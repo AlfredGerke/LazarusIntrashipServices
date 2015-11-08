@@ -1,0 +1,12 @@
+###########################
+## LazarusIntrashipServices
+###########################
+
+lib/i386-win32/
+example/lib/i386-win32/
+test/lib/i386-win32/
+*.bak
+*.lps
+*.lnk
+*.dll
+*.exe
