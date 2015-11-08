@@ -10,9 +10,9 @@ Die folgenden Dateien wurden manuelle heruntergeladen:
 - is_base_de.xsd    
 - cis_base.xsd    
 
-Die URLs für [is_base_de.xsd](dhl/is_base_de.xsd "is_base_de.xsd") und [cis_base.xsd](dhl/cis_base.xsd "cis_base.xsd") wurden für einen lokalen Aufruf angepasst.
+Die URLs für [is_base_de.xsd](is_base_de.xsd "is_base_de.xsd") und [cis_base.xsd](cis_base.xsd "cis_base.xsd") wurden für einen lokalen Aufruf angepasst.
 
-In [cis_base.xsd](dhl/cis_base.xsd "cis_base.xsd") wurden für zwei complexe Typen das Note-Element mit dem simple Type: String erweitert,
+In [cis_base.xsd](cis_base.xsd "cis_base.xsd") wurden für zwei complexe Typen das Note-Element mit dem simple Type: String erweitert,
 da das Fehlen dieser Erweiterung zu einem Fehler während des WSDL-Importes geführt hat.
 
 Zum Ende des WSDL-Importes wird die Meldung ausgegeben das die Unit: **geschaeftskundenversand-api-1.0** nicht gefunden wurde.
