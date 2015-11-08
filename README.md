@@ -8,14 +8,31 @@ die Geschäftskundenversand-API von DHL-Intraship in ein entsprechendes Projekt 
 
 **Inhaltsübersicht:**
 
-- 0     Anmerkung zur neuen Version
-- 1     Einleitung
-- 2     Versionen
+- Anmerkung zur neuen Version
+- Voraussetzungen
+- Einleitung
+- Versionen
 
 0 Anmerkung zur neuen Version
 -----------------------------
 
 Erstellung der ersten Version.
+
+
+Voraussetzungen
+---------------
+
+### Entwicklerportal der DHL
+Um Informationen über die verschiedenen APIs von DHL Intraship zu erhalten, sowie 
+Zugang zum Testsystem zu erlangen, muss jeder Entwickler sich auf dem Entwicklerportal registrieren.
+
+* [Entwicklerportal der DHL](https://entwickler.dhl.de/ "Entwicklerportal der DHL")
+
+Diese Testanwendung wird ohne Zugang zum Testsystem nicht funktionieren. 
+
+Allerdings kann man jede Web API durch entsprechende Testsysteme simulieren, was 
+aber den logischen Anteil, der bei der Nutzung des Logistikportals zum tragen kommt,
+nur unzureichend berücksichtigt.
 
 
 1 Einleitung
