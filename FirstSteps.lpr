@@ -7,7 +7,9 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, fs_main, geschaeftskundenversand_api_1_0, geschaeftskundenversand_api_1_0_proxy, cis_base, is_base_de
+  Forms, fs_main, geschaeftskundenversand_api_1_0,
+  geschaeftskundenversand_api_1_0_proxy, cis_base, is_base_de,
+intraship_services_const
   { you can add units after this };
 
 {$R *.res}
@@ -15,7 +17,7 @@ uses
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TMain, Main);
   Application.Run;
 end.
 

@@ -5,22 +5,49 @@ unit fs_main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  Buttons, StdCtrls;
 
 type
-  TForm1 = class(TForm)
+
+  { TMain }
+
+  TMain = class(TForm)
+    btnClose: TBitBtn;
+    btnDeleteShipmentDD: TSpeedButton;
+    edtLog: TMemo;
+    edtShipmentNr: TLabeledEdit;
+    lblShipmentNr: TBoundLabel;
+    pnlOutline: TPanel;
+    pnlBottom: TPanel;
+    pnlClient: TPanel;
+    btnClearLog: TSpeedButton;
+    btnCreateShipmentDD: TSpeedButton;
+    procedure btnClearLogClick(Sender: TObject);
   private
-    { private declarations }
+    procedure ClearLog;
   public
-    { public declarations }
+
   end;
 
 var
-  Form1: TForm1;
+  Main: TMain;
 
 implementation
 
 {$R *.lfm}
+
+{ TMain }
+
+procedure TMain.btnClearLogClick(Sender: TObject);
+begin
+  ClearLog;
+end;
+
+procedure TMain.ClearLog;
+begin
+  edtLog.Clear;
+end;
 
 end.
 
