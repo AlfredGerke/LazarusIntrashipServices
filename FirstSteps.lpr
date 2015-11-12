@@ -9,7 +9,8 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, fs_main, geschaeftskundenversand_api_1_0,
   geschaeftskundenversand_api_1_0_proxy, cis_base, is_base_de,
-intraship_services_const
+  IntrashipServicesConst,
+BusinessClientAPIRequestBuilder, IntrashipServicesTypes
   { you can add units after this };
 
 {$R *.res}
