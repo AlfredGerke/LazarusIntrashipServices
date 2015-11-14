@@ -7,10 +7,16 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, fs_main, geschaeftskundenversand_api_1_0,
-  geschaeftskundenversand_api_1_0_proxy, cis_base, is_base_de,
+  Forms,
+  fs_main,
+  geschaeftskundenversand_api_1_0,
+  geschaeftskundenversand_api_1_0_proxy,
+  cis_base,
+  is_base_de,
   IntrashipServicesConst,
-BusinessClientAPIRequestBuilder, IntrashipServicesTypes
+  BusinessClientAPIRequestBuilder,
+  IntrashipServicesTypes,
+  IntrashipServicesUtils
   { you can add units after this };
 
 {$R *.res}

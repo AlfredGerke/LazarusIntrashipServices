@@ -1,12 +1,15 @@
 unit fs_main;
 
-{$mode objfpc}{$H+}
+{$mode delphi}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Buttons, StdCtrls;
+  Forms,
+  ExtCtrls,
+  Buttons,
+  StdCtrls,
+  fpc_http_protocol, Classes;
 
 type
 
@@ -24,8 +27,11 @@ type
     btnClearLog: TSpeedButton;
     btnCreateShipmentDD: TSpeedButton;
     procedure btnClearLogClick(Sender: TObject);
+    procedure btnCreateShipmentDDClick(Sender: TObject);
+    procedure Memo1Change(Sender: TObject);
   private
     procedure ClearLog;
+    procedure CreateDD;
   public
 
   end;
@@ -44,9 +50,24 @@ begin
   ClearLog;
 end;
 
+procedure TMain.btnCreateShipmentDDClick(Sender: TObject);
+begin
+
+end;
+
+procedure TMain.Memo1Change(Sender: TObject);
+begin
+  CreateDD;
+end;
+
 procedure TMain.ClearLog;
 begin
   edtLog.Clear;
+end;
+
+procedure TMain.CreateDD;
+begin
+  FPC_RegisterHTTP_Transport();
 end;
 
 end.

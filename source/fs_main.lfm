@@ -1,7 +1,7 @@
 object Main: TMain
-  Left = 738
+  Left = 605
   Height = 351
-  Top = 273
+  Top = 345
   Width = 693
   BorderStyle = bsDialog
   Caption = 'Erste Schritte'
@@ -23,6 +23,7 @@ object Main: TMain
       Top = 8
       Width = 191
       Caption = 'CreateShipmentDD'
+      OnClick = btnCreateShipmentDDClick
     end
     object edtShipmentNr: TLabeledEdit
       Left = 8

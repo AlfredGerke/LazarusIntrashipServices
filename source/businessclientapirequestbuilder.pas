@@ -1,6 +1,6 @@
 unit BusinessClientAPIRequestBuilder;
 
-{$mode objfpc}{$H+}
+{$mode delphi}{$H+}
 
 interface
 
@@ -39,6 +39,10 @@ procedure FreeSingeltonBusinessClientAPIRequestBuilder;
 
 implementation
 
+uses
+  SysUtils,
+  IntrashipServicesConst;
+
 var
   business_client_api_request_builder: TBusinessClientAPIRequestBuilder;
 
@@ -72,7 +76,7 @@ begin
 
   receiver_native_address := NativeAddressType.Create;
   receiver_native_zip := Zip_Type.Create;
-  receiver_native_origin := Origin.Create;
+  receiver_native_origin := Origin_Type.Create;
 
   if not FOrderData.IsWorldWide then
   begin
@@ -230,7 +234,8 @@ var
   shipment_details: ShipmentDetailsDDType;
   attendance_type: ShipmentDetailsDDType_Attendance_Type;
   anz: integer;
-  shipment_order_array: CreateShipmentDDRequest_ShipmentOrderArray;
+  shipment_item_array: ShipmentDetailsDDType_ShipmentItemArray;
+  shipment_item_ddtype: ShipmentItemDDType;
   services: ShipmentDetailsDDType_ServiceArray;
   service: ShipmentServiceDD;
 begin
@@ -245,13 +250,13 @@ begin
 
   shipment_details.Attendance := attendance_type;
 
-  shipment_order_array := CreateShipmentDDRequest_ShipmentOrderArray.Create;
+  shipment_item_array := ShipmentDetailsDDType_ShipmentItemArray.Create;
   for anz := 0 to AShipmentItemNr-1 do
   begin
-    shipment_order_ddtype := shipment_order_array.AddAt(anz);
-    SetShipmentItemDDType(shipment_order_ddtype);
+    shipment_item_ddtype := shipment_item_array.AddAt(anz);
+    SetShipmentItemDDType(shipment_item_ddtype);
   end;
-  shipment_details.ShipmentItem := shipment_details_array;
+  shipment_details.ShipmentItem := shipment_item_array;
 
   // Nachnahmeservice
   if FOrderData.UseServiceCOD then
@@ -277,7 +282,7 @@ var
   major_ver: string;
   minor_ver: string;
 begin
-  res := Version.Create;
+  res := Version_Type.Create;
 
   case AActor of
     catCreateShipmentDD:

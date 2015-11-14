@@ -9,13 +9,13 @@ uses
 
 type
   TCustomActorTypes =
-    (catUnkown, catCreateShipmentDD, catGetLabelDD, catDeleteShipmentDD,
-     catGetOrderData, catGetCredentials);
+    (catUnkown, catCreateShipmentDD, catGetLabelDD, catDeleteShipmentDD, catGetOrderData,
+     catGetCredentials);
 
 const
   CustomActorTypesStr: array[TCustomActorTypes] of string =
-    ('Unbekannt', 'CreateShipmentDD', 'GetLabelDD', 'DeleteShipmentDD',
-     'GetOrderData', 'GetCredentials');
+    ('Unbekannt', 'CreateShipmentDD', 'GetLabelDD', 'DeleteShipmentDD', 'GetOrderData',
+     'GetCredentials');
 
 type
 
@@ -23,9 +23,7 @@ type
 
   TStringHandler = record
     Str: string;
-  end;
 
-  TStringHandlerHelper = record helper for TStringHandler
     function Equals(AItems: string): boolean;
     function IsInteger: boolean;
     function IsFloat: boolean;
@@ -66,17 +64,6 @@ type
     procedure Clear;
   end;
 
-  TCredentials = record
-    Username: TStringHandler;
-    Password: TStringHandler;
-    DeveloperID: TStringHandler;
-    Signature: TStringHandler;
-    DoTest: Boolean;
-
-    function CheckData: TErrorByCheckData;
-    procedure Clear;
-  end;
-
   { TErrorHandler }
 
   TErrorHandler = record
@@ -86,6 +73,19 @@ type
 
     procedure SetError(ACode: smallint;
                        AMsg: string);
+    procedure Clear;
+  end;
+
+  { TCredentials }
+
+  TCredentials = record
+    Username: TStringHandler;
+    Password: TStringHandler;
+    DeveloperID: TStringHandler;
+    Signature: TStringHandler;
+    DoTest: Boolean;
+
+    function CheckData: TErrorHandler;
     procedure Clear;
   end;
 
@@ -163,6 +163,7 @@ type
 
     function SetPostOfficeAsReceiver: boolean;
     function CheckData: TErrorHandler;
+    procedure SetTestdata;
 
     procedure Clear;
   end;
@@ -170,7 +171,43 @@ type
 implementation
 
 uses
-  IniFiles;
+  IniFiles,
+  IntrashipServicesConst,
+  IntrashipServicesUtils;
+
+{ TCredentials }
+
+function TCredentials.CheckData: TErrorHandler;
+var
+  error: TErrorHandler;
+begin
+  error.Clear;
+
+  if Username.IsEmpty then
+    error.SetError(101, 'Kein Benutzername vorhanden!');
+
+  if not error.Found then
+    if Password.IsEmpty then
+      error.SetError(102, 'Kein Passwort vorhanden!');
+
+  if not error.Found then
+    if DeveloperID.IsEmpty then
+      error.SetError(103, 'Keine Entwickler-/Anwendungskennung vorhanden!');
+
+  if not error.Found then
+    if Signature.IsEmpty then
+      error.SetError(104, 'Keine Entwickler-/Anwendungssignatur vorhanden!');
+
+  if not error.Found then
+    error.SetError(0, 'Alles Ok!');
+
+  Result := error;
+end;
+
+procedure TCredentials.Clear;
+begin
+  FillChar(Self, SizeOf(Self), #0);
+end;
 
 { TErrorHandler }
 
@@ -583,6 +620,72 @@ begin
   ReceiverPhone.Clear;
 end;
 
+procedure TOrderData.SetTestdata;
+begin
+  Sequence.SetByInteger(0);
+
+  // Auftragsdaten
+  EKP.SetByString(IntrashipServicesConst.EKP);
+  ProductCode.SetByString(DD_PROD_CODE);
+  PartnerID.SetByString(PARTNER_ID);
+  ShipmentDescription.SetByString(SHIPMENT_DESC);
+  UseServiceCOD := False;
+  ServiceGroupOtherCodCodAmount.SetByString(COD_CODAMOUNT);
+  ServiceGroupOtherCodCodCurrency.SetByString(COD_CODCURRENCE);
+
+  // Sendungsdaten
+  WeihgtInKG.SetByInteger(3);
+  LengthInCM.SetByInteger(50);
+  WidthInCM.SetByInteger(30);
+  HeightInCM.SetByInteger(15);
+  PackageType.SetByString('PK');
+
+  // Versenderdaten
+  ShipperCompanyName1.SetByString(SHIPPER_COMPANY_NAME);
+  ShipperStreetName.SetByString(SHIPPER_STREET);
+  ShipperCity.SetByString(SHIPPER_CITY);
+  ShipperStreetNumber.SetByString(SHIPPER_STREETNR);
+  ShipperZipGermanyOrOther.SetByString(SHIPPER_ZIP);
+  ShipperOriginCountryISOCode.SetByString(SHIPPER_COUNTRY_CODE);
+  ShipperEmail.SetByString(SHIPPER_CONTACT_EMAIL);
+  ShipperContactPerson.SetByString(SHIPPER_CONTACT_NAME);
+  ShipperPhone.SetByString(SHIPPER_CONTACT_PHONE);
+  ShipperBankAccountOwner.SetByString(SHIPPER_BANK_ACCOUNTOWNER);
+  ShipperBankAccountNumber.SetByString(SHIPPER_BANK_ACCOUNTNUMBER);
+  ShipperBankBankCode.SetByString(SHIPPER_BANK_BANKCODE);
+  ShipperBankBankName.SetByString(SHIPPER_BANK_BANKNAME);
+  ShipperBankBIC.SetByString(SHIPPER_BANK_BIC);
+  ShipperBankIBAN.SetByString(SHIPPER_BANK_IBAN);
+  ShipperBankNote.SetByString(SHIPPER_BANK_NOTE);
+
+  // Empfängerdaten
+  ReceiverPersonFirstName.SetByString(RECEIVER_FIRST_NAME);
+  ReceiverPersonLastName.SetByString(RECEIVER_LAST_NAME);
+  ReceiverCompanyName1.SetByString(RECEIVER_COMPANY_NAME);
+  ReceiverStreetName.SetByString(RECEIVER_LOCAL_STREET);
+  ReceiverStreetNumber.SetByString(RECEIVER_LOCAL_STREETNR);
+  ReceiverPhone.SetByString(RECEIVER_CONTACT_PHONE);
+  ReceiverContactPerson.SetByString(RECEIVER_CONTACT_NAME);
+  ReceiverEmail.SetByString(RECEIVER_CONTACT_EMAIL);
+  ReceiverCountryISOCode.SetByString(RECEIVER_LOCAL_COUNTRY_CODE);
+  ReceiverCountry.SetByString(EmptyStr);
+  ReceiverZipGermanyOrOhter.SetByString(RECEIVER_LOCAL_ZIP);
+  ReceiverCity.SetByString(RECEIVER_LOCAL_CITY);
+  IsPerson := True;
+  IsWorldWide := False;
+  IsEngland := False;
+  ReceiverCountry.SetByString(EmptyStr);
+
+  // Packstation
+  SendToPackstation := False;
+  SendToPostOffice := False;
+  ReceiverForFiliale.SetByString(RECEIVERNAME_FOR_POST_OFFICE);
+  Postnumber.SetByString(IntrashipServicesConst.POSTNUMBER);
+  Filialnumber.SetByString(POST_OFFICE_NUMBER);
+  FilialZip.SetByString(POST_OFFICE_ZIP);
+  FilialCity.SetByString(POST_OFFICE_CITY);
+end;
+
 { TCustomSettings }
 
 procedure TCustomSettings.Clear;
@@ -630,7 +733,7 @@ end;
 
 { TStringHandler }
 
-function TStringHandlerHelper.AsBoolean: Boolean;
+function TStringHandler.AsBoolean: Boolean;
 var
   is_bool: Boolean;
 begin
@@ -640,7 +743,7 @@ begin
     raise Exception.CreateFmt('%s ist kein gültiger Boolean!', [Str]);
 end;
 
-function TStringHandlerHelper.AsInteger: Integer;
+function TStringHandler.AsInteger: Integer;
 var
   int: integer;
 begin
@@ -650,7 +753,7 @@ begin
     raise Exception.CreateFmt('%s ist kein gültiger Integer!', [Str]);
 end;
 
-function TStringHandlerHelper.AsCurrency: Currency;
+function TStringHandler.AsCurrency: Currency;
 var
   curr: Currency;
 begin
@@ -660,12 +763,12 @@ begin
     raise Exception.CreateFmt('%s ist kein gültiger Currency!', [Str]);
 end;
 
-function TStringHandlerHelper.AsString: string;
+function TStringHandler.AsString: string;
 begin
   Result := Str;
 end;
 
-function TStringHandlerHelper.AsStringAsFloat: string;
+function TStringHandler.AsStringAsFloat: string;
 var
   test_str: string;
 begin
@@ -678,7 +781,7 @@ begin
     raise Exception.CreateFmt('%s ist kein gültiger Decimalwert!', [Str]);
 end;
 
-procedure TStringHandlerHelper.AsStringlist(AList: TStrings);
+procedure TStringHandler.AsStringlist(AList: TStrings);
 var
   list: TStrings;
 begin
@@ -693,17 +796,17 @@ begin
   end;
 end;
 
-procedure TStringHandlerHelper.Clear;
+procedure TStringHandler.Clear;
 begin
   FillChar(Self, SizeOf(Self), #0);
 end;
 
-function TStringHandlerHelper.Equals(AItems: string): boolean;
+function TStringHandler.Equals(AItems: string): boolean;
 begin
   Result := (CompareStr(AsString, AItems) = 0);
 end;
 
-function TStringHandlerHelper.IsFloat: boolean;
+function TStringHandler.IsFloat: boolean;
 var
   ext: extended;
   test_str: string;
@@ -712,7 +815,7 @@ begin
   Result := TryStrToFloat(test_str, ext);
 end;
 
-function TStringHandlerHelper.IsEmpty(ADoTrim: boolean = True): boolean;
+function TStringHandler.IsEmpty(ADoTrim: boolean = True): boolean;
 var
   check_string: string;
 begin
@@ -724,29 +827,29 @@ begin
   Result := (check_string = EmptyStr);
 end;
 
-function TStringHandlerHelper.IsInteger: boolean;
+function TStringHandler.IsInteger: boolean;
 var
   int: integer;
 begin
   Result := TryStrToInt(AsString, int);
 end;
 
-function TStringHandlerHelper.GetLength: integer;
+function TStringHandler.GetLength: integer;
 begin
   Result := Length(Str);
 end;
 
-procedure TStringHandlerHelper.SetByInteger(AInteger: integer);
+procedure TStringHandler.SetByInteger(AInteger: integer);
 begin
   Str := IntToStr(AInteger);
 end;
 
-procedure TStringHandlerHelper.SetByShortString(AString: ShortString);
+procedure TStringHandler.SetByShortString(AString: ShortString);
 begin
  Str := GetShortStringAsString(AString);
 end;
 
-procedure TStringHandlerHelper.SetByString(AString: string);
+procedure TStringHandler.SetByString(AString: string);
 begin
   Str := AString;
 end;
