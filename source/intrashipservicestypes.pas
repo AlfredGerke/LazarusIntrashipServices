@@ -42,9 +42,22 @@ type
     procedure Clear;
   end;
 
-  { TCustomSettings }
+  { TErrorHandler }
 
-  TCustomSettings = record
+  TErrorHandler = record
+    Found: boolean;
+    Code: smallint;
+    Msg: string;
+
+    procedure SetIsOK(AMsg: string = 'Alles Ok!');
+    procedure SetError(ACode: smallint;
+                       AMsg: string);
+    procedure Clear;
+  end;
+
+  { TConfigSettings }
+
+  TConfigSettings = record
     Active: boolean;
     IniFilename: string;
 
@@ -60,32 +73,25 @@ type
     MajorVersionGLDD: TStringHandler;
     MinorVersionGLDD: TStringHandler;
 
-    procedure SetByIni;
-    procedure Clear;
-  end;
-
-  { TErrorHandler }
-
-  TErrorHandler = record
-    Found: boolean;
-    Code: smallint;
-    Msg: string;
-
-    procedure SetError(ACode: smallint;
-                       AMsg: string);
+    function SetByIni: TErrorHandler;
     procedure Clear;
   end;
 
   { TCredentials }
 
   TCredentials = record
+    IniFilename: string;
+
     Username: TStringHandler;
     Password: TStringHandler;
-    DeveloperID: TStringHandler;
+
+    IntrashipUser: TStringHandler;
     Signature: TStringHandler;
+
     DoTest: Boolean;
 
     function CheckData: TErrorHandler;
+    function SetByIni: TErrorHandler;
     procedure Clear;
   end;
 
@@ -191,15 +197,50 @@ begin
       error.SetError(102, 'Kein Passwort vorhanden!');
 
   if not error.Found then
-    if DeveloperID.IsEmpty then
+    if IntrashipUser.IsEmpty then
       error.SetError(103, 'Keine Entwickler-/Anwendungskennung vorhanden!');
 
   if not error.Found then
     if Signature.IsEmpty then
-      error.SetError(104, 'Keine Entwickler-/Anwendungssignatur vorhanden!');
+      error.SetError(104, 'Keine Signatur vorhanden!');
 
   if not error.Found then
     error.SetError(0, 'Alles Ok!');
+
+  Result := error;
+end;
+
+function TCredentials.SetByIni: TErrorHandler;
+var
+  error: TErrorHandler;
+  ini: TIniFile;
+  str: string;
+begin
+  error.Clear;
+  if FileExists(IniFilename) then
+  begin
+    ini := TIniFile.Create(IniFilename);
+    try
+      str := ini.ReadString('authentication', 'user', '');
+      Username.SetByString(str);
+
+      str := ini.ReadString('authentication', 'password', '');
+      Password.SetByString(str);
+
+      str := ini.ReadString('intraship', 'user', '');
+      IntrashipUser.SetByString(str);
+
+      str := ini.ReadString('intraship', 'signature', '');
+      Signature.SetByString(str);
+
+      error := CheckData;
+    finally
+      if Assigned(ini) then
+        FreeAndNil(ini);
+    end;
+  end
+  else
+    error.SetError(-1, Format('%s Konfigurationsdatei nicht vorhanden!', [IniFilename]));
 
   Result := error;
 end;
@@ -210,6 +251,12 @@ begin
 end;
 
 { TErrorHandler }
+
+procedure TErrorHandler.SetIsOK(AMsg: string = 'Alles Ok!');
+begin
+  if not Found then
+    SetError(0, AMsg);
+end;
 
 procedure TErrorHandler.SetError(ACode: smallint; AMsg: string);
 begin
@@ -686,49 +733,62 @@ begin
   FilialCity.SetByString(POST_OFFICE_CITY);
 end;
 
-{ TCustomSettings }
+{ TConfigSettings }
 
-procedure TCustomSettings.Clear;
+procedure TConfigSettings.Clear;
 begin
   FillChar(Self, SizeOf(Self), #0);
 end;
 
-procedure TCustomSettings.SetByIni;
+function TConfigSettings.SetByIni: TErrorHandler;
 var
   ini: TIniFile;
   int: integer;
+  error: TErrorHandler;
 begin
+  error.Clear;
+
   if not Active then
   begin
-    ini := TIniFile.Create(IniFilename);
-    try
-      int := ini.ReadInteger('connect', 'connecttimeout', 10000);
-      ConnectTimeout.SetByInteger(int);
+    if FileExists(IniFilename) then
+    begin
+      ini := TIniFile.Create(IniFilename);
+      try
+        int := ini.ReadInteger('connect', 'connecttimeout', 10000);
+        ConnectTimeout.SetByInteger(int);
 
-      int := ini.ReadInteger('connect', 'receivetimeout', 10000);
-      ReceiveTimeout.SetByInteger(int);
+        int := ini.ReadInteger('connect', 'receivetimeout', 10000);
+        ReceiveTimeout.SetByInteger(int);
 
-      int := ini.ReadInteger('createshipmentdd', 'majorversion', 1);
-      MajorVersionCSDD.SetByInteger(int);
-      int := ini.ReadInteger('createshipmentdd', 'minorversion', 0);
-      MinorVersionCSDD.SetByInteger(int);
+        int := ini.ReadInteger('createshipmentdd', 'majorversion', 1);
+        MajorVersionCSDD.SetByInteger(int);
 
-      int := ini.ReadInteger('deleteshipmentdd', 'majorversion', 1);
-      MajorVersionDSDD.SetByInteger(int);
-      int := ini.ReadInteger('deleteshipmentdd', 'minorversion', 0);
-      MinorVersionDSDD.SetByInteger(int);
+        int := ini.ReadInteger('createshipmentdd', 'minorversion', 0);
+        MinorVersionCSDD.SetByInteger(int);
 
-      int := ini.ReadInteger('getlabeldd', 'majorversion', 1);
-      MajorVersionGLDD.SetByInteger(int);
-      int := ini.ReadInteger('getlabeldd', 'minorversion', 0);
-      MinorVersionGLDD.SetByInteger(int);
+        int := ini.ReadInteger('deleteshipmentdd', 'majorversion', 1);
+        MajorVersionDSDD.SetByInteger(int);
 
-      Active := True;
-    finally
-      if Assigned(ini) then
-        FreeAndNil(ini);
-    end;
+        int := ini.ReadInteger('deleteshipmentdd', 'minorversion', 0);
+        MinorVersionDSDD.SetByInteger(int);
+
+        int := ini.ReadInteger('getlabeldd', 'majorversion', 1);
+        MajorVersionGLDD.SetByInteger(int);
+
+        int := ini.ReadInteger('getlabeldd', 'minorversion', 0);
+        MinorVersionGLDD.SetByInteger(int);
+
+        Active := True;
+      finally
+        if Assigned(ini) then
+          FreeAndNil(ini);
+      end;
+    end
+    else
+      error.SetError(-1, Format('%s Konfigurationsdatei nicht vorhanden!', [IniFilename]));
   end;
+
+  Result := error;
 end;
 
 { TStringHandler }

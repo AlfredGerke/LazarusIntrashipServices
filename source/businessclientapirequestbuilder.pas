@@ -15,7 +15,7 @@ type
 
   TBusinessClientAPIRequestBuilder = class
   private
-    FCustomSettings: TCustomSettings;
+    FCustomSettings: TConfigSettings;
     FOrderData: TOrderData;
 
     function GetReceiverCommunicationType: CommunicationType;

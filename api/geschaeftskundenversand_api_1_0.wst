@@ -1,5 +1,5 @@
-  GetWSTResourceManager().AddResource('GESCHAEFTSKUNDENVERSAND-API-1.0',
-    #0#0#0#16'WST_METADATA_0.6'#0#0#0#31'geschaeftskundenversand-api-1.0'#0#1#0#0
+  GetWSTResourceManager().AddResource('geschaeftskundenversand_api_1_0',
+    #0#0#0#16'WST_METADATA_0.6'#0#0#0#31'geschaeftskundenversand_api_1_0'#0#1#0#0
     +#0#19'ISWSServicePortType'#0#15#0#0#0#16'createShipmentTD'#2#0#0#0#28'Create'
     +'ShipmentTDRequestParam'#0#0#0#23'CreateShipmentTDRequest'#0#0#0#0#0#0#0#1#0
     +#0#0#6'Result'#0#0#0#22'CreateShipmentResponse'#0#0#0#0#0#0#0#3#0#0#0#16'cre'

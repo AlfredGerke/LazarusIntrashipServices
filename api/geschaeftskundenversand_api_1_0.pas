@@ -16,7 +16,8 @@ uses SysUtils, Classes, TypInfo, base_service_intf, service_intf,
 
 const
   sNAME_SPACE = 'http://de.ws.intrashipservice';
-  sUNIT_NAME = 'geschaeftskundenversand-api-1.0';
+  //sUNIT_NAME = 'geschaeftskundenversand-api-1.0';
+  sUNIT_NAME = 'geschaeftskundenversand_api_1_0';
 
 type
 
