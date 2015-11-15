@@ -9,7 +9,10 @@ uses
   ExtCtrls,
   Buttons,
   StdCtrls,
-  fpc_http_protocol, Classes;
+  fpc_http_protocol,
+  Classes,
+  { TODO -oAlfred Gerke -cFragen zum SOAP-Handling : Immer notwendig und wenn ja wo am besten einbinden? }
+  soap_formatter;
 
 type
 
@@ -88,7 +91,7 @@ begin
 
   FPC_RegisterHTTP_Transport();
 
-  proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTPS:', 'https://cig.dhl.de/services/sandbox/soap');
+  proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', 'http://cig.dhl.de/services/sandbox/soap');
 
   auth := Authentification.Create;
   auth.user := credentials.IntrashipUser.AsString;
