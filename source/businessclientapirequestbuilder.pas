@@ -15,7 +15,7 @@ type
 
   TBusinessClientAPIRequestBuilder = class
   private
-    FCustomSettings: TConfigSettings;
+    FConfigSettings: TConfigSettings;
     FOrderData: TOrderData;
 
     function GetReceiverCommunicationType: CommunicationType;
@@ -29,10 +29,18 @@ type
     procedure SetShipmentItemDDType(AShipmentItemDDType: ShipmentItemDDType);
     function GetShipmentDetails(AShipmentItemNr: integer): ShipmentDetailsDDType;
     function GetVersion(AActor: TCustomActorTypes): Version_Type;
-
-    function GetCreateShipmentDDReq(aDoXMLabel: boolean): CreateShipmentDDRequest;
   public
     class function GetInstance: TBusinessClientAPIRequestBuilder;
+
+    function GetCreateShipmentDDReq(aDoXMLabel: boolean): CreateShipmentDDRequest;
+
+    property ConfigSettings: TConfigSettings
+      read FConfigSettings
+      write FConfigSettings;
+
+    property OrderData: TOrderData
+      read FOrderData
+      write FOrderData;
   end;
 
 procedure FreeSingeltonBusinessClientAPIRequestBuilder;
@@ -287,18 +295,18 @@ begin
   case AActor of
     catCreateShipmentDD:
     begin
-      major_ver := FCustomSettings.MajorVersionCSDD.AsString;
-      minor_ver:= FCustomSettings.MinorVersionCSDD.AsString;
+      major_ver := FConfigSettings.MajorVersionCSDD.AsString;
+      minor_ver:= FConfigSettings.MinorVersionCSDD.AsString;
     end;
     catGetLabelDD:
     begin
-      major_ver := FCustomSettings.MajorVersionGLDD.AsString;
-      minor_ver := FCustomSettings.MinorVersionGLDD.AsString;
+      major_ver := FConfigSettings.MajorVersionGLDD.AsString;
+      minor_ver := FConfigSettings.MinorVersionGLDD.AsString;
     end;
     catDeleteShipmentDD:
     begin
-      major_ver := FCustomSettings.MajorVersionDSDD.AsString;
-      minor_ver:= FCustomSettings.MinorVersionDSDD.AsString;
+      major_ver := FConfigSettings.MajorVersionDSDD.AsString;
+      minor_ver:= FConfigSettings.MinorVersionDSDD.AsString;
     end;
   else
     major_ver := MAJOR_RELEASE;

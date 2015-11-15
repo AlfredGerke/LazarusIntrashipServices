@@ -52,7 +52,9 @@ uses
   BusinessClientAPIRequestBuilder,
   IntrashipServicesTypes,
   base_service_intf,
-  cis_base;
+  cis_base,
+  is_base_de,
+  SysUtils;
 
 { TMain }
 
@@ -82,23 +84,53 @@ var
   auth: Authentification;
   credentials: TCredentials;
   config: TConfigSettings;
+  order_data: TOrderData;
+  request_builder: TBusinessClientAPIRequestBuilder;
+  req: CreateShipmentDDRequest;
+  resp: CreateShipmentResponse;
 begin
-  credentials.IniFilename := '.\ini\settings.ini';
-  credentials.SetByIni;
+  try
+    try
+      credentials.IniFilename := '.\ini\settings.ini';
+      credentials.SetByIni;
 
-  config.IniFilename := '.\ini\settings.ini';
-  config.SetByIni;
+      config.IniFilename := '.\ini\settings.ini';
+      config.SetByIni;
 
-  FPC_RegisterHTTP_Transport();
+      order_data.SetTestdata;
 
-  proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', 'http://cig.dhl.de/services/sandbox/soap');
+      FPC_RegisterHTTP_Transport();
 
-  auth := Authentification.Create;
-  auth.user := credentials.IntrashipUser.AsString;
-  auth.signature := credentials.Signature.AsString;
-  auth._type := 0;
+      proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', 'https://cig.dhl.de/services/sandbox/soap');
 
-  (proxy as ICallContext).AddHeader(auth, True);
+      auth := Authentification.Create;
+      auth.user := credentials.IntrashipUser.AsString;
+      auth.signature := credentials.Signature.AsString;
+      auth._type := 0;
+
+      (proxy as ICallContext).AddHeader(auth, True);
+
+      request_builder := TBusinessClientAPIRequestBuilder.Create;
+      request_builder.ConfigSettings := config;
+      request_builder.OrderData := order_data;
+
+      req := request_builder.GetCreateShipmentDDReq(False);
+
+      resp := proxy.createShipmentDD(req);
+    except
+      on E: Exception do
+        edtLog.Lines.Add(E.Message);
+    end;
+  finally
+    if Assigned(proxy) then
+      FreeAndNil(proxy);
+
+    if Assigned(auth) then
+      FreeAndNil(auth);
+
+    if Assigned(request_builder) then
+      FreeAndNil(request_builder);
+  end;
 end;
 
 end.
