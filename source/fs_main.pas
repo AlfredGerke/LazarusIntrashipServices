@@ -9,7 +9,7 @@ uses
   ExtCtrls,
   Buttons,
   StdCtrls,
-  fpc_http_protocol,
+  synapse_http_protocol,
   Classes,
   { TODO -oAlfred Gerke -cFragen zum SOAP-Handling : Immer notwendig und wenn ja wo am besten einbinden? }
   soap_formatter;
@@ -99,7 +99,7 @@ begin
 
       order_data.SetTestdata;
 
-      FPC_RegisterHTTP_Transport();
+      SYNAPSE_RegisterHTTP_Transport();
 
       proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', 'https://cig.dhl.de/services/sandbox/soap');
 

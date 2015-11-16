@@ -91,7 +91,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="source;api;..\..\Subversion\lazarus-ccr"/>
+      <OtherUnitFiles Value="source;api;..\..\Subversion\lazarus-ccr;..\..\synapse\source\lib"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
