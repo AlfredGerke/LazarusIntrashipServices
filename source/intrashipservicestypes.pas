@@ -174,12 +174,30 @@ type
     procedure Clear;
   end;
 
+  { TUrlHandler }
+
+  TUrlHandler = record
+    Credentials: TCredentials;
+
+    URL: TStringHandler;
+
+    function GetURL: TStringHandler;
+  end;
+
 implementation
 
 uses
   IniFiles,
   IntrashipServicesConst,
   IntrashipServicesUtils;
+
+{ TUrlHandler }
+
+function TUrlHandler.GetURL: TStringHandler;
+begin
+  Result.SetByString(StringReplace(URL.AsString, 'https://', Format('https://%s:%s@',
+    [Credentials.Username.AsString, Credentials.Password.AsString]), [rfIgnoreCase]));
+end;
 
 { TCredentials }
 

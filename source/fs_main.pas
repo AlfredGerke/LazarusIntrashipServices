@@ -88,11 +88,15 @@ var
   request_builder: TBusinessClientAPIRequestBuilder;
   req: CreateShipmentDDRequest;
   resp: CreateShipmentResponse;
+  url: TUrlHandler;
 begin
   try
     try
       credentials.IniFilename := '.\ini\settings.ini';
       credentials.SetByIni;
+
+      url.Credentials := Credentials;
+      url.URL.SetByString('https://cig.dhl.de/services/sandbox/soap') ;
 
       config.IniFilename := '.\ini\settings.ini';
       config.SetByIni;
@@ -101,7 +105,7 @@ begin
 
       SYNAPSE_RegisterHTTP_Transport();
 
-      proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', 'https://cig.dhl.de/services/sandbox/soap');
+      proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
 
       auth := Authentification.Create;
       auth.user := credentials.IntrashipUser.AsString;
