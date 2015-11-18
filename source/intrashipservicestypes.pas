@@ -52,6 +52,8 @@ type
     procedure SetIsOK(AMsg: string = 'Alles Ok!');
     procedure SetError(ACode: smallint;
                        AMsg: string);
+
+    function GetErrorMessage(AFormat: string = '[%d] - %s'): string;
     procedure Clear;
   end;
 
@@ -169,7 +171,7 @@ type
 
     function SetPostOfficeAsReceiver: boolean;
     function CheckData: TErrorHandler;
-    procedure SetTestdata;
+    function SetTestdata: TErrorHandler;
 
     procedure Clear;
   end;
@@ -281,6 +283,11 @@ begin
   Code := ACode;
   Msg := AMsg;
   Found := (Code <> 0);
+end;
+
+function TErrorHandler.GetErrorMessage(AFormat: string = '[%d] - %s'): string;
+begin
+  Result := Format(AFormat, [Code, Msg]);
 end;
 
 procedure TErrorHandler.Clear;
@@ -685,7 +692,7 @@ begin
   ReceiverPhone.Clear;
 end;
 
-procedure TOrderData.SetTestdata;
+function TOrderData.SetTestdata: TErrorHandler;
 begin
   Sequence.SetByInteger(0);
 
@@ -749,6 +756,8 @@ begin
   Filialnumber.SetByString(POST_OFFICE_NUMBER);
   FilialZip.SetByString(POST_OFFICE_ZIP);
   FilialCity.SetByString(POST_OFFICE_CITY);
+
+  Result := CheckData;
 end;
 
 { TConfigSettings }

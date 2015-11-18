@@ -54,7 +54,8 @@ uses
   base_service_intf,
   cis_base,
   is_base_de,
-  SysUtils;
+  SysUtils,
+  Dialogs;
 
 { TMain }
 
@@ -89,19 +90,35 @@ var
   req: CreateShipmentDDRequest;
   resp: CreateShipmentResponse;
   url: TUrlHandler;
+  err: TErrorHandler;
 begin
   try
     try
       credentials.IniFilename := '.\ini\settings.ini';
-      credentials.SetByIni;
+      err := credentials.SetByIni;
+      if err.Found then
+      begin
+        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0);
+        Exit;
+      end;
+
+      config.IniFilename := '.\ini\settings.ini';
+      err := config.SetByIni;
+      if err.Found then
+      begin
+        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0);
+        Exit;
+      end;
+
+      err := order_data.SetTestdata;
+      if err.Found then
+      begin
+        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0);
+        Exit;
+      end;
 
       url.Credentials := Credentials;
       url.URL.SetByString('https://cig.dhl.de/services/sandbox/soap') ;
-
-      config.IniFilename := '.\ini\settings.ini';
-      config.SetByIni;
-
-      order_data.SetTestdata;
 
       SYNAPSE_RegisterHTTP_Transport();
 
