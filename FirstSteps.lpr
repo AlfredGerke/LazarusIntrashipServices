@@ -1,6 +1,6 @@
 program FirstSteps;
 
-{$mode objfpc}{$H+}
+{$mode delphi}{$H+}
 
 uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
@@ -16,7 +16,8 @@ uses
   IntrashipServicesConst,
   BusinessClientAPIRequestBuilder,
   IntrashipServicesTypes,
-  IntrashipServicesUtils
+  IntrashipServicesUtils,
+  lis_synapse_http_protocol
   { you can add units after this };
 
 {$R *.res}

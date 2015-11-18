@@ -33,7 +33,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="FirstSteps.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -81,6 +81,10 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="IntrashipServicesUtils"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="source\lis_synapse_http_protocol.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -97,6 +101,7 @@
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
+        <UseAnsiStrings Value="False"/>
       </SyntaxOptions>
     </Parsing>
     <Linking>

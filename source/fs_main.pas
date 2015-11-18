@@ -9,10 +9,11 @@ uses
   ExtCtrls,
   Buttons,
   StdCtrls,
-  synapse_http_protocol,
+  lis_synapse_http_protocol,
   Classes,
   { TODO -oAlfred Gerke -cFragen zum SOAP-Handling : Immer notwendig und wenn ja wo am besten einbinden? }
-  soap_formatter;
+  soap_formatter,
+  httpsend;
 
 type
 
@@ -35,8 +36,11 @@ type
   private
     procedure ClearLog;
     procedure CreateShipmentDD;
-  public
 
+    procedure OnBeforeExecuteProc(ARequest: TStream);
+    procedure OnAfterExecuteProc(AResponse: TStream);
+    procedure OnSetHeadersProc(AConnection: THTTPSend);
+  public
   end;
 
 var
@@ -94,14 +98,6 @@ var
 begin
   try
     try
-      credentials.IniFilename := '.\ini\settings.ini';
-      err := credentials.SetByIni;
-      if err.Found then
-      begin
-        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0);
-        Exit;
-      end;
-
       config.IniFilename := '.\ini\settings.ini';
       err := config.SetByIni;
       if err.Found then
@@ -120,7 +116,7 @@ begin
       url.Credentials := Credentials;
       url.URL.SetByString('https://cig.dhl.de/services/sandbox/soap') ;
 
-      SYNAPSE_RegisterHTTP_Transport();
+      SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc);
 
       proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
 
@@ -152,6 +148,39 @@ begin
     if Assigned(request_builder) then
       FreeAndNil(request_builder);
   end;
+end;
+
+procedure TMain.OnBeforeExecuteProc(ARequest: TStream);
+begin
+  edtLog.Lines.add('// OnBeforeExecute');
+  edtLog.Lines.add('//!<--');
+
+
+  edtLog.Lines.add('//-->');
+end;
+
+procedure TMain.OnAfterExecuteProc(AResponse: TStream);
+begin
+  edtLog.Lines.add('// OnAfterExecute');
+  edtLog.Lines.add('//!<--');
+
+
+  edtLog.Lines.add('//-->');
+end;
+
+procedure TMain.OnSetHeadersProc(AConnection: THTTPSend);
+var
+  credentials: TCredentials;
+  err: TErrorHandler;
+begin
+  edtLog.Lines.add('// OnSetHeadersProc');
+  credentials.IniFilename := '.\ini\settings.ini';
+  err := credentials.SetByIni;
+  if err.Found then
+    edtLog.Lines.Add(err.GetErrorMessage)
+  else
+    if not credentials.Username.IsEmpty then
+      AConnection.Headers.Insert(0, credentials.AsBasicHTTPAuthenticationString);
 end;
 
 end.

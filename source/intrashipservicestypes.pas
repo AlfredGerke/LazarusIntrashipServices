@@ -5,7 +5,9 @@ unit IntrashipServicesTypes;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes,
+  SysUtils,
+  httpsend;
 
 type
   TCustomActorTypes =
@@ -92,6 +94,7 @@ type
 
     DoTest: Boolean;
 
+    function AsBasicHTTPAuthenticationString: string;
     function CheckData: TErrorHandler;
     function SetByIni: TErrorHandler;
     procedure Clear;
@@ -183,25 +186,40 @@ type
 
     URL: TStringHandler;
 
-    function GetURL: TStringHandler;
+    function AsURL: string;
   end;
+
+type
+
+  TOnBeforeExecute = procedure(ARequest: TStream) of object;
+  TOnAfterExecute  = procedure(AResponse: TStream) of object;
+  TOnSetHeaders = procedure(AConnections: THTTPSend) of object;
 
 implementation
 
 uses
   IniFiles,
   IntrashipServicesConst,
-  IntrashipServicesUtils;
+  IntrashipServicesUtils,
+  synacode;
 
 { TUrlHandler }
 
-function TUrlHandler.GetURL: TStringHandler;
+function TUrlHandler.AsURL: string;
 begin
-  Result.SetByString(StringReplace(URL.AsString, 'https://', Format('https://%s:%s@',
-    [Credentials.Username.AsString, Credentials.Password.AsString]), [rfIgnoreCase]));
+  if Credentials.Username.IsEmpty then
+    Result := URL.AsString
+  else
+    Result := StringReplace(URL.AsString, 'https://', Format('https://%s:%s@',
+      [Credentials.Username.AsString, Credentials.Password.AsString]), [rfIgnoreCase]);
 end;
 
 { TCredentials }
+
+function TCredentials.AsBasicHTTPAuthenticationString: string;
+begin
+  Result := 'Authorization: Basic ' + EncodeBase64(Username.AsString + ':' + Password.AsString);
+end;
 
 function TCredentials.CheckData: TErrorHandler;
 var
