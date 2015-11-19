@@ -17,7 +17,8 @@ uses
   BusinessClientAPIRequestBuilder,
   IntrashipServicesTypes,
   IntrashipServicesUtils,
-  lis_synapse_http_protocol
+  lis_synapse_http_protocol,
+  ssl_openssl
   { you can add units after this };
 
 {$R *.res}

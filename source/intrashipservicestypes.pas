@@ -194,7 +194,8 @@ type
 
 type
 
-  TOnBeforeExecute = procedure(ARequest: TStream) of object;
+  TOnBeforeExecute = procedure(ARequest: TStream;
+                               var AContinue: boolean) of object;
   TOnAfterExecute  = procedure(AResponse: TStream) of object;
   TOnSetHeaders = procedure(AConnections: THTTPSend) of object;
 

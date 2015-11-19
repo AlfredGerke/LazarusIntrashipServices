@@ -51,7 +51,8 @@ type
   public
     class function GetInstance: TLIS_HTTPTransportEvents;
 
-    procedure DoOnBeforeExecute(ARequest: TStream);
+    procedure DoOnBeforeExecute(ARequest: TStream;
+                                var AContinue: boolean);
     procedure DoOnAfterExecute(AResponse: TStream);
     procedure DoOnSetHeaders(AConnection: THTTPSend);
 
@@ -120,10 +121,11 @@ begin
   Result := lis_http_transport_events;
 end;
 
-procedure TLIS_HTTPTransportEvents.DoOnBeforeExecute(ARequest: TStream);
+procedure TLIS_HTTPTransportEvents.DoOnBeforeExecute(ARequest: TStream;
+  var AContinue: boolean);
 begin
   if Assigned(FOnBeforeExecute) then
-    FOnBeforeExecute(ARequest);
+    FOnBeforeExecute(ARequest, AContinue);
 end;
 
 procedure TLIS_HTTPTransportEvents.DoOnAfterExecute(AResponse: TStream);
@@ -150,10 +152,16 @@ end;
 { TLIS_HTTPTransport }
 
 procedure TLIS_HTTPTransport.DoSendAndReceive(ARequest, AResponse: TStream);
+var
+  continue: boolean;
 begin
   with TLIS_HTTPTransportEvents.GetInstance do
   begin
-    DoOnBeforeExecute(ARequest);
+    continue := True;
+    DoOnBeforeExecute(ARequest, continue);
+    if not continue then
+      Exit;
+
     DoOnSetHeaders(GetConnection);
 
     inherited DoSendAndReceive(ARequest, AResponse);

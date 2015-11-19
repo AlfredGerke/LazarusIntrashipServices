@@ -33,7 +33,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="11">
+    <Units Count="12">
       <Unit0>
         <Filename Value="FirstSteps.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -85,6 +85,10 @@
         <Filename Value="source\lis_synapse_http_protocol.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="..\..\synapse\source\lib\ssl_openssl.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

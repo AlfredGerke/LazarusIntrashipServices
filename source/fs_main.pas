@@ -14,7 +14,9 @@ uses
   { TODO -oAlfred Gerke -cFragen zum SOAP-Handling : Immer notwendig und wenn ja wo am besten einbinden? }
   soap_formatter,
   httpsend,
-  IntrashipServicesTypes;
+  IntrashipServicesTypes,
+  cis_base,
+  is_base_de;
 
 type
 
@@ -35,6 +37,9 @@ type
     procedure btnCreateShipmentDDClick(Sender: TObject);
     procedure Memo1Change(Sender: TObject);
   private
+    function GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
+                                    AOrderData: TOrderData): CreateShipmentDDRequest;
+    function GetAuthentificationHeader(ACredentials: TCredentials): Authentification;
     function GetSettings(var AConfig: TConfigSettings;
                          var ACredentials: TCredentials;
                          var AOrderData: TOrderData;
@@ -42,7 +47,8 @@ type
     procedure ClearLog;
     procedure CreateShipmentDD;
 
-    procedure OnBeforeExecuteProc(ARequest: TStream);
+    procedure OnBeforeExecuteProc(ARequest: TStream;
+                                  var AContinue: boolean);
     procedure OnAfterExecuteProc(AResponse: TStream);
     procedure OnSetHeadersProc(AConnection: THTTPSend);
   public
@@ -60,8 +66,6 @@ uses
   geschaeftskundenversand_api_1_0,
   BusinessClientAPIRequestBuilder,
   base_service_intf,
-  cis_base,
-  is_base_de,
   SysUtils,
   Dialogs;
 
@@ -80,6 +84,31 @@ end;
 procedure TMain.Memo1Change(Sender: TObject);
 begin
   CreateShipmentDD;
+end;
+
+function TMain.GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
+  AOrderData: TOrderData): CreateShipmentDDRequest;
+var
+  request_builder: TBusinessClientAPIRequestBuilder;
+  req: CreateShipmentDDRequest;
+begin
+  request_builder := TBusinessClientAPIRequestBuilder.Create;
+  try
+    request_builder.ConfigSettings := AConfigSettings;
+    request_builder.OrderData := AOrderData;
+
+    req := request_builder.GetCreateShipmentDDReq(False);
+  finally
+    Result := req;
+  end;
+end;
+
+function TMain.GetAuthentificationHeader(ACredentials: TCredentials): Authentification;
+begin
+  Result := Authentification.Create;
+  Result.user := ACredentials.IntrashipUser.AsString;
+  Result.signature := ACredentials.Signature.AsString;
+  Result._type := 0;
 end;
 
 function TMain.GetSettings(var AConfig: TConfigSettings;
@@ -128,7 +157,6 @@ var
   credentials: TCredentials;
   config: TConfigSettings;
   order_data: TOrderData;
-  request_builder: TBusinessClientAPIRequestBuilder;
   req: CreateShipmentDDRequest;
   resp: CreateShipmentResponse;
   url: TUrlHandler;
@@ -147,18 +175,10 @@ begin
 
       proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
 
-      auth := Authentification.Create;
-      auth.user := credentials.IntrashipUser.AsString;
-      auth.signature := credentials.Signature.AsString;
-      auth._type := 0;
-
+      auth := GetAuthentificationHeader(credentials);
       (proxy as ICallContext).AddHeader(auth, True);
 
-      request_builder := TBusinessClientAPIRequestBuilder.Create;
-      request_builder.ConfigSettings := config;
-      request_builder.OrderData := order_data;
-
-      req := request_builder.GetCreateShipmentDDReq(False);
+      req := GetCreateShipmentDDReq(config, order_data);
 
       resp := proxy.createShipmentDD(req);
     except
@@ -166,18 +186,11 @@ begin
         edtLog.Lines.Add(E.Message);
     end;
   finally
-    if Assigned(request_builder) then
-      FreeAndNil(request_builder);
-
-    if Assigned(proxy) then
-      FreeAndNil(proxy);
-
-    if Assigned(auth) then
-      FreeAndNil(auth);
   end;
 end;
 
-procedure TMain.OnBeforeExecuteProc(ARequest: TStream);
+procedure TMain.OnBeforeExecuteProc(ARequest: TStream;
+  var AContinue: boolean);
 var
   list: TStrings;
 begin
@@ -196,6 +209,8 @@ begin
   finally
     if Assigned(list) then
       FreeAndNil(list);
+
+    AContinue := False;
   end;
 end;
 

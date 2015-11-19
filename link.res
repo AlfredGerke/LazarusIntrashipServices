@@ -107,6 +107,7 @@ C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\businessc
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\intrashipservicestypes.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\intrashipservicesutils.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\lis_synapse_http_protocol.o
+C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\ssl_openssl.o
 C:\Users\Alfred\Programme\lazarus\lcl\units\i386-win32\interfacebase.o
 C:\Users\Alfred\Programme\lazarus\fpc\2.6.4\units\i386-win32\rtl\types.o
 C:\Users\Alfred\Programme\lazarus\fpc\2.6.4\units\i386-win32\rtl\classes.o
@@ -368,6 +369,7 @@ C:\Users\Alfred\Programme\lazarus\fpc\2.6.4\units\i386-win32\fcl-xml\xmlwrite.o
 C:\Users\Alfred\Programme\lazarus\fpc\2.6.4\units\i386-win32\fcl-xml\xmlread.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\wst_fpc_xml.o
 C:\Users\Alfred\Programme\lazarus\fpc\2.6.4\units\i386-win32\fcl-xml\xpath.o
+C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\ssl_openssl_lib.o
 C:\Users\Alfred\Programme\lazarus\fpc\2.6.4\units\i386-win32\rtl\sysinitpas.o
 )
 GROUP(
