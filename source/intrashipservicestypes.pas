@@ -97,6 +97,7 @@ type
     function AsBasicHTTPAuthenticationString: string;
     function CheckData: TErrorHandler;
     function SetByIni: TErrorHandler;
+
     procedure Clear;
   end;
 
@@ -187,6 +188,8 @@ type
     URL: TStringHandler;
 
     function AsURL: string;
+
+    procedure Clear;
   end;
 
 type
@@ -212,6 +215,11 @@ begin
   else
     Result := StringReplace(URL.AsString, 'https://', Format('https://%s:%s@',
       [Credentials.Username.AsString, Credentials.Password.AsString]), [rfIgnoreCase]);
+end;
+
+procedure TUrlHandler.Clear;
+begin
+  FillChar(Self, SizeOf(Self), #0);
 end;
 
 { TCredentials }

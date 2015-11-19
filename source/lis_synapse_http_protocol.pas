@@ -9,9 +9,24 @@ uses
   SysUtils,
   synapse_http_protocol,
   IntrashipServicesTypes,
-  httpsend;
+  httpsend,
+  client_utils,
+  service_intf;
 
 type
+
+
+  { THTTPTransportHack }
+
+  THTTPTransportHack = class(TBaseTransport,ITransport)
+  Private
+    FConnection : THTTPSend;
+  private
+  protected
+  Public
+  Published
+  End;
+
 
   { TLIS_HTTPTransport }
 
@@ -65,11 +80,9 @@ procedure SYNAPSE_RegisterLIS_HTTP_Transport(AOnBeforeExecuteProc: TOnBeforeExec
 
 implementation
 
-{ TLIS_HTTPTransportEvents }
-
 uses
   base_service_intf,
-  service_intf,
+  //service_intf,
   typinfo;
 
 var
@@ -94,8 +107,10 @@ end;
 
 function THTTPTransportHelper.GetConnection: THTTPSend;
 begin
-  Result := nil;
+  Result := THTTPTransportHack(self).FConnection;
 end;
+
+{ TLIS_HTTPTransportEvents }
 
 class function TLIS_HTTPTransportEvents.GetInstance: TLIS_HTTPTransportEvents;
 begin
