@@ -100,8 +100,8 @@ C:\Users\Alfred\Programme\lazarus\lcl\units\i386-win32\forms.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\fs_main.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\geschaeftskundenversand_api_1_0.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\geschaeftskundenversand_api_1_0_proxy.o
-C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\cis_base.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\is_base_de.o
+C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\cis_base.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\intrashipservicesconst.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\businessclientapirequestbuilder.o
 C:\Users\Alfred\Sourcen\GitHub\LazarusIntrashipServices\lib\i386-win32\intrashipservicestypes.o

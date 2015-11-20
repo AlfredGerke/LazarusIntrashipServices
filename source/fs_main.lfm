@@ -93,7 +93,7 @@ object Main: TMain
       Top = 1
       Width = 481
       Align = alClient
-      ScrollBars = ssAutoBoth
+      ScrollBars = ssBoth
       TabOrder = 0
     end
   end

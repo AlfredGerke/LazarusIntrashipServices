@@ -5176,6 +5176,4 @@ initialization
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ExportDocumentDDType_ExportDocPositionArray),'ExportDocumentDDType_ExportDocPositionArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(ExportDocumentDDType_ExportDocPositionArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
 
-
-
 End.

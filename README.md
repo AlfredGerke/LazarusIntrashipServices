@@ -47,7 +47,7 @@ die Geschäftskundenversand-API von DHL-Intraship in ein entsprechendes Projekt 
 * [Lazarus Wiki: Web Service Toolkit](http://wiki.lazarus.freepascal.org/index.php/Web_Service_Toolkit "Lazarus Wiki: Web Service Toolkit")
 
 Sollte in einem ersten Schritt eine Realisierung mit annehmbarem Aufwand gelungen sein, soll in einem folgendem Schritt
-eine DLL entwickelt werden, über die eine Grundversion der Geschäftskundenversand-API zur Verfügung gestellt werden kann.
+eine Komponente entwickelt werden, über die eine Grundversion der Geschäftskundenversand-API zur Verfügung gestellt werden kann.
 
 
 Versionen
@@ -55,4 +55,10 @@ Versionen
       
 Lazarus: 1.4.4       
 FPC: 2.6.4     
-Web Service Toolkit: 0.6            
+Web Service Toolkit: 0.6   
+Synapse: 0.40   
+OpenSSL: 1.0.2d      
+
+Das Web Service Toolkit bietet neben dem Standard HTTP-Zugriff von FPC zusätzlich den Zugriff über Synapse und Indy an.
+In diesem Projekt wird die Netzwerkkommunikation mit [Ararat Synapse](http://synapse.ararat.cz/ "Ararat Synapse") realisiert.
+Als SSL-Plugin wird das OpenSSL-Plugin gewählt, da es von Synapse besonders empfohlen wird. Bedinung für das OpenSSL-Plugin sind die entsprechenden Libaries (DLLs genügen). 

@@ -15,8 +15,8 @@ uses
   soap_formatter,
   httpsend,
   IntrashipServicesTypes,
-  cis_base,
-  is_base_de;
+  is_base_de,
+  cis_base;
 
 type
 
@@ -35,7 +35,6 @@ type
     btnCreateShipmentDD: TSpeedButton;
     procedure btnClearLogClick(Sender: TObject);
     procedure btnCreateShipmentDDClick(Sender: TObject);
-    procedure Memo1Change(Sender: TObject);
   private
     function GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
                                     AOrderData: TOrderData): CreateShipmentDDRequest;
@@ -77,11 +76,6 @@ begin
 end;
 
 procedure TMain.btnCreateShipmentDDClick(Sender: TObject);
-begin
-  CreateShipmentDD;
-end;
-
-procedure TMain.Memo1Change(Sender: TObject);
 begin
   CreateShipmentDD;
 end;
@@ -186,6 +180,11 @@ begin
         edtLog.Lines.Add(E.Message);
     end;
   finally
+    if Assigned(req) then
+      FreeAndNil(req);
+
+    if Assigned(resp) then
+      FreeAndNil(resp);
   end;
 end;
 
@@ -194,6 +193,8 @@ procedure TMain.OnBeforeExecuteProc(ARequest: TStream;
 var
   list: TStrings;
 begin
+  edtLog.Lines.add('// OnBeforeExecuteProc');
+
   list := TStringList.Create;
   try
     list.Clear;
@@ -210,7 +211,7 @@ begin
     if Assigned(list) then
       FreeAndNil(list);
 
-    AContinue := False;
+    AContinue := True;
   end;
 end;
 
@@ -218,6 +219,8 @@ procedure TMain.OnAfterExecuteProc(AResponse: TStream);
 var
   list: TStrings;
 begin
+  edtLog.Lines.add('// OnAfterExecuteEvent');
+
   list := TStringList.Create;
   try
     list.Clear;
@@ -241,6 +244,7 @@ var
   err: TErrorHandler;
 begin
   edtLog.Lines.add('// OnSetHeadersProc');
+
   credentials.IniFilename := '.\ini\settings.ini';
   err := credentials.SetByIni;
   if err.Found then
