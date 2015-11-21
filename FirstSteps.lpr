@@ -18,7 +18,7 @@ uses
   IntrashipServicesTypes,
   IntrashipServicesUtils,
   lis_synapse_http_protocol,
-  ssl_openssl
+  ssl_openssl, Remodel
   { you can add units after this };
 
 {$R *.res}

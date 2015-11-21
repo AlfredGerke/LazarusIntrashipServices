@@ -68,7 +68,8 @@ uses
   BusinessClientAPIRequestBuilder,
   base_service_intf,
   SysUtils,
-  Dialogs;
+  Dialogs,
+  remodel;
 
 { TMain }
 
@@ -206,6 +207,8 @@ begin
   list := TStringList.Create;
   try
     list.Clear;
+
+    TRemodelRequest.GetInstance.RemodelByStream(ARequest);
 
     ARequest.Position := 0;
     list.LoadFromStream(ARequest);
