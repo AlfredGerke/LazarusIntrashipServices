@@ -197,6 +197,7 @@ type
   TOnBeforeExecute = procedure(ARequest: TStream;
                                var AContinue: boolean) of object;
   TOnAfterExecute  = procedure(AResponse: TStream) of object;
+  TOnSkipSendAndReceive = TOnAfterExecute;
   TOnSetHeaders = procedure(AConnections: THTTPSend) of object;
 
 implementation

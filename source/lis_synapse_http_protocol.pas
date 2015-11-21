@@ -48,17 +48,20 @@ type
     FOnBeforeExecute: TOnBeforeExecute;
     FOnAfterExecute: TOnAfterExecute;
     FOnSetHeaders: TOnSetHeaders;
+    FOnSkipSendAndReceive: TOnSkipSendAndReceive;
   public
     class function GetInstance: TLIS_HTTPTransportEvents;
 
     procedure DoOnBeforeExecute(ARequest: TStream;
                                 var AContinue: boolean);
+    procedure DoOnSkipSendAndReceive(AResponse: TStream);
     procedure DoOnAfterExecute(AResponse: TStream);
     procedure DoOnSetHeaders(AConnection: THTTPSend);
 
     procedure SetEvents(AOnBeforeExecuteProc: TOnBeforeExecute;
                         AOnAfterExecuteProc: TOnAfterExecute;
-                        AOnSetHeaders: TOnSetHeaders);
+                        AOnSetHeaders: TOnSetHeaders;
+                        AOnSkipSendAndReceive: TOnSkipSendAndReceive);
 
     property OnBeforeExecute: TOnBeforeExecute
       read FOnBeforeExecute
@@ -67,6 +70,10 @@ type
     property OnAfterExecute: TOnAfterExecute
       read FOnAfterExecute
       write FOnAfterExecute;
+
+    property OnSkipSendAndReceive: TOnSkipSendAndReceive
+      read FOnSkipSendAndReceive
+      write FOnSkipSendAndReceive;
 
     property OnSetHeaders: TOnSetHeaders
       read FOnSetHeaders
@@ -77,7 +84,8 @@ procedure FreeLIS_HTTPTransportEventsSingletonInstance;
 
 procedure SYNAPSE_RegisterLIS_HTTP_Transport(AOnBeforeExecuteProc: TOnBeforeExecute;
                                              AOnAfterExecuteProc: TOnAfterExecute;
-                                             AOnSetHeaders: TOnSetHeaders);
+                                             AOnSetHeaders: TOnSetHeaders;
+                                             ASkipSendAndReceive: TOnSkipSendAndReceive);
 
 implementation
 
@@ -97,9 +105,11 @@ end;
 
 procedure SYNAPSE_RegisterLIS_HTTP_Transport(AOnBeforeExecuteProc: TOnBeforeExecute;
   AOnAfterExecuteProc: TOnAfterExecute;
-  AOnSetHeaders: TOnSetHeaders);
+  AOnSetHeaders: TOnSetHeaders;
+  ASkipSendAndReceive: TOnSkipSendAndReceive);
 begin
-  TLIS_HTTPTransportEvents.GetInstance.SetEvents(AOnBeforeExecuteProc, AOnAfterExecuteProc, AOnSetHeaders);
+  TLIS_HTTPTransportEvents.GetInstance.SetEvents(AOnBeforeExecuteProc, AOnAfterExecuteProc,
+    AOnSetHeaders, ASkipSendAndReceive);
 
   GetTransportRegistry().Register(sTRANSPORT_NAME,TSimpleItemFactory.Create(TLIS_HTTPTransport));
 end;
@@ -128,6 +138,12 @@ begin
     FOnBeforeExecute(ARequest, AContinue);
 end;
 
+procedure TLIS_HTTPTransportEvents.DoOnSkipSendAndReceive(AResponse: TStream);
+begin
+  if Assigned(FOnSkipSendAndReceive) then
+    FOnSkipSendAndReceive(AResponse);
+end;
+
 procedure TLIS_HTTPTransportEvents.DoOnAfterExecute(AResponse: TStream);
 begin
   if Assigned(FOnAfterExecute) then
@@ -140,13 +156,16 @@ begin
     FOnSetHeaders(AConnection);
 end;
 
-procedure TLIS_HTTPTransportEvents.SetEvents(AOnBeforeExecuteProc: TOnBeforeExecute;
+procedure TLIS_HTTPTransportEvents.SetEvents(
+  AOnBeforeExecuteProc: TOnBeforeExecute;
   AOnAfterExecuteProc: TOnAfterExecute;
-  AOnSetHeaders: TOnSetHeaders);
+  AOnSetHeaders: TOnSetHeaders;
+  AOnSkipSendAndReceive: TOnSkipSendAndReceive);
 begin
   FOnBeforeExecute := AOnBeforeExecuteProc;
   FOnAfterExecute := AOnAfterExecuteProc;
   FOnSetHeaders := AOnSetHeaders;
+  FOnSkipSendAndReceive := AOnSkipSendAndReceive;
 end;
 
 { TLIS_HTTPTransport }
@@ -160,7 +179,10 @@ begin
     continue := True;
     DoOnBeforeExecute(ARequest, continue);
     if not continue then
+    begin
+      DoOnSkipSendAndReceive(AResponse);
       Exit;
+    end;
 
     DoOnSetHeaders(GetConnection);
 

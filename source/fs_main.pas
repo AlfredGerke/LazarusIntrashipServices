@@ -25,6 +25,7 @@ type
   TMain = class(TForm)
     btnClose: TBitBtn;
     btnDeleteShipmentDD: TSpeedButton;
+    cbxSkipSendAndReceive: TCheckBox;
     edtLog: TMemo;
     edtShipmentNr: TLabeledEdit;
     lblShipmentNr: TBoundLabel;
@@ -48,6 +49,7 @@ type
 
     procedure OnBeforeExecuteProc(ARequest: TStream;
                                   var AContinue: boolean);
+    procedure OnSkipSendAndReceive(AResponse: TStream);
     procedure OnAfterExecuteProc(AResponse: TStream);
     procedure OnSetHeadersProc(AConnection: THTTPSend);
   public
@@ -155,7 +157,9 @@ var
   resp: CreateShipmentResponse;
   url: TUrlHandler;
   err: TErrorHandler;
+  free_resp: boolean;
 begin
+  free_resp := True;
   try
     try
       err := GetSettings(config, credentials, order_data, url);
@@ -165,7 +169,8 @@ begin
         Exit;
       end;
 
-      SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc);
+      SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
+        OnSkipSendAndReceive);
 
       proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
 
@@ -177,13 +182,16 @@ begin
       resp := proxy.createShipmentDD(req);
     except
       on E: Exception do
+      begin
         edtLog.Lines.Add(E.Message);
+        free_resp := False;
+      end;
     end;
   finally
     if Assigned(req) then
       FreeAndNil(req);
 
-    if Assigned(resp) then
+    if (Assigned(resp) and free_resp) then
       FreeAndNil(resp);
   end;
 end;
@@ -211,7 +219,44 @@ begin
     if Assigned(list) then
       FreeAndNil(list);
 
-    AContinue := True;
+    AContinue := not cbxSkipSendAndReceive.Checked;
+  end;
+end;
+
+procedure TMain.OnSkipSendAndReceive(AResponse: TStream);
+var
+  list: TStrings;
+begin
+  edtLog.Lines.add('// OnSkipSendAndReceive');
+  list := TStringlist.Create;
+  try
+    AResponse.Position := 0;
+    list.LoadFromStream(AResponse);
+
+    edtLog.lines.Add('-----------------------------');
+    edtLog.lines.Add('//!<-- Beginnt hier: OnSkipSendAndReceive');
+
+    list.Add('<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">');
+    list.Add('  <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>');
+    list.Add('  <soap:Body>');
+    list.Add('    <SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">');
+    list.Add('      <faultcode xmlns="" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">soapenv:Client</faultcode>');
+    list.Add(Format('      <faultstring xmlns="">%s</faultstring>', ['Vorzeitig abgebrochen!']));
+    list.Add('      <detail xmlns=""/>');
+    list.Add('    </SOAP-ENV:Fault>');
+    list.Add('  </soap:Body>');
+    list.Add('</soap:Envelope>');
+
+    edtLog.lines.AddStrings(list);
+    edtLog.lines.Add('//Endet hier: OnSkipSendAndReceive -->');
+    edtLog.lines.Add('-----------------------------');
+
+    AResponse.Position := 0;
+
+    list.SaveToStream(AResponse);
+  finally
+    if Assigned(list) then
+      FreeAndNil(list);
   end;
 end;
 
