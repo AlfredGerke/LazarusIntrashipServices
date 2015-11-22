@@ -18,14 +18,17 @@ type
   private
     FXMLDocument: TXMLDocument;
   protected
-    procedure LoadXMLByStream(AStream: TStream);
+    procedure RemoveEmptyElements(AChildNode: TDOMNode); overload;
+    procedure RemoveEmptyElements; overload;
+    procedure AlterNamespace;
+
+    procedure GetXMLByStream(AStream: TStream);
+    procedure SetXMLToStream(AStream: TStream);
   public
     class function GetInstance: TRemodelRequest;
     class procedure FreeSingletonInstance;
 
     procedure RemodelByStream(ARequest: TStream);
-    procedure RemoveEmptyElements;
-    procedure AlterNamespace;
 
     destructor Destroy; override;
   end;
@@ -36,18 +39,24 @@ implementation
 { TRemodelRequest }
 
 uses
-  XMLRead;
+  XMLRead,
+  XMLWrite;
 
 var
   remodel_request: TRemodelRequest;
 
-procedure TRemodelRequest.LoadXMLByStream(AStream: TStream);
+procedure TRemodelRequest.GetXMLByStream(AStream: TStream);
 begin
   if Assigned(FXMLDocument) then
     FreeAndNil(FXMLDocument);
   FXMLDocument := TXMLDocument.Create;
 
   ReadXMLFile(FXMLDocument, AStream);
+end;
+
+procedure TRemodelRequest.SetXMLToStream(AStream: TStream);
+begin
+  WriteXML(FXMLDocument, AStream);
 end;
 
 class function TRemodelRequest.GetInstance: TRemodelRequest;
@@ -66,15 +75,36 @@ end;
 
 procedure TRemodelRequest.RemodelByStream(ARequest: TStream);
 begin
-  LoadXMLByStream(ARequest);
+  GetXMLByStream(ARequest);
 
   RemoveEmptyElements;
   AlterNamespace;
+
+  SetXMLToStream(ARequest);
+end;
+
+procedure TRemodelRequest.RemoveEmptyElements(AChildNode: TDOMNode);
+var
+  anz: integer;
+begin
+  if AChildNode.HasChildNodes then
+    for anz := AChildNode.ChildNodes.Count-1 downto 0 do
+      RemoveEmptyElements(AChildNode.ChildNodes.Item[anz]);
+
+  if (Trim(AChildNode.NodeValue) = EmptyStr) then
+     AChildNode.ParentNode.RemoveChild(AChildNode);
 end;
 
 procedure TRemodelRequest.RemoveEmptyElements;
+var
+  anz: integer;
+  child_node: TDOMNode;
 begin
-
+  for anz := 0 to FXMLDocument.DocumentElement.ChildNodes.Count-1 do
+  begin
+    child_node := FXMLDocument.DocumentElement.ChildNodes.Item[anz];
+    RemoveEmptyElements(child_node);
+  end;
 end;
 
 procedure TRemodelRequest.AlterNamespace;
