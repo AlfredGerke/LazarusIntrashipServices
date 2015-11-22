@@ -14,12 +14,16 @@ type
 
   { TRemodelRequest }
 
+  TOnHandleChildNode = procedure(AChildNode: TDOMNode) of object;
+
   TRemodelRequest = class
   private
     FXMLDocument: TXMLDocument;
   protected
-    procedure RemoveEmptyElements(AChildNode: TDOMNode); overload;
-    procedure RemoveEmptyElements; overload;
+    procedure AlterChildNodeNamespaceProc(AChildnode: tDOMNode);
+    procedure RemoveEmptyChildNodeProc(AChildNode: TDOMNode); overload;
+    procedure LoopChildNodes(AHandleChildNodeProc: TOnHandleChildNode); overload;
+    procedure RemoveEmptyChildNodes;
     procedure AlterNamespace;
 
     procedure GetXMLByStream(AStream: TStream);
@@ -40,7 +44,8 @@ implementation
 
 uses
   XMLRead,
-  XMLWrite;
+  XMLWrite,
+  Dialogs;
 
 var
   remodel_request: TRemodelRequest;
@@ -56,6 +61,9 @@ end;
 
 procedure TRemodelRequest.SetXMLToStream(AStream: TStream);
 begin
+  AStream.Position:=0;
+  AStream.Size:=0;
+
   WriteXML(FXMLDocument, AStream);
 end;
 
@@ -77,25 +85,42 @@ procedure TRemodelRequest.RemodelByStream(ARequest: TStream);
 begin
   GetXMLByStream(ARequest);
 
-  RemoveEmptyElements;
+  RemoveEmptyChildNodes;
   AlterNamespace;
 
   SetXMLToStream(ARequest);
 end;
 
-procedure TRemodelRequest.RemoveEmptyElements(AChildNode: TDOMNode);
+procedure TRemodelRequest.AlterChildNodeNamespaceProc(AChildnode: TDOMNode);
 var
   anz: integer;
 begin
-  if AChildNode.HasChildNodes then
-    for anz := AChildNode.ChildNodes.Count-1 downto 0 do
-      RemoveEmptyElements(AChildNode.ChildNodes.Item[anz]);
+  if Assigned(AChildNode) then
+  begin
+    if AChildNode.HasChildNodes then
+      for anz := AChildNode.ChildNodes.Count-1 downto 0 do
+        AlterChildNodeNamespaceProc(AChildNode.ChildNodes.Item[anz]);
 
-  if (Trim(AChildNode.NodeValue) = EmptyStr) then
-     AChildNode.ParentNode.RemoveChild(AChildNode);
+    { TODO -oAlfred Gerke -cremodel : Hier muss tns: wenn vorhanden entfernt werden }
+  end;
 end;
 
-procedure TRemodelRequest.RemoveEmptyElements;
+procedure TRemodelRequest.RemoveEmptyChildNodeProc(AChildNode: TDOMNode);
+var
+  anz: integer;
+begin
+  if Assigned(AChildNode) then
+  begin
+    if AChildNode.HasChildNodes then
+      for anz := AChildNode.ChildNodes.Count-1 downto 0 do
+        RemoveEmptyChildNodeProc(AChildNode.ChildNodes.Item[anz]);
+
+    if (Trim(AChildNode.TextContent) = EmptyStr) then
+       AChildNode.ParentNode.RemoveChild(AChildNode);
+  end;
+end;
+
+procedure TRemodelRequest.LoopChildNodes(AHandleChildNodeProc: TOnHandleChildNode);
 var
   anz: integer;
   child_node: TDOMNode;
@@ -103,13 +128,19 @@ begin
   for anz := 0 to FXMLDocument.DocumentElement.ChildNodes.Count-1 do
   begin
     child_node := FXMLDocument.DocumentElement.ChildNodes.Item[anz];
-    RemoveEmptyElements(child_node);
+    if Assigned(AHandleChildNodeProc) then
+      AHandleChildNodeProc(child_node);
   end;
+end;
+
+procedure TRemodelRequest.RemoveEmptyChildNodes;
+begin
+  LoopChildNodes(RemoveEmptyChildNodeProc);
 end;
 
 procedure TRemodelRequest.AlterNamespace;
 begin
-
+  LoopChildNodes(AlterChildNodeNamespaceProc);
 end;
 
 destructor TRemodelRequest.Destroy;
