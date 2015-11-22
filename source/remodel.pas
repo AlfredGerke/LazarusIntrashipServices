@@ -20,9 +20,11 @@ type
   private
     FXMLDocument: TXMLDocument;
   protected
-    procedure AlterChildNodeNamespaceProc(AChildnode: tDOMNode);
-    procedure RemoveEmptyChildNodeProc(AChildNode: TDOMNode); overload;
+    procedure AlterChildNodeNamespaceProc(AChildnode: TDOMNode);
+    procedure RemoveEmptyChildNodeProc(AChildNode: TDOMNode);
     procedure LoopChildNodes(AHandleChildNodeProc: TOnHandleChildNode); overload;
+    procedure LoopChildNodes(AChildNode: TDOMNode;
+                             AHandleChildNodeProc: TOnHandleChildNode); overload;
     procedure RemoveEmptyChildNodes;
     procedure AlterNamespace;
 
@@ -91,33 +93,16 @@ begin
   SetXMLToStream(ARequest);
 end;
 
-procedure TRemodelRequest.AlterChildNodeNamespaceProc(AChildnode: TDOMNode);
-var
-  anz: integer;
+procedure TRemodelRequest.AlterChildNodeNamespaceProc(AChildnode: tDOMNode);
 begin
-  if Assigned(AChildNode) then
-  begin
-    if AChildNode.HasChildNodes then
-      for anz := AChildNode.ChildNodes.Count-1 downto 0 do
-        AlterChildNodeNamespaceProc(AChildNode.ChildNodes.Item[anz]);
-
-    { TODO -oAlfred Gerke -cremodel : Hier muss tns: wenn vorhanden entfernt werden }
-  end;
+  { TODO -oAlfred Gerke -cremodel : Hier muss tns: wenn vorhanden entfernt werden }
 end;
 
 procedure TRemodelRequest.RemoveEmptyChildNodeProc(AChildNode: TDOMNode);
-var
-  anz: integer;
 begin
   if Assigned(AChildNode) then
-  begin
-    if AChildNode.HasChildNodes then
-      for anz := AChildNode.ChildNodes.Count-1 downto 0 do
-        RemoveEmptyChildNodeProc(AChildNode.ChildNodes.Item[anz]);
-
     if (Trim(AChildNode.TextContent) = EmptyStr) then
        AChildNode.ParentNode.RemoveChild(AChildNode);
-  end;
 end;
 
 procedure TRemodelRequest.LoopChildNodes(AHandleChildNodeProc: TOnHandleChildNode);
@@ -129,7 +114,23 @@ begin
   begin
     child_node := FXMLDocument.DocumentElement.ChildNodes.Item[anz];
     if Assigned(AHandleChildNodeProc) then
-      AHandleChildNodeProc(child_node);
+      LoopChildNodes(child_node, AHandleChildNodeProc);
+  end;
+end;
+
+procedure TRemodelRequest.LoopChildNodes(AChildNode: TDOMNode;
+  AHandleChildNodeProc: TOnHandleChildNode);
+var
+  anz: integer;
+begin
+  if Assigned(AChildNode) then
+  begin
+    if AChildNode.HasChildNodes then
+      for anz := AChildNode.ChildNodes.Count-1 downto 0 do
+        LoopChildNodes(AChildNode.ChildNodes.Item[anz], AHandleChildNodeProc);
+
+    if Assigned(AHandleChildNodeProc) then
+       AHandleChildNodeProc(AChildNode);
   end;
 end;
 
