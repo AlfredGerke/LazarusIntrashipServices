@@ -8,7 +8,8 @@ interface
 uses
   Classes,
   SysUtils,
-  DOM;
+  DOM,
+  IntrashipServicesTypes;
 
 type
 
@@ -19,6 +20,7 @@ type
   TRemodelRequest = class
   private
     FXMLDocument: TXMLDocument;
+    FOnMonitor: TOnMonitor;
   protected
     procedure AlterChildNodeNamespaceProc(AChildnode: TDOMNode);
     procedure RemoveEmptyChildNodeProc(AChildNode: TDOMNode);
@@ -31,12 +33,17 @@ type
     procedure GetXMLByStream(AStream: TStream);
     procedure SetXMLToStream(AStream: TStream);
   public
-    class function GetInstance: TRemodelRequest;
+    class function GetInstance(AOnMonitor: TOnMonitor = nil): TRemodelRequest;
     class procedure FreeSingletonInstance;
 
+    destructor Destroy; override;
+
+    procedure DoMonitor(ALog: string);
     procedure RemodelByStream(ARequest: TStream);
 
-    destructor Destroy; override;
+    property OnMonitor: TOnMonitor
+      read FOnMonitor
+      write FOnMonitor;
   end;
 
 
@@ -69,10 +76,12 @@ begin
   WriteXML(FXMLDocument, AStream);
 end;
 
-class function TRemodelRequest.GetInstance: TRemodelRequest;
+class function TRemodelRequest.GetInstance(AOnMonitor: TOnMonitor = nil): TRemodelRequest;
 begin
   if not Assigned(remodel_request) then
     remodel_request := TRemodelRequest.Create;
+
+  remodel_request.OnMonitor := AOnMonitor;
 
   Result := remodel_request;
 end;
@@ -85,17 +94,33 @@ end;
 
 procedure TRemodelRequest.RemodelByStream(ARequest: TStream);
 begin
+  remodel_request.DoMonitor('// ReModel');
+  remodel_request.DoMonitor('-----------------------------');
+  remodel_request.DoMonitor('//!<-- Beginnt hier: ReModel');
+
   GetXMLByStream(ARequest);
 
   RemoveEmptyChildNodes;
   AlterNamespace;
 
   SetXMLToStream(ARequest);
+
+  remodel_request.DoMonitor('// Endet hier: ReModel -->');
+  remodel_request.DoMonitor('-----------------------------');
 end;
 
-procedure TRemodelRequest.AlterChildNodeNamespaceProc(AChildnode: tDOMNode);
+procedure TRemodelRequest.AlterChildNodeNamespaceProc(AChildnode: TDOMNode);
+var
+  anz: integer;
 begin
-  { TODO -oAlfred Gerke -cremodel : Hier muss tns: wenn vorhanden entfernt werden }
+  if Assigned(AChildnode) then
+  begin
+    remodel_request.DoMonitor(Format('NodeName: %s', [AChildnode.NodeName]));
+
+    if AChildnode.HasAttributes then
+      for anz := 0 to AChildnode.Attributes.Length-1 do
+        remodel_request.DoMonitor(Format('Attribute: %s', [AChildnode.Attributes.Item[anz].NodeName]));
+  end;
 end;
 
 procedure TRemodelRequest.RemoveEmptyChildNodeProc(AChildNode: TDOMNode);
@@ -150,6 +175,12 @@ begin
     FreeAndNil(FXMLDocument);
 
   inherited Destroy;
+end;
+
+procedure TRemodelRequest.DoMonitor(ALog: string);
+begin
+  if Assigned(FOnMonitor) then
+    FOnMonitor(ALog);
 end;
 
 finalization

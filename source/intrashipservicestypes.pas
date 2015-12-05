@@ -10,6 +10,8 @@ uses
   httpsend;
 
 type
+  TOnMonitor = procedure(ALog: string) of object;
+
   TCustomActorTypes =
     (catUnkown, catCreateShipmentDD, catGetLabelDD, catDeleteShipmentDD, catGetOrderData,
      catGetCredentials);

@@ -37,6 +37,7 @@ type
     procedure btnClearLogClick(Sender: TObject);
     procedure btnCreateShipmentDDClick(Sender: TObject);
   private
+    procedure DoMonitor(ALog: string);
     function GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
                                     AOrderData: TOrderData): CreateShipmentDDRequest;
     function GetAuthentificationHeader(ACredentials: TCredentials): Authentification;
@@ -81,6 +82,11 @@ end;
 procedure TMain.btnCreateShipmentDDClick(Sender: TObject);
 begin
   CreateShipmentDD;
+end;
+
+procedure TMain.DoMonitor(ALog: string);
+begin
+  edtLog.Lines.Add(ALog);
 end;
 
 function TMain.GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
@@ -202,13 +208,14 @@ procedure TMain.OnBeforeExecuteProc(ARequest: TStream;
 var
   list: TStrings;
 begin
+  with TRemodelRequest.GetInstance(self.DoMonitor) do
+    RemodelByStream(ARequest);
+
   edtLog.Lines.add('// OnBeforeExecuteProc');
 
   list := TStringList.Create;
   try
     list.Clear;
-
-    TRemodelRequest.GetInstance.RemodelByStream(ARequest);
 
     ARequest.Position := 0;
     list.LoadFromStream(ARequest);
@@ -216,7 +223,7 @@ begin
     edtLog.lines.Add('-----------------------------');
     edtLog.lines.Add('//!<-- Beginnt hier: OnBeforeExecuteEvent');
     edtLog.lines.AddStrings(list);
-    edtLog.lines.Add('//Endet hier: OnBeforeExecuteEvent -->');
+    edtLog.lines.Add('// Endet hier: OnBeforeExecuteEvent -->');
     edtLog.lines.Add('-----------------------------');
   finally
     if Assigned(list) then
@@ -251,7 +258,7 @@ begin
     list.Add('</soap:Envelope>');
 
     edtLog.lines.AddStrings(list);
-    edtLog.lines.Add('//Endet hier: OnSkipSendAndReceive -->');
+    edtLog.lines.Add('// Endet hier: OnSkipSendAndReceive -->');
     edtLog.lines.Add('-----------------------------');
 
     AResponse.Position := 0;
