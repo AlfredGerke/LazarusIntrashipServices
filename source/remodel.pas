@@ -54,7 +54,7 @@ implementation
 uses
   XMLRead,
   XMLWrite,
-  Dialogs;
+  dbugintf;
 
 var
   remodel_request: TRemodelRequest;
@@ -115,11 +115,11 @@ var
 begin
   if Assigned(AChildnode) then
   begin
-    remodel_request.DoMonitor(Format('NodeName: %s', [AChildnode.NodeName]));
+    SendDebug(Format('NodeName: %s', [AChildnode.NodeName]));
 
     if AChildnode.HasAttributes then
       for anz := 0 to AChildnode.Attributes.Length-1 do
-        remodel_request.DoMonitor(Format('Attribute: %s', [AChildnode.Attributes.Item[anz].NodeName]));
+        SendDebug(Format('Attribute: %s', [AChildnode.Attributes.Item[anz].NodeName]));
   end;
 end;
 

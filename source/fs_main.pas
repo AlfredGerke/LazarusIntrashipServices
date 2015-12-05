@@ -36,6 +36,7 @@ type
     btnCreateShipmentDD: TSpeedButton;
     procedure btnClearLogClick(Sender: TObject);
     procedure btnCreateShipmentDDClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     procedure DoMonitor(ALog: string);
     function GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
@@ -70,7 +71,8 @@ uses
   base_service_intf,
   SysUtils,
   Dialogs,
-  remodel;
+  remodel,
+  dbugintf;
 
 { TMain }
 
@@ -82,6 +84,10 @@ end;
 procedure TMain.btnCreateShipmentDDClick(Sender: TObject);
 begin
   CreateShipmentDD;
+end;
+
+procedure TMain.FormCreate(Sender: TObject);
+begin
 end;
 
 procedure TMain.DoMonitor(ALog: string);
