@@ -19,8 +19,7 @@ Liste von Packages die nach der Installation einer neuen Lazarus Version eingeri
 Wird benötigt um LazImageEditor zu installieren.
 
 * [Download: LazRGBGraphics](http://sourceforge.net/projects/lazarus-ccr/files/LazRGBGraphics/ "LazRGBGraphics")
-    * s. [Wiki](http://wiki.lazarus.freepascal.org/LazRGBGraphics](http://wiki.lazarus.freepascal.org/LazRGBGraphics "Wiki")
-
+    * s. [Wiki](http://wiki.lazarus.freepascal.org/LazRGBGraphics "Wiki")
 
 ## Quelle: Subversion
 ### ColorPalette (mandatory) 
@@ -29,7 +28,7 @@ Wird benötigt um LazImageEditor zu kompilieren.
 * [Download Subversion: ColorPalette](https://svn.code.sf.net/p/lazarus-ccr/svn/components/colorpalette "ColorPalette")    
 oder
 * [Download SourceForge: ColorPalette](http://sourceforge.net/projects/lazarus-ccr/files/ColorPalette/ "ColorPalette")
-    * s. [Wiki](http://wiki.lazarus.freepascal.org/ColorPalette, "Wiki")
+    * s. [Wiki](http://wiki.lazarus.freepascal.org/ColorPalette "Wiki")
 
 
 ### Web Service Toolkit (mandatory)
