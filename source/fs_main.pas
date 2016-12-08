@@ -185,7 +185,8 @@ begin
       SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
         OnSkipSendAndReceive);
 
-      proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
+      //proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
+      proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.AsURL);
 
       auth := GetAuthentificationHeader(credentials);
       (proxy as ICallContext).AddHeader(auth, True);

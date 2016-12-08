@@ -6,6 +6,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
+  ssl_openssl, // ssl-Plugin
   Interfaces, // this includes the LCL widgetset
   Forms,
   fs_main,
@@ -18,7 +19,7 @@ uses
   IntrashipServicesTypes,
   IntrashipServicesUtils,
   lis_synapse_http_protocol,
-  ssl_openssl, Remodel
+  Remodel
   { you can add units after this };
 
 {$R *.res}

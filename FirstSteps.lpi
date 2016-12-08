@@ -33,7 +33,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="12">
       <Unit0>
         <Filename Value="FirstSteps.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -86,14 +86,10 @@
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="..\..\synapse\source\lib\ssl_openssl.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit11>
-      <Unit12>
         <Filename Value="source\remodel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Remodel"/>
-      </Unit12>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -104,7 +100,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="source;api;..\..\Subversion\lazarus-ccr;..\..\synapse\source\lib"/>
+      <OtherUnitFiles Value="source;api;..\..\Subversion\lazarus-ccr;..\..\Subversion\Synapse"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
