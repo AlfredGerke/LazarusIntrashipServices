@@ -10,10 +10,6 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   fs_main,
-  geschaeftskundenversand_api_1_0,
-  geschaeftskundenversand_api_1_0_proxy,
-  is_base_de,
-  cis_base,
   IntrashipServicesConst,
   BusinessClientAPIRequestBuilder,
   IntrashipServicesTypes,

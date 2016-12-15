@@ -5,8 +5,7 @@ unit BusinessClientAPIRequestBuilder;
 interface
 
 uses
-  is_base_de,
-  cis_base,
+  geschaeftskundenversand_api_2_2_schema_cis_base,
   IntrashipServicesTypes;
 
 type

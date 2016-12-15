@@ -15,8 +15,7 @@ uses
   soap_formatter,
   httpsend,
   IntrashipServicesTypes,
-  is_base_de,
-  cis_base;
+  geschaeftskundenversand_api_2_2_schema_cis_base;
 
 type
 
@@ -36,11 +35,10 @@ type
     btnCreateShipmentDD: TSpeedButton;
     procedure btnClearLogClick(Sender: TObject);
     procedure btnCreateShipmentDDClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     procedure DoMonitor(ALog: string);
     function GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
-                                    AOrderData: TOrderData): CreateShipmentDDRequest;
+                                    AOrderData: TOrderData): CreateShipmentOrderRequest;
     function GetAuthentificationHeader(ACredentials: TCredentials): Authentification;
     function GetSettings(var AConfig: TConfigSettings;
                          var ACredentials: TCredentials;
@@ -65,8 +63,8 @@ implementation
 {$R *.lfm}
 
 uses
-  geschaeftskundenversand_api_1_0_proxy,
-  geschaeftskundenversand_api_1_0,
+  geschaeftskundenversand_api_2_2_proxy,
+  geschaeftskundenversand_api_2_2,
   BusinessClientAPIRequestBuilder,
   base_service_intf,
   SysUtils,
@@ -86,20 +84,16 @@ begin
   CreateShipmentDD;
 end;
 
-procedure TMain.FormCreate(Sender: TObject);
-begin
-end;
-
 procedure TMain.DoMonitor(ALog: string);
 begin
   edtLog.Lines.Add(ALog);
 end;
 
 function TMain.GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
-  AOrderData: TOrderData): CreateShipmentDDRequest;
+  AOrderData: TOrderData): CreateShipmentOrderRequest;
 var
   request_builder: TBusinessClientAPIRequestBuilder;
-  req: CreateShipmentDDRequest;
+  req: CreateShipmentOrderRequest;
 begin
   request_builder := TBusinessClientAPIRequestBuilder.Create;
   try
@@ -161,13 +155,13 @@ end;
 
 procedure TMain.CreateShipmentDD;
 var
-  proxy: ISWSServicePortType;
+  proxy: TGKVAPIServicePortType_Proxy;
   auth: Authentification;
   credentials: TCredentials;
   config: TConfigSettings;
   order_data: TOrderData;
-  req: CreateShipmentDDRequest;
-  resp: CreateShipmentResponse;
+  req: CreateShipmentOrderRequest;
+  resp: CreateShipmentOrderResponse;
   url: TUrlHandler;
   err: TErrorHandler;
   free_resp: boolean;
@@ -193,7 +187,7 @@ begin
 
       req := GetCreateShipmentDDReq(config, order_data);
 
-      resp := proxy.createShipmentDD(req);
+      resp := proxy.createShipmentOrder(req);
     except
       on E: Exception do
       begin

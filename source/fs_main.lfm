@@ -7,7 +7,6 @@ object Main: TMain
   Caption = 'Erste Schritte'
   ClientHeight = 351
   ClientWidth = 693
-  OnCreate = FormCreate
   LCLVersion = '1.6.2.0'
   object pnlOutline: TPanel
     Left = 0
