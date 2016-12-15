@@ -178,17 +178,17 @@ begin
   begin
     continue := True;
     DoOnBeforeExecute(ARequest, continue);
+
     if not continue then
+      DoOnSkipSendAndReceive(AResponse)
+    else
     begin
-      DoOnSkipSendAndReceive(AResponse);
-      Exit;
+      DoOnSetHeaders(GetConnection);
+
+      inherited DoSendAndReceive(ARequest, AResponse);
+
+      DoOnAfterExecute(AResponse);
     end;
-
-    DoOnSetHeaders(GetConnection);
-
-    inherited DoSendAndReceive(ARequest, AResponse);
-
-    DoOnAfterExecute(AResponse);
   end;
 end;
 

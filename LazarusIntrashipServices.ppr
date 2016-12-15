@@ -13,7 +13,7 @@ ProjectFilesOnly=0
 LazarusIntrashipServices
 	+Root
 		+dhl
-			+2.2
+			-2.2
 				dhl\2.2\README.md
 				dhl\2.2\geschaeftskundenversand-api-2.2.wsdl
 				dhl\2.2\geschaeftskundenversand-api-2.2-schema-bcs_base.xsd
@@ -26,38 +26,18 @@ LazarusIntrashipServices
 		ppas.bat
 		README.md
 [Open project files]
-0=dhl\2.2\README.md
-1=dhl\2.2\geschaeftskundenversand-api-2.2.wsdl
-2=dhl\2.2\geschaeftskundenversand-api-2.2-schema-bcs_base.xsd
-3=dhl\2.2\geschaeftskundenversand-api-2.2-schema-cis_base.xsd
-4=Neu1.xsd
-5=api\2_2\geschaeftskundenversand_api_2_2.pas
-6=api\2_2\geschaeftskundenversand_api_2_2_proxy.pas
-7=api\2_2\geschaeftskundenversand_api_2_2_schema_cis_base.pas
+0=dhl\2.2\geschaeftskundenversand-api-2.2.wsdl
+1=dhl\2.2\README.md
+2=README.md
 [Selected Project Files]
 Main=
-Selected=Neu1.xsd
-[dhl\2.2\README.md]
-TopLine=1
-Caret=1,1
+Selected=README.md
 [dhl\2.2\geschaeftskundenversand-api-2.2.wsdl]
 TopLine=1
 Caret=1,1
-[dhl\2.2\geschaeftskundenversand-api-2.2-schema-bcs_base.xsd]
+[dhl\2.2\README.md]
 TopLine=1
 Caret=1,1
-[dhl\2.2\geschaeftskundenversand-api-2.2-schema-cis_base.xsd]
+[README.md]
 TopLine=1
 Caret=1,1
-[Neu1.xsd]
-TopLine=1
-Caret=1,1
-[api\2_2\geschaeftskundenversand_api_2_2.pas]
-TopLine=11
-Caret=49,6
-[api\2_2\geschaeftskundenversand_api_2_2_proxy.pas]
-TopLine=5
-Caret=43,321
-[api\2_2\geschaeftskundenversand_api_2_2_schema_cis_base.pas]
-TopLine=37
-Caret=134,29
