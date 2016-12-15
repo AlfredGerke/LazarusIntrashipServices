@@ -5131,7 +5131,7 @@ initialization
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(CreateShipmentTDRequest_ShipmentOrderArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
   typeRegistryInstance.Register(sEMPTY_NAME_SPACE,TypeInfo(CreateShipmentResponse_CreationStateArray),'CreateShipmentResponse_CreationStateArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(CreateShipmentResponse_CreationStateArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
-  typeRegistryInstance.Register(sEMPTY_NAME_SPACE,TypeInfo(CreateShipmentDDRequest_ShipmentOrderArray),'CreateShipmentDDRequest_ShipmentOrderArray');
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(CreateShipmentDDRequest_ShipmentOrderArray),'CreateShipmentDDRequest_ShipmentOrderArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(CreateShipmentDDRequest_ShipmentOrderArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
   typeRegistryInstance.Register(sEMPTY_NAME_SPACE,TypeInfo(DeleteShipmentTDRequest_ShipmentNumberArray),'DeleteShipmentTDRequest_ShipmentNumberArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(DeleteShipmentTDRequest_ShipmentNumberArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
