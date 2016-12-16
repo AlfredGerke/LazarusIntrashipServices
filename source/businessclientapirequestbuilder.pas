@@ -5,6 +5,7 @@ unit BusinessClientAPIRequestBuilder;
 interface
 
 uses
+  geschaeftskundenversand_api_2_2,
   geschaeftskundenversand_api_2_2_schema_cis_base,
   IntrashipServicesTypes;
 
@@ -31,7 +32,7 @@ type
   public
     class function GetInstance: TBusinessClientAPIRequestBuilder;
 
-    function GetCreateShipmentDDReq(aDoXMLabel: boolean): CreateShipmentDDRequest;
+    function GetCreateShipmentOrderReq(aDoXMLabel: boolean): CreateShipmentOrderRequest;
 
     property ConfigSettings: TConfigSettings
       read FConfigSettings
@@ -318,22 +319,22 @@ begin
   Result := res;
 end;
 
-function TBusinessClientAPIRequestBuilder.GetCreateShipmentDDReq(
-  aDoXMLabel: boolean): CreateShipmentDDRequest;
+function TBusinessClientAPIRequestBuilder.GetCreateShipmentOrderReq(
+  aDoXMLabel: boolean): CreateShipmentOrderRequest;
 var
-  req: CreateShipmentDDRequest;
+  req: CreateShipmentOrderRequest;
   shipment_order_ddtype: ShipmentOrderDDType;
   shipment_type: ShipmentOrderDDType_Shipment_Type;
   shipment_details: ShipmentDetailsDDType;
   shipper_dd_type: ShipperDDType;
   receiver: ReceiverDDType;
-  shipment_order_array: CreateShipmentDDRequest_ShipmentOrderArray;
+  shipment_order_array: CreateShipmentOrderRequest_ShipmentOrderArray;
 begin
   req := CreateShipmentDDRequest.Create;
 
   req.Version := GetVersion(catCreateShipmentDD);
 
-  shipment_order_array := CreateShipmentDDRequest_ShipmentOrderArray.Create;
+  shipment_order_array := CreateShipmentOrderRequest_ShipmentOrderArray.Create;
 
   shipment_order_ddtype := shipment_order_array.Add();
   shipment_order_ddtype.SequenceNumber := FOrderData.Sequence.AsString;

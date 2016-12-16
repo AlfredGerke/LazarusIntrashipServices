@@ -12,7 +12,7 @@ ProjectFilesOnly=0
 [Project tree]
 LazarusIntrashipServices
 	+Root
-		+dhl
+		-dhl
 			-2.2
 				dhl\2.2\README.md
 				dhl\2.2\geschaeftskundenversand-api-2.2.wsdl
@@ -25,19 +25,21 @@ LazarusIntrashipServices
 		LICENSE
 		ppas.bat
 		README.md
+		.gitignore
+		.gitattributes
 [Open project files]
-0=dhl\2.2\geschaeftskundenversand-api-2.2.wsdl
-1=dhl\2.2\README.md
-2=README.md
+0=.gitattributes
+1=.gitignore
+2=..\..\Subversion\DHL-WS-Test_2_2\importWSDL.bat
 [Selected Project Files]
 Main=
-Selected=README.md
-[dhl\2.2\geschaeftskundenversand-api-2.2.wsdl]
+Selected=..\..\Subversion\DHL-WS-Test_2_2\importWSDL.bat
+[.gitattributes]
 TopLine=1
-Caret=1,1
-[dhl\2.2\README.md]
+Caret=28,18
+[.gitignore]
 TopLine=1
-Caret=1,1
-[README.md]
+Caret=1,12
+[..\..\Subversion\DHL-WS-Test_2_2\importWSDL.bat]
 TopLine=1
-Caret=1,1
+Caret=40,1

@@ -37,15 +37,15 @@ type
     procedure btnCreateShipmentDDClick(Sender: TObject);
   private
     procedure DoMonitor(ALog: string);
-    function GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
-                                    AOrderData: TOrderData): CreateShipmentOrderRequest;
+    function GetCreateShipmentOrderReq(AConfigSettings: TConfigSettings;
+                                       AOrderData: TOrderData): CreateShipmentOrderRequest;
     function GetAuthentificationHeader(ACredentials: TCredentials): Authentification;
     function GetSettings(var AConfig: TConfigSettings;
                          var ACredentials: TCredentials;
                          var AOrderData: TOrderData;
                          var AUrl: TUrlHandler): TErrorHandler;
     procedure ClearLog;
-    procedure CreateShipmentDD;
+    procedure CreateShipmentOrderReq;
 
     procedure OnBeforeExecuteProc(ARequest: TStream;
                                   var AContinue: boolean);
@@ -81,7 +81,7 @@ end;
 
 procedure TMain.btnCreateShipmentDDClick(Sender: TObject);
 begin
-  CreateShipmentDD;
+  CreateShipmentOrderReq;
 end;
 
 procedure TMain.DoMonitor(ALog: string);
@@ -89,7 +89,7 @@ begin
   edtLog.Lines.Add(ALog);
 end;
 
-function TMain.GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
+function TMain.GetCreateShipmentOrderReq(AConfigSettings: TConfigSettings;
   AOrderData: TOrderData): CreateShipmentOrderRequest;
 var
   request_builder: TBusinessClientAPIRequestBuilder;
@@ -100,7 +100,7 @@ begin
     request_builder.ConfigSettings := AConfigSettings;
     request_builder.OrderData := AOrderData;
 
-    req := request_builder.GetCreateShipmentDDReq(False);
+    req := request_builder.GetCreateShipmentOrderReq(False);
   finally
     Result := req;
   end;
@@ -111,7 +111,6 @@ begin
   Result := Authentification.Create;
   Result.user := ACredentials.IntrashipUser.AsString;
   Result.signature := ACredentials.Signature.AsString;
-  Result._type := 0;
 end;
 
 function TMain.GetSettings(var AConfig: TConfigSettings;
@@ -153,7 +152,7 @@ begin
   edtLog.Clear;
 end;
 
-procedure TMain.CreateShipmentDD;
+procedure TMain.CreateShipmentOrderReq;
 var
   proxy: TGKVAPIServicePortType_Proxy;
   auth: Authentification;
@@ -171,23 +170,23 @@ begin
     try
       err := GetSettings(config, credentials, order_data, url);
       if err.Found then
+        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0)
+      else
       begin
-        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0);
-        Exit;
+        SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
+          OnSkipSendAndReceive);
+
+        //proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
+        proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.AsURL);
+
+        auth := GetAuthentificationHeader(credentials);
+        (proxy as ICallContext).AddHeader(auth, True);
+
+        req := GetCreateShipmentOrderReq(config, order_data);
+
+        resp := proxy.createShipmentOrder(req);
+
       end;
-
-      SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
-        OnSkipSendAndReceive);
-
-      //proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
-      proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.AsURL);
-
-      auth := GetAuthentificationHeader(credentials);
-      (proxy as ICallContext).AddHeader(auth, True);
-
-      req := GetCreateShipmentDDReq(config, order_data);
-
-      resp := proxy.createShipmentOrder(req);
     except
       on E: Exception do
       begin

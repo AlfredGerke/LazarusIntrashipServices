@@ -1167,7 +1167,8 @@ initialization
 
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Dimension_unit_Type),'Dimension_unit_Type');
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(CountryType),'CountryType',[trioqualifiedElement, triounqualifiedAttribute]);
-  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(AuthentificationType),'AuthentificationType',[trioqualifiedElement, triounqualifiedAttribute]);
+  // DeclaredName AuthentificationType wurde in Authentification gändert
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(AuthentificationType),'Authentification',[trioqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Version_Type),'Version',[trioqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(NativeAddressType),'NativeAddressType',[trioqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverNativeAddressType),'ReceiverNativeAddressType',[trioqualifiedElement, triounqualifiedAttribute]);
