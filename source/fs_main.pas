@@ -15,6 +15,7 @@ uses
   soap_formatter,
   httpsend,
   IntrashipServicesTypes,
+  geschaeftskundenversand_api_2_2,
   geschaeftskundenversand_api_2_2_schema_cis_base;
 
 type
@@ -64,7 +65,6 @@ implementation
 
 uses
   geschaeftskundenversand_api_2_2_proxy,
-  geschaeftskundenversand_api_2_2,
   BusinessClientAPIRequestBuilder,
   base_service_intf,
   SysUtils,

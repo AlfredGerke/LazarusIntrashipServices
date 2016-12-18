@@ -5,12 +5,12 @@ unit IntrashipServicesConst;
 interface
 
 const
-  MAJOR_RELEASE = '1';
+  MAJOR_RELEASE = '2';
   MINOR_RELEASE = '0';
-  DD_PROD_CODE = 'EPN';
-  //EKP = '5000000008';
-  EKP = '5000000000';
+  DD_PROD_CODE = 'V01PAK';
+  EKP = '2222222222';
   PARTNER_ID = '01';
+  ACCOUNT_NUMBER = '22222222220101';
 
   SHIPMENT_DESC = 'Interessanter Artikel';
   SHIPPER_COMPANY_NAME = 'Deutsche Post IT Brief GmbH';
@@ -50,7 +50,7 @@ const
   SHIPPER_BANK_BANKNAME = '.';
   SHIPPER_BANK_BIC = '.33XXXXX';
   SHIPPER_BANK_IBAN = 'DE85.11111111111111111';
-  SHIPPER_BANK_NOTE = 'BLahblub';
+  SHIPPER_BANK_NOTE = 'Notiz';
 
   COD_CODAMOUNT = '100.99';
   COD_CODCURRENCE = 'EUR';

@@ -13,12 +13,12 @@ type
   TOnMonitor = procedure(ALog: string) of object;
 
   TCustomActorTypes =
-    (catUnkown, catCreateShipmentDD, catGetLabelDD, catDeleteShipmentDD, catGetOrderData,
+    (catUnkown, catCreateShipment, catGetLabel, catDeleteShipment, catGetOrderData,
      catGetCredentials);
 
 const
   CustomActorTypesStr: array[TCustomActorTypes] of string =
-    ('Unbekannt', 'CreateShipmentDD', 'GetLabelDD', 'DeleteShipmentDD', 'GetOrderData',
+    ('Unbekannt', 'CreateShipment', 'GetLabel', 'DeleteShipment', 'GetOrderData',
      'GetCredentials');
 
 type
@@ -70,14 +70,14 @@ type
     ConnectTimeout: TStringHandler;
     ReceiveTimeout: TStringHandler;
 
-    MajorVersionCSDD: TStringHandler;
-    MinorVersionCSDD: TStringHandler;
+    MajorVersionCS: TStringHandler;
+    MinorVersionCS: TStringHandler;
 
-    MajorVersionDSDD: TStringHandler;
-    MinorVersionDSDD: TStringHandler;
+    MajorVersionDS: TStringHandler;
+    MinorVersionDS: TStringHandler;
 
-    MajorVersionGLDD: TStringHandler;
-    MinorVersionGLDD: TStringHandler;
+    MajorVersionGL: TStringHandler;
+    MinorVersionGL: TStringHandler;
 
     function SetByIni: TErrorHandler;
     procedure Clear;
@@ -111,6 +111,7 @@ type
     ProductCode: TStringHandler;
     EKP: TStringHandler;
     PartnerID: TStringHandler;
+    AccountNumber: TStringHandler;
 
     ShipmentDescription: TStringHandler;
 
@@ -156,8 +157,6 @@ type
     UseServiceCOD: boolean;
 
     ShipperBankAccountOwner: TStringHandler;
-    ShipperBankAccountNumber: TStringHandler;
-    ShipperBankBankCode: TStringHandler;
     ShipperBankBankName: TStringHandler;
     ShipperBankBic: TStringHandler;
     ShipperBankIBAN: TStringHandler;
@@ -174,6 +173,8 @@ type
     Filialnumber: TStringHandler;
     FilialZip: TStringHandler;
     FilialCity: TStringHandler;
+
+    function GetReceiverPersonFirstLastName: TStringHandler;
 
     function SetPostOfficeAsReceiver: boolean;
     function CheckData: TErrorHandler;
@@ -267,7 +268,10 @@ var
   str: string;
 begin
   error.Clear;
-  if FileExists(IniFilename) then
+
+  if not FileExists(IniFilename) then
+    error.SetError(-1, Format('%s Konfigurationsdatei nicht vorhanden!', [IniFilename]))
+  else
   begin
     ini := TIniFile.Create(IniFilename);
     try
@@ -288,9 +292,7 @@ begin
       if Assigned(ini) then
         FreeAndNil(ini);
     end;
-  end
-  else
-    error.SetError(-1, Format('%s Konfigurationsdatei nicht vorhanden!', [IniFilename]));
+  end;
 
   Result := error;
 end;
@@ -326,6 +328,12 @@ begin
 end;
 
 { TOrderData }
+
+function TOrderData.GetReceiverPersonFirstLastName: TStringHandler;
+begin
+  Result.Clear;
+  Result.SetByString(ReceiverPersonFirstName.AsString + ', ' + ReceiverPersonLastName.AsString);
+end;
 
 function TOrderData.SetPostOfficeAsReceiver: boolean;
 begin
@@ -628,14 +636,6 @@ begin
         error.SetError(255, 'Kontoinhaber muss vorhanden sein!');
 
     if not error.Found then
-      if (ShipperBankAccountNumber.GetLength > 15) then
-        error.SetError(256, 'Kontonummer zu lang (max. 15 Zeichen)');
-
-    if not error.Found then
-      if (ShipperBankBankCode.GetLength > 15) then
-        error.SetError(257, 'Bankleitzahl zu lang (max. 15 Zeichen)');
-
-    if not error.Found then
       if ShipperBankBankName.IsEmpty then
         error.SetError(258, 'Bankname muss vorhanden sein!');
 
@@ -727,6 +727,7 @@ begin
   Sequence.SetByInteger(0);
 
   // Auftragsdaten
+  AccountNumber.SetByString(IntrashipServicesConst.ACCOUNT_NUMBER);
   EKP.SetByString(IntrashipServicesConst.EKP);
   ProductCode.SetByString(DD_PROD_CODE);
   PartnerID.SetByString(PARTNER_ID);
@@ -753,8 +754,6 @@ begin
   ShipperContactPerson.SetByString(SHIPPER_CONTACT_NAME);
   ShipperPhone.SetByString(SHIPPER_CONTACT_PHONE);
   ShipperBankAccountOwner.SetByString(SHIPPER_BANK_ACCOUNTOWNER);
-  ShipperBankAccountNumber.SetByString(SHIPPER_BANK_ACCOUNTNUMBER);
-  ShipperBankBankCode.SetByString(SHIPPER_BANK_BANKCODE);
   ShipperBankBankName.SetByString(SHIPPER_BANK_BANKNAME);
   ShipperBankBIC.SetByString(SHIPPER_BANK_BIC);
   ShipperBankIBAN.SetByString(SHIPPER_BANK_IBAN);
@@ -806,8 +805,9 @@ begin
   error.Clear;
 
   if not Active then
-  begin
-    if FileExists(IniFilename) then
+    if not FileExists(IniFilename) then
+      error.SetError(-1, Format('%s Konfigurationsdatei nicht vorhanden!', [IniFilename]))
+    else
     begin
       ini := TIniFile.Create(IniFilename);
       try
@@ -817,33 +817,30 @@ begin
         int := ini.ReadInteger('connect', 'receivetimeout', 10000);
         ReceiveTimeout.SetByInteger(int);
 
-        int := ini.ReadInteger('createshipmentdd', 'majorversion', 1);
-        MajorVersionCSDD.SetByInteger(int);
+        int := ini.ReadInteger('createshipment', 'majorversion', 2);
+        MajorVersionCS.SetByInteger(int);
 
-        int := ini.ReadInteger('createshipmentdd', 'minorversion', 0);
-        MinorVersionCSDD.SetByInteger(int);
+        int := ini.ReadInteger('createshipment', 'minorversion', 0);
+        MinorVersionCS.SetByInteger(int);
 
-        int := ini.ReadInteger('deleteshipmentdd', 'majorversion', 1);
-        MajorVersionDSDD.SetByInteger(int);
+        int := ini.ReadInteger('deleteshipment', 'majorversion', 2);
+        MajorVersionDS.SetByInteger(int);
 
-        int := ini.ReadInteger('deleteshipmentdd', 'minorversion', 0);
-        MinorVersionDSDD.SetByInteger(int);
+        int := ini.ReadInteger('deleteshipment', 'minorversion', 0);
+        MinorVersionDS.SetByInteger(int);
 
-        int := ini.ReadInteger('getlabeldd', 'majorversion', 1);
-        MajorVersionGLDD.SetByInteger(int);
+        int := ini.ReadInteger('getlabel', 'majorversion', 2);
+        MajorVersionGL.SetByInteger(int);
 
-        int := ini.ReadInteger('getlabeldd', 'minorversion', 0);
-        MinorVersionGLDD.SetByInteger(int);
+        int := ini.ReadInteger('getlabel', 'minorversion', 0);
+        MinorVersionGL.SetByInteger(int);
 
         Active := True;
       finally
         if Assigned(ini) then
           FreeAndNil(ini);
       end;
-    end
-    else
-      error.SetError(-1, Format('%s Konfigurationsdatei nicht vorhanden!', [IniFilename]));
-  end;
+    end;
 
   Result := error;
 end;
@@ -914,8 +911,10 @@ begin
 end;
 
 procedure TStringHandler.Clear;
+const
+  empty_rec: TStringHandler = ();
 begin
-  FillChar(Self, SizeOf(Self), #0);
+  Self := empty_rec;
 end;
 
 function TStringHandler.Equals(AItems: string): boolean;

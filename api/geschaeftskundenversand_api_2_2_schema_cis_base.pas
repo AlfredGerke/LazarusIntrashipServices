@@ -999,7 +999,7 @@ end;
 
 function ShipmentNumberType.wstHas_shipmentNumber() : Boolean;
 begin
-  Result := ( FshipmentNumber <> shipmentNumber_Type(0) );
+  Result := ( Trim(FshipmentNumber) <> EmptyStr );
 end;
 
 function Dimension.wstHas__unit() : Boolean;
