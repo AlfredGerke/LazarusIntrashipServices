@@ -28,7 +28,7 @@ type
     procedure SetShipmentSerciceCOD(AShipmentService: ShipmentService);
     procedure SetShipmentItemType(AShipmentItemType: ShipmentItemTypeType);
     function GetShipmentDetails(AShipmentItemNr: integer): ShipmentDetailsTypeType;
-    function GetVersion(AActor: TCustomActorTypes): Version_Type;
+    function GetVersion(AActor: TCustomActorTypes): geschaeftskundenversand_api_2_2.Version_Type;
   public
     class function GetInstance: TBusinessClientAPIRequestBuilder;
 
@@ -82,7 +82,6 @@ var
 begin
 
   receiver_native_address := NativeAddressType.Create;
-  receiver_native_zip := Zip_Type.Create;
   receiver_native_origin := Origin_Type.Create;
 
   if not FOrderData.IsWorldWide then
@@ -116,9 +115,9 @@ end;
 function TBusinessClientAPIRequestBuilder.GetReceiverCompany: name1_Type;
 begin
   if FOrderData.IsPerson then
-    Result := FOrderData.GetReceiverPersonFirstLastName
+    Result := FOrderData.GetReceiverPersonFirstLastName.AsString
   else
-    Result := FOrderData.ReceiverCompanyName1;
+    Result := FOrderData.ReceiverCompanyName1.AsString;
 end;
 
 function TBusinessClientAPIRequestBuilder.GetShipperCommunicationType: CommunicationType;
@@ -186,7 +185,7 @@ begin
   service_config_cod.addFee := ServiceconfigurationCashOnDelivery_addFee_Type(0);
   service_config_cod.active := ServiceconfigurationCashOnDelivery_active_Type(1);
 
-  ShipmentService.CashOnDelivery := service_config_cod;
+  AShipmentService.CashOnDelivery := service_config_cod;
 end;
 
 procedure TBusinessClientAPIRequestBuilder.SetShipmentItemType(
@@ -196,7 +195,6 @@ begin
   AShipmentItemType.LengthInCM := FOrderData.LengthInCM.AsInteger;
   AShipmentItemType.WidthInCM := FOrderData.WidthInCM.AsInteger;
   AShipmentItemType.HeightInCM := FOrderData.HeightInCM.AsInteger;
-  AShipmentItemType.PackageType := FOrderData.PackageType.AsString;
 end;
 
 function TBusinessClientAPIRequestBuilder.GetShipmentDetails(
@@ -207,7 +205,7 @@ var
   shipment_item_type: ShipmentItemTypeType;
   services: ShipmentService;
 begin
-  shipment_details := ShipmentDetailsDDType.Create;
+  shipment_details := ShipmentDetailsTypeType.Create;
 
   shipment_details.Product := FOrderData.ProductCode.AsString;
   shipment_details.ShipmentDate := FormatDateTime('yyyy-mm-dd', Date);
@@ -218,7 +216,7 @@ begin
     shipment_item_type := ShipmentItemTypeType.Create;
     SetShipmentItemType(shipment_item_type);
   end;
-  shipment_details.ShipmentItem := ShipmentItemTypeType;
+  shipment_details.ShipmentItem := ShipmentItemType(ShipmentItemTypeType);
 
   // Nachnahmeservice
   if FOrderData.UseServiceCOD then
@@ -237,13 +235,13 @@ begin
 end;
 
 function TBusinessClientAPIRequestBuilder.GetVersion(
-  AActor: TCustomActorTypes): Version_Type;
+  AActor: TCustomActorTypes): geschaeftskundenversand_api_2_2.Version_Type;
 var
-  res: Version_Type;
+  res: geschaeftskundenversand_api_2_2.Version_Type;
   major_ver: string;
   minor_ver: string;
 begin
-  res := Version_Type.Create;
+  res := geschaeftskundenversand_api_2_2.Version_Type.Create;
 
   case AActor of
     catCreateShipment:
@@ -285,7 +283,7 @@ var
 begin
   req := CreateShipmentOrderRequest.Create;
 
-  req.Version := GetVersion(catCreateShipment);
+  req.Version := self.GetVersion(catCreateShipment);
 
   shipment_order_array := CreateShipmentOrderRequest_ShipmentOrderArray.Create;
 
