@@ -154,7 +154,7 @@ end;
 
 procedure TMain.CreateShipmentOrderReq;
 var
-  proxy: TGKVAPIServicePortType_Proxy;
+  proxy: GKVAPIServicePortType;
   auth: Authentification;
   credentials: TCredentials;
   config: TConfigSettings;

@@ -19,7 +19,7 @@ type
     FOrderData: TOrderData;
 
     function GetReceiverCommunicationType: CommunicationType;
-    function GetReceiverNativeAddressType: NativeAddressType;
+    function GetReceiverNativeAddressType: ReceiverNativeAddressType;
     function GetReceiverCompany: name1_Type;
     function GetShipperCommunicationType: CommunicationType;
     function GetShipperNativeAddressType: NativeAddressType;
@@ -75,13 +75,13 @@ begin
   Result := communication_type;
 end;
 
-function TBusinessClientAPIRequestBuilder.GetReceiverNativeAddressType: NativeAddressType;
+function TBusinessClientAPIRequestBuilder.GetReceiverNativeAddressType: ReceiverNativeAddressType;
 var
-  receiver_native_address: NativeAddressType;
+  receiver_native_address: ReceiverNativeAddressType;
   receiver_native_origin: Origin_Type;
 begin
 
-  receiver_native_address := NativeAddressType.Create;
+  receiver_native_address := ReceiverNativeAddressType.Create;
   receiver_native_origin := Origin_Type.Create;
 
   if not FOrderData.IsWorldWide then
