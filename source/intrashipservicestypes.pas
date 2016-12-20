@@ -380,12 +380,14 @@ begin
       error.SetError(205, 'Sequence muss ein Integer sein!');
 
   if not error.Found then
-    if ((ProductCode.AsString <> 'EPN') and (ProductCode.AsString <> 'BPI') and
-        (ProductCode.AsString <> 'EPI') and (ProductCode.AsString <> 'EUP')) then
+    if ((ProductCode.AsString <> 'V01PAK') and (ProductCode.AsString <> 'V53WPAK') and
+        (ProductCode.AsString <> 'V54EPAK') and (ProductCode.AsString <> 'V06PAK') and
+        (ProductCode.AsString <> 'V06TG V06WZ') and (ProductCode.AsString <> 'V86PARCEL') and
+        (ProductCode.AsString <> 'V87PARCEL') and (ProductCode.AsString <> 'V82PARCEL')) then
       error.SetError(248, 'Falscher Eintrag für den Produktcode!');
 
   if not error.Found then
-    if ProductCode.Equals('EPN') then
+    if ProductCode.Equals('V01PAK') then
       PackageCount := 1;
 
   if not error.Found then
@@ -911,10 +913,8 @@ begin
 end;
 
 procedure TStringHandler.Clear;
-const
-  empty_rec: TStringHandler = ();
 begin
-  Self := empty_rec;
+  FillChar(Self, SizeOf(Self), #0);
 end;
 
 function TStringHandler.Equals(AItems: string): boolean;

@@ -1193,6 +1193,10 @@ initialization
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverNativeAddressType_addressAdditionArray),'ReceiverNativeAddressType_addressAdditionArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(ReceiverNativeAddressType_addressAdditionArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
 
+
+
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(accountNumber_Type),'accountNumber',[trioqualifiedElement, triounqualifiedAttribute]);
+
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(Dimension)].RegisterExternalPropertyName('_unit','unit');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(TimeFrame)].RegisterExternalPropertyName('_until','until');
 

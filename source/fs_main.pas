@@ -185,7 +185,6 @@ begin
         req := GetCreateShipmentOrderReq(config, order_data);
 
         resp := proxy.createShipmentOrder(req);
-
       end;
     except
       on E: Exception do

@@ -216,7 +216,7 @@ begin
     shipment_item_type := ShipmentItemTypeType.Create;
     SetShipmentItemType(shipment_item_type);
   end;
-  shipment_details.ShipmentItem := ShipmentItemType(ShipmentItemTypeType);
+  shipment_details.ShipmentItem := ShipmentItemType(shipment_item_type);
 
   // Nachnahmeservice
   if FOrderData.UseServiceCOD then

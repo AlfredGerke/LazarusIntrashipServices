@@ -4254,8 +4254,13 @@ initialization
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverType),'ReceiverType',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Ident),'Ident',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsType),'ShipmentDetailsType',[triounqualifiedElement, triounqualifiedAttribute]);
-  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeType),'ShipmentDetailsTypeType',[triounqualifiedElement, triounqualifiedAttribute]);
-  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemType),'ShipmentItemType',[triounqualifiedElement, triounqualifiedAttribute]);
+
+  //typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeType),'ShipmentDetailsTypeType',[triounqualifiedElement, triounqualifiedAttribute]);
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeType),'ShipmentDetails',[triounqualifiedElement, triounqualifiedAttribute]);
+
+  //typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemType),'ShipmentItemType',[triounqualifiedElement, triounqualifiedAttribute]);
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemType),'ShipmentItem',[triounqualifiedElement, triounqualifiedAttribute]);
+
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemTypeType),'ShipmentItemTypeType',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentService),'ShipmentService',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Serviceconfiguration),'Serviceconfiguration',[triounqualifiedElement, triounqualifiedAttribute]);
