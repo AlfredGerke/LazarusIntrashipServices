@@ -5,8 +5,14 @@ password=<pass>
 
 ;Credentials
 [intraship]
+test=1
 user=<user> 
 signature=<signatur>
+
+;URL für Produktiv- und Testsystem
+[url]
+sandbox="<sandbox-url>"
+productiv="<productiv-url>" 
 
 ;Timeouts derzeit nicht unterstützt
 [connect]

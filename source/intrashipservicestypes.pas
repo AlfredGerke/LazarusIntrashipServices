@@ -67,6 +67,9 @@ type
     Active: boolean;
     IniFilename: string;
 
+    SandboxURL: string;
+    ProductivURL: string;
+
     ConnectTimeout: TStringHandler;
     ReceiveTimeout: TStringHandler;
 
@@ -187,10 +190,13 @@ type
 
   TUrlHandler = record
     Credentials: TCredentials;
+    Configuration: TConfigSettings;
 
     URL: TStringHandler;
 
     function AsURL: string;
+
+    procedure InitURL;
 
     procedure Clear;
   end;
@@ -220,6 +226,14 @@ begin
   else
     Result := StringReplace(URL.AsString, 'https://', Format('https://%s:%s@',
       [Credentials.Username.AsString, Credentials.Password.AsString]), [rfIgnoreCase]);
+end;
+
+procedure TUrlHandler.InitURL;
+begin
+  if Credentials.DoTest then
+    URL.SetByString(Configuration.SandboxURL)
+  else
+    URL.SetByString(Configuration.ProductivURL);
 end;
 
 procedure TUrlHandler.Clear;
@@ -280,6 +294,8 @@ begin
 
       str := ini.ReadString('authentication', 'password', '');
       Password.SetByString(str);
+
+      DoTest:= ini.ReadBool('intraship', 'test', True);
 
       str := ini.ReadString('intraship', 'user', '');
       IntrashipUser.SetByString(str);
@@ -813,6 +829,9 @@ begin
     begin
       ini := TIniFile.Create(IniFilename);
       try
+        SandboxURL := ini.ReadString('url', 'sandbox', '');
+        ProductivURL := ini.ReadString('url', 'productiv', '');
+
         int := ini.ReadInteger('connect', 'connecttimeout', 10000);
         ConnectTimeout.SetByInteger(int);
 

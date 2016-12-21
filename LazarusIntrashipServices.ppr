@@ -33,18 +33,22 @@ LazarusIntrashipServices
 1=ini\README.md
 2=ini\settings.in_
 3=README.md
+4=.gitignore
 [Selected Project Files]
 Main=
-Selected=ini\settings.ini
+Selected=.gitignore
 [ini\settings.ini]
 TopLine=1
-Caret=1,15
+Caret=35,12
 [ini\README.md]
 TopLine=1
-Caret=80,8
+Caret=45,10
 [ini\settings.in_]
 TopLine=1
-Caret=36,11
+Caret=35,12
 [README.md]
 TopLine=1
-Caret=17,36
+Caret=84,30
+[.gitignore]
+TopLine=1
+Caret=51,11

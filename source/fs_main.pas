@@ -140,7 +140,9 @@ begin
 
     {%H-}AUrl.Clear;
     AUrl.Credentials := ACredentials;
-    AUrl.URL.SetByString('https://cig.dhl.de/services/sandbox/soap') ;
+    AUrl.Configuration := AConfig;
+    AUrl.InitURL;
+
   finally
     Result := err;
   end;
