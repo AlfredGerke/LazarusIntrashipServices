@@ -15,6 +15,3 @@ Die folgenden Dateien wurden manuelle heruntergeladen:
 
 In [geschaeftskundenversand-api-2.2-schema-cis_base.xsd](geschaeftskundenversand-api-2.2-schema-cis_base.xsd "geschaeftskundenversand-api-2.2-schema-cis_base.xsd") wurden für einen complexen Typen das Note-Element mit dem simple Type: String erweitert,
 da das Fehlen dieser Erweiterung zu einem Fehler während des WSDL-Importes geführt hat.
-
-Die generierten Units mit dem Namensanteil: **geschaeftskundenversand-api-2.2** wurden manuell in **geschaeftskundenversand_api_2_2** geändert.    
-In der `geschaeftskundenversand_api_2_2.wst` wurde die Ressource **geschaeftskundenversand-api-2.2** manuell in **geschaeftskundenversand_api_2_2** geändert. 
