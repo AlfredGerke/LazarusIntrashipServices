@@ -1,0 +1,26 @@
+;CIGAuthentifizierung
+[authentication]
+user=<user>
+password=<pass>
+
+;Credentials
+[intraship]
+user=2222222222_01 
+signature=pass
+
+;Timeouts derzeit nicht unterstützt
+[connect]
+connecttimeout=10000
+receivetimeout=1000
+
+[createshipment]
+majorversion=2
+minorversion=0      
+
+[deleteshipment]
+majorversion=2
+minorversion=0      
+
+[getlabel]
+majorversion=2
+minorversion=0

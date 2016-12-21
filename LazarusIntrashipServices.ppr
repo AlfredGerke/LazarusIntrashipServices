@@ -12,7 +12,10 @@ ProjectFilesOnly=0
 [Project tree]
 LazarusIntrashipServices
 	+Root
-		-ini
+		+ini
+			ini\settings.ini
+			ini\README.md
+			ini\settings.in_
 		-api
 			api\README.md
 		-dhl
@@ -26,50 +29,22 @@ LazarusIntrashipServices
 		.gitignore
 		.gitattributes
 [Open project files]
-0=api\README.md
-1=dhl\README.md
-2=dhl\geschaeftskundenversand-api-2.2.wsdl
-3=dhl\geschaeftskundenversand-api-2.2-schema-cis_base.xsd
-4=dhl\geschaeftskundenversand-api-2.2-schema-bcs_base.xsd
-5=LICENSE
-6=ppas.bat
-7=README.md
-8=.gitignore
-9=.gitattributes
-10=ini\settings.ini
+0=ini\settings.ini
+1=ini\README.md
+2=ini\settings.in_
+3=README.md
 [Selected Project Files]
 Main=
-Selected=.gitignore
-[api\README.md]
-TopLine=1
-Caret=1,1
-[dhl\README.md]
-TopLine=1
-Caret=88,17
-[dhl\geschaeftskundenversand-api-2.2.wsdl]
-TopLine=1
-Caret=1,1
-[dhl\geschaeftskundenversand-api-2.2-schema-cis_base.xsd]
-TopLine=1
-Caret=1,1
-[dhl\geschaeftskundenversand-api-2.2-schema-bcs_base.xsd]
-TopLine=1
-Caret=1,1
-[LICENSE]
-TopLine=1
-Caret=1,1
-[ppas.bat]
-TopLine=1
-Caret=1,1
-[README.md]
-TopLine=1
-Caret=1,1
-[.gitignore]
-TopLine=1
-Caret=57,16
-[.gitattributes]
-TopLine=1
-Caret=1,1
+Selected=ini\settings.ini
 [ini\settings.ini]
 TopLine=1
-Caret=1,1
+Caret=1,15
+[ini\README.md]
+TopLine=1
+Caret=80,8
+[ini\settings.in_]
+TopLine=1
+Caret=36,11
+[README.md]
+TopLine=1
+Caret=17,36

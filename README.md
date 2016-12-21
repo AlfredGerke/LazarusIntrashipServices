@@ -12,6 +12,7 @@ die Geschäftskundenversand-API von DHL-Intraship in ein entsprechendes Projekt 
 - Voraussetzungen
 - Einleitung
 - Versionen
+- settings.ini
 
 Anmerkung zur neuen Version
 ---------------------------
@@ -61,4 +62,8 @@ OpenSSL: 1.0.2d
 
 Das Web Service Toolkit bietet neben dem Standard HTTP-Zugriff von FPC zusätzlich den Zugriff über Synapse und Indy an.
 In diesem Projekt wird die Netzwerkkommunikation mit [Ararat Synapse](http://synapse.ararat.cz/ "Ararat Synapse") realisiert.
-Als SSL-Plugin wird das OpenSSL-Plugin gewählt, da es von Synapse besonders empfohlen wird. Bedingung für das OpenSSL-Plugin sind die entsprechenden Libaries (DLLs genügen). 
+Als SSL-Plugin wird das OpenSSL-Plugin gewählt, da es von Synapse besonders empfohlen wird. Bedingung für das OpenSSL-Plugin sind die entsprechenden Libaries (DLLs genügen).
+
+settings.ini
+------------
+Im Ordner [./ini/](https://github.com/AlfredGerke/LazarusIntrashipServices/tree/master/ini "https://github.com/AlfredGerke/LazarusIntrashipServices/tree/master/ini") befindet sich eine Vorlage für die **settings.ini** -> **settings.in_** (s. [README.md](https://github.com/AlfredGerke/LazarusIntrashipServices/blob/master/ini/README.md "https://github.com/AlfredGerke/LazarusIntrashipServices/blob/master/ini/README.md"))  
