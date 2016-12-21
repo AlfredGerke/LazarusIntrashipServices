@@ -12,6 +12,7 @@ Die generierten Units mit dem Namensanteil: `geschaeftskundenversand-api-2.2` wu
 In der `geschaeftskundenversand_api_2_2.wst` wurde die Ressource `geschaeftskundenversand-api-2.2` manuell in `geschaeftskundenversand_api_2_2` geändert.
 
 ### Problem cisbase-Namespace     
-Der cisbase-Namespace muss an zwei Stellen in ein Element eingearbeitet werden welches den webservice-Namespace besitzt. 
-Zu diesem Zweck wurden die Typen: `ShipmentDetailsTypeCISBase` und `ReceiverTypeTypeCISBase` eingeführt und für den cisbase-Namespace registriert.
-Die Type für den cisbase-Namespace werden in der Unit `geschaeftskundenversand_api_2_2_schema_cis_base.pas` eingeführt.
+Der cisbase-Namespace muss an drei Stellen in ein Element eingearbeitet werden welches den webservice-Namespace besitzt.
+Zu diesem Zweck wurden die Typen: `ShipmentDetailsTypeCISBase` und `ReceiverTypeTypeCISBase` für den Reques eingeführt und für den cisbase-Namespace registriert.
+Für den Response wird der Type: `LabelDataCISBase` eingeführt.
+Die Typen für den cisbase-Namespace werden in der Unit `geschaeftskundenversand_api_2_2_schema_cis_base.pas` eingeführt.

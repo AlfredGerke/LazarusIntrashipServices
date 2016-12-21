@@ -45,7 +45,8 @@ type
                          var AOrderData: TOrderData;
                          var AUrl: TUrlHandler): TErrorHandler;
     procedure ClearLog;
-    procedure CreateShipmentOrderReq;
+    procedure CreateShipmentOrder;
+    procedure GetShipmentNoByResponse(ACreationState: CreateShipmentOrderResponse_CreationStateArray);
 
     procedure OnBeforeExecuteProc(ARequest: TStream;
                                   var AContinue: boolean);
@@ -69,7 +70,8 @@ uses
   SysUtils,
   Dialogs,
   remodel,
-  dbugintf;
+  dbugintf,
+  state_info;
 
 { TMain }
 
@@ -80,7 +82,7 @@ end;
 
 procedure TMain.btnCreateShipmentDDClick(Sender: TObject);
 begin
-  CreateShipmentOrderReq;
+  CreateShipmentOrder;
 end;
 
 procedure TMain.DoMonitor(ALog: string);
@@ -153,7 +155,7 @@ begin
   edtLog.Clear;
 end;
 
-procedure TMain.CreateShipmentOrderReq;
+procedure TMain.CreateShipmentOrder;
 var
   proxy: GKVAPIServicePortType;
   auth: Authentification;
@@ -178,7 +180,8 @@ begin
         SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
           OnSkipSendAndReceive);
 
-        // Wenn keine BasicHTTP-Authentication verwendet werden soll (Header) dann url.AsURL verwenden
+        // Wenn keine BasicHTTP-Authentication verwendet werden soll (s. OnSetHeadersProc) dann
+        // url.AsURL verwenden
         //proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.AsURL);
         proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
 
@@ -188,6 +191,18 @@ begin
         req := GetCreateShipmentOrderReq(config, order_data);
 
         resp := proxy.createShipmentOrder(req);
+
+        if not cbxSkipSendAndReceive.Checked then
+          if not Assigned(resp) then
+            raise Exception.Create('Fehler im Response! (s. Log)')
+          else
+            if Assigned(resp.CreationState) then
+              GetShipmentNoByResponse(resp.CreationState)
+            else
+            if Assigned(resp.Status) then
+              TStateInformation.Open(resp.Status)
+            else
+              raise Exception.Create('Fehler im Response! (s. Log)');
       end;
     except
       on E: Exception do
@@ -202,6 +217,26 @@ begin
 
     if (Assigned(resp) and free_resp) then
       FreeAndNil(resp);
+  end;
+end;
+
+procedure TMain.GetShipmentNoByResponse(
+  ACreationState: CreateShipmentOrderResponse_CreationStateArray);
+var
+  cre_state: CreationState;
+  len: integer;
+begin
+  len := ACreationState.Length;
+
+  if (len > 0) then
+  begin
+    cre_state := ACreationState.Item[0];
+    edtShipmentNr.text := String(cre_state.LabelData.shipmentNumber);
+
+    SendDebug(Format('Sendungsnummer: %s', [cre_state.LabelData.shipmentNumber]));
+    SendDebug(Format('Labelurl: %s', [cre_state.LabelData.labelUrl]));
+
+    TStateInformation.Open(cre_state.LabelData.Status);
   end;
 end;
 

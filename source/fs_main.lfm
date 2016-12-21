@@ -22,7 +22,7 @@ object Main: TMain
       Height = 30
       Top = 8
       Width = 191
-      Caption = 'CreateShipmentDD'
+      Caption = 'CreateShipmentOrder'
       OnClick = btnCreateShipmentDDClick
     end
     object edtShipmentNr: TLabeledEdit
@@ -47,7 +47,7 @@ object Main: TMain
       Height = 30
       Top = 116
       Width = 191
-      Caption = 'DeleteShipmentDD'
+      Caption = 'DeleteShipmentOrder'
     end
     object cbxSkipSendAndReceive: TCheckBox
       Left = 8

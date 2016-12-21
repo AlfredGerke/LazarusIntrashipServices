@@ -608,10 +608,29 @@ type
     property dummy: dummy_Type read Fdummy write Fdummy;
     property name1 : name1_Type read Fname1 write Fname1;
   end;
+
+  LabelDataCISBase = class(TBaseComplexRemotable)
+  private
+    FshipmentNumber : shipmentNumber_Type;
+  protected
+    function wstHas_shipmentNumber() : Boolean;
+  published
+    property shipmentNumber : shipmentNumber_Type read FshipmentNumber write FshipmentNumber stored wstHas_shipmentNumber;
+  end;
+
   // -->
 
 Implementation
 uses metadata_repository, record_rtti, wst_types;
+
+{ LabelDataCISBase }
+
+function LabelDataCISBase.wstHas_shipmentNumber: Boolean;
+begin
+  Result := ( FshipmentNumber <> '' );
+end;
+
+{ CountryType }
 
 function CountryType.wstHas_country() : Boolean;
 begin
@@ -1227,5 +1246,6 @@ initialization
   // Zustäztliche von Hand angelegte Objecte für den cisbase-Namspace werden hier registrieren
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeCISBase),'ShipmentDetailsTypeCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverTypeTypeCISBase),'ReceiverTypeTypeCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(LabelDataCISBase),'LabelDataCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
 
 End.

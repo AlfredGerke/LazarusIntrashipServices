@@ -735,6 +735,7 @@ type
 
   ReceiverTypeType = class(ReceiverTypeTypeCISBase)
   private
+    // Element erhält den cisbase-Namespace und wird in ReceiverTypeTypeCISBase deklariert
     //Fname1 : name1_Type;
     FAddress : ReceiverNativeAddressType;
     FPackstation : PackStationType;
@@ -750,6 +751,7 @@ type
     constructor Create();override;
     procedure FreeObjectProperties();override;
   published
+    // Element erhält den cisbase-Namespace und wird in ReceiverTypeTypeCISBase deklariert
     //property name1 : name1_Type read Fname1 write Fname1;
     property Address : ReceiverNativeAddressType read FAddress write FAddress stored wstHas_Address;
     property Packstation : PackStationType read FPackstation write FPackstation stored wstHas_Packstation;
@@ -785,6 +787,7 @@ type
   ShipmentDetailsType = class(ShipmentDetailsTypeCISBase)
   private
     Fproduct : UnicodeString;
+    // Element erhält den cisbase-Namespace und wird in ShipmentDetailsTypeCISBase deklariert
     //FaccountNumber : accountNumber_Type;
     FcustomerReference : ShipmentDetailsType_customerReference_Type;
     FshipmentDate : ShipmentDetailsType_shipmentDate_Type;
@@ -796,6 +799,7 @@ type
     function wstHas_returnShipmentReference() : Boolean;
   published
     property product : UnicodeString read Fproduct write Fproduct;
+    // Element erhält den cisbase-Namespace und wird in ShipmentDetailsTypeCISBase deklariert
     //property accountNumber : accountNumber_Type read FaccountNumber write FaccountNumber;
     property customerReference : ShipmentDetailsType_customerReference_Type read FcustomerReference write FcustomerReference stored wstHas_customerReference;
     property shipmentDate : ShipmentDetailsType_shipmentDate_Type read FshipmentDate write FshipmentDate;
@@ -1162,10 +1166,11 @@ type
     property DeliveryAdress : FurtherAddressesType_DeliveryAdress_Type read FDeliveryAdress write FDeliveryAdress stored wstHas_DeliveryAdress;
   end;
 
-  LabelData = class(TBaseComplexRemotable)
+  LabelData = class(LabelDataCISBase)
   private
     FStatus : Statusinformation;
-    FshipmentNumber : shipmentNumber_Type;
+    // Element erhält den cisbase-Namespace und wird in LabelDataCISBase deklariert
+    //FshipmentNumber : shipmentNumber_Type;
     FlabelUrl : UnicodeString;
     FlabelData : TBase64StringRemotable;
     FreturnLabelUrl : UnicodeString;
@@ -1175,7 +1180,8 @@ type
     FcodLabelUrl : UnicodeString;
     FcodLabelData : TBase64StringRemotable;
   private
-    function wstHas_shipmentNumber() : Boolean;
+    // Element erhält den cisbase-Namespace und wird in LabelDataCISBase deklariert
+    //function wstHas_shipmentNumber() : Boolean;
     function wstHas_labelUrl() : Boolean;
     function wstHas_labelData() : Boolean;
     function wstHas_returnLabelUrl() : Boolean;
@@ -1189,7 +1195,8 @@ type
     procedure FreeObjectProperties();override;
   published
     property Status : Statusinformation read FStatus write FStatus;
-    property shipmentNumber : shipmentNumber_Type read FshipmentNumber write FshipmentNumber stored wstHas_shipmentNumber;
+    // Element erhält den cisbase-Namespace und wird in LabelDataCISBase deklariert
+    //property shipmentNumber : shipmentNumber_Type read FshipmentNumber write FshipmentNumber stored wstHas_shipmentNumber;
     property labelUrl : UnicodeString read FlabelUrl write FlabelUrl stored wstHas_labelUrl;
     property labelData : TBase64StringRemotable read FlabelData write FlabelData stored wstHas_labelData;
     property returnLabelUrl : UnicodeString read FreturnLabelUrl write FreturnLabelUrl stored wstHas_returnLabelUrl;
@@ -2808,10 +2815,11 @@ begin
   inherited FreeObjectProperties();
 end;
 
-function LabelData.wstHas_shipmentNumber() : Boolean;
-begin
-  Result := ( FshipmentNumber <> '' );
-end;
+// Element erhält den cisbase-Namespace und wird in LabelDataCISBase deklariert
+//function LabelData.wstHas_shipmentNumber() : Boolean;
+//begin
+//  Result := ( FshipmentNumber <> '' );
+//end;
 
 function LabelData.wstHas_labelUrl() : Boolean;
 begin

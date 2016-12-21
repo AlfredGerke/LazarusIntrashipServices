@@ -33,7 +33,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="11">
+    <Units Count="12">
       <Unit0>
         <Filename Value="FirstSteps.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -86,6 +86,12 @@
         <Filename Value="api\geschaeftskundenversand_api_2_2_schema_cis_base.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="source\state_info.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="StateInformation"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

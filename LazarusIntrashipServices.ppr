@@ -16,7 +16,7 @@ LazarusIntrashipServices
 			ini\settings.ini
 			ini\README.md
 			ini\settings.in_
-		-api
+		+api
 			api\README.md
 		-dhl
 			dhl\geschaeftskundenversand-api-2.2.wsdl
@@ -34,12 +34,13 @@ LazarusIntrashipServices
 2=ini\settings.in_
 3=README.md
 4=.gitignore
+5=api\README.md
 [Selected Project Files]
 Main=
-Selected=.gitignore
+Selected=ini\settings.ini
 [ini\settings.ini]
 TopLine=1
-Caret=35,12
+Caret=9,3
 [ini\README.md]
 TopLine=1
 Caret=45,10
@@ -52,3 +53,6 @@ Caret=84,30
 [.gitignore]
 TopLine=1
 Caret=51,11
+[api\README.md]
+TopLine=1
+Caret=26,18

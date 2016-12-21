@@ -15,7 +15,7 @@ uses
   IntrashipServicesTypes,
   IntrashipServicesUtils,
   lis_synapse_http_protocol,
-  Remodel
+  Remodel, state_info
   { you can add units after this };
 
 {$R *.res}
