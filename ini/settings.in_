@@ -5,8 +5,8 @@ password=<pass>
 
 ;Credentials
 [intraship]
-user=2222222222_01 
-signature=pass
+user=<user> 
+signature=<signatur>
 
 ;Timeouts derzeit nicht unterstützt
 [connect]
