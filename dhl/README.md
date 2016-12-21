@@ -10,8 +10,8 @@ Die folgenden Dateien wurden manuelle heruntergeladen:
 - geschaeftskundenversand-api-2.2-schema-bcs_base.xsd    
 - geschaeftskundenversand-api-2.2-schema-cis_base.xsd    
 
-**Link (Stand 2016-12-14):
-* geschaeftskundenversand-api/2.2/ (https://cig.dhl.de/cig-wsdls/com/dpdhl/wsdl/geschaeftskundenversand-api/2.2/ "https://cig.dhl.de/cig-wsdls/com/dpdhl/wsdl/geschaeftskundenversand-api/2.2/")    
+**Link (Stand 2016-12-14):**
+* [geschaeftskundenversand-api/2.2/](https://cig.dhl.de/cig-wsdls/com/dpdhl/wsdl/geschaeftskundenversand-api/2.2/ "https://cig.dhl.de/cig-wsdls/com/dpdhl/wsdl/geschaeftskundenversand-api/2.2/")    
 
 In [geschaeftskundenversand-api-2.2-schema-cis_base.xsd](geschaeftskundenversand-api-2.2-schema-cis_base.xsd "geschaeftskundenversand-api-2.2-schema-cis_base.xsd") wurden für einen complexen Typen das Note-Element mit dem simple Type: String erweitert,
 da das Fehlen dieser Erweiterung zu einem Fehler während des WSDL-Importes geführt hat.
