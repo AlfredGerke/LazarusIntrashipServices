@@ -11,7 +11,6 @@ uses
   StdCtrls,
   lis_synapse_http_protocol,
   Classes,
-  { TODO -oAlfred Gerke -cFragen zum SOAP-Handling : Immer notwendig und wenn ja wo am besten einbinden? }
   soap_formatter,
   httpsend,
   IntrashipServicesTypes,
@@ -169,6 +168,7 @@ begin
   try
     try
       err := GetSettings(config, credentials, order_data, url);
+
       if err.Found then
         MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0)
       else
@@ -176,8 +176,9 @@ begin
         SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
           OnSkipSendAndReceive);
 
-        //proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
-        proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.AsURL);
+        // Wenn keine BasicHTTP-Authentication verwendet werden soll (Header) dann url.AsURL verwenden
+        //proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.AsURL);
+        proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
 
         auth := GetAuthentificationHeader(credentials);
         (proxy as ICallContext).AddHeader(auth, True);

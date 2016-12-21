@@ -80,7 +80,6 @@ var
   receiver_native_address: ReceiverNativeAddressType;
   receiver_native_origin: Origin_Type;
 begin
-
   receiver_native_address := ReceiverNativeAddressType.Create;
   receiver_native_origin := Origin_Type.Create;
 
@@ -305,7 +304,6 @@ begin
 
   receiver := ReceiverType.Create;
   shipment_type.Receiver := receiver;
-
 
   receiver.name1 := GetReceiverCompany;
   receiver.Address := GetReceiverNativeAddressType;
