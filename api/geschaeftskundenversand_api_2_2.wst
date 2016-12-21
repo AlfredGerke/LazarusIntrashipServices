@@ -1,5 +1,5 @@
-  GetWSTResourceManager().AddResource('GESCHAEFTSKUNDENVERSAND-API-2.2',
-    #0#0#0#16'WST_METADATA_0.6'#0#0#0#31'geschaeftskundenversand-api-2.2'#0#1#0#0
+  GetWSTResourceManager().AddResource('geschaeftskundenversand_api_2_2',
+    #0#0#0#16'WST_METADATA_0.6'#0#0#0#31'geschaeftskundenversand_api_2_2'#0#1#0#0
     +#0#21'GKVAPIServicePortType'#0#9#0#0#0#19'createShipmentOrder'#2#0#0#0#31'Cr'
     +'eateShipmentOrderRequestParam'#0#0#0#26'CreateShipmentOrderRequest'#0#0#0#0
     +#0#0#0#1#0#0#0#6'Result'#0#0#0#27'CreateShipmentOrderResponse'#0#0#0#0#0#0#0

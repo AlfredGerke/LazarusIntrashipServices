@@ -28,7 +28,6 @@ type
     procedure LoopChildNodes(AChildNode: TDOMNode;
                              AHandleChildNodeProc: TOnHandleChildNode); overload;
     procedure RemoveEmptyChildNodes;
-    procedure AlterNamespace;
 
     procedure GetXMLByStream(AStream: TStream);
     procedure SetXMLToStream(AStream: TStream);
@@ -101,7 +100,6 @@ begin
   GetXMLByStream(ARequest);
 
   RemoveEmptyChildNodes;
-  AlterNamespace;
 
   SetXMLToStream(ARequest);
 
@@ -162,11 +160,6 @@ end;
 procedure TRemodelRequest.RemoveEmptyChildNodes;
 begin
   LoopChildNodes(RemoveEmptyChildNodeProc);
-end;
-
-procedure TRemodelRequest.AlterNamespace;
-begin
-  LoopChildNodes(AlterChildNodeNamespaceProc);
 end;
 
 destructor TRemodelRequest.Destroy;

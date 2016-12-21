@@ -11,12 +11,11 @@ uses
   StdCtrls,
   lis_synapse_http_protocol,
   Classes,
-  { TODO -oAlfred Gerke -cFragen zum SOAP-Handling : Immer notwendig und wenn ja wo am besten einbinden? }
   soap_formatter,
   httpsend,
   IntrashipServicesTypes,
-  is_base_de,
-  cis_base;
+  geschaeftskundenversand_api_2_2,
+  geschaeftskundenversand_api_2_2_schema_cis_base;
 
 type
 
@@ -36,18 +35,17 @@ type
     btnCreateShipmentDD: TSpeedButton;
     procedure btnClearLogClick(Sender: TObject);
     procedure btnCreateShipmentDDClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     procedure DoMonitor(ALog: string);
-    function GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
-                                    AOrderData: TOrderData): CreateShipmentDDRequest;
+    function GetCreateShipmentOrderReq(AConfigSettings: TConfigSettings;
+                                       AOrderData: TOrderData): CreateShipmentOrderRequest;
     function GetAuthentificationHeader(ACredentials: TCredentials): Authentification;
     function GetSettings(var AConfig: TConfigSettings;
                          var ACredentials: TCredentials;
                          var AOrderData: TOrderData;
                          var AUrl: TUrlHandler): TErrorHandler;
     procedure ClearLog;
-    procedure CreateShipmentDD;
+    procedure CreateShipmentOrderReq;
 
     procedure OnBeforeExecuteProc(ARequest: TStream;
                                   var AContinue: boolean);
@@ -65,8 +63,7 @@ implementation
 {$R *.lfm}
 
 uses
-  geschaeftskundenversand_api_1_0_proxy,
-  geschaeftskundenversand_api_1_0,
+  geschaeftskundenversand_api_2_2_proxy,
   BusinessClientAPIRequestBuilder,
   base_service_intf,
   SysUtils,
@@ -83,11 +80,7 @@ end;
 
 procedure TMain.btnCreateShipmentDDClick(Sender: TObject);
 begin
-  CreateShipmentDD;
-end;
-
-procedure TMain.FormCreate(Sender: TObject);
-begin
+  CreateShipmentOrderReq;
 end;
 
 procedure TMain.DoMonitor(ALog: string);
@@ -95,18 +88,18 @@ begin
   edtLog.Lines.Add(ALog);
 end;
 
-function TMain.GetCreateShipmentDDReq(AConfigSettings: TConfigSettings;
-  AOrderData: TOrderData): CreateShipmentDDRequest;
+function TMain.GetCreateShipmentOrderReq(AConfigSettings: TConfigSettings;
+  AOrderData: TOrderData): CreateShipmentOrderRequest;
 var
   request_builder: TBusinessClientAPIRequestBuilder;
-  req: CreateShipmentDDRequest;
+  req: CreateShipmentOrderRequest;
 begin
   request_builder := TBusinessClientAPIRequestBuilder.Create;
   try
     request_builder.ConfigSettings := AConfigSettings;
     request_builder.OrderData := AOrderData;
 
-    req := request_builder.GetCreateShipmentDDReq(False);
+    req := request_builder.GetCreateShipmentOrderReq(False);
   finally
     Result := req;
   end;
@@ -117,7 +110,6 @@ begin
   Result := Authentification.Create;
   Result.user := ACredentials.IntrashipUser.AsString;
   Result.signature := ACredentials.Signature.AsString;
-  Result._type := 0;
 end;
 
 function TMain.GetSettings(var AConfig: TConfigSettings;
@@ -159,15 +151,15 @@ begin
   edtLog.Clear;
 end;
 
-procedure TMain.CreateShipmentDD;
+procedure TMain.CreateShipmentOrderReq;
 var
-  proxy: ISWSServicePortType;
+  proxy: GKVAPIServicePortType;
   auth: Authentification;
   credentials: TCredentials;
   config: TConfigSettings;
   order_data: TOrderData;
-  req: CreateShipmentDDRequest;
-  resp: CreateShipmentResponse;
+  req: CreateShipmentOrderRequest;
+  resp: CreateShipmentOrderResponse;
   url: TUrlHandler;
   err: TErrorHandler;
   free_resp: boolean;
@@ -176,24 +168,25 @@ begin
   try
     try
       err := GetSettings(config, credentials, order_data, url);
+
       if err.Found then
+        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0)
+      else
       begin
-        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0);
-        Exit;
+        SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
+          OnSkipSendAndReceive);
+
+        // Wenn keine BasicHTTP-Authentication verwendet werden soll (Header) dann url.AsURL verwenden
+        //proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.AsURL);
+        proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
+
+        auth := GetAuthentificationHeader(credentials);
+        (proxy as ICallContext).AddHeader(auth, True);
+
+        req := GetCreateShipmentOrderReq(config, order_data);
+
+        resp := proxy.createShipmentOrder(req);
       end;
-
-      SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
-        OnSkipSendAndReceive);
-
-      //proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
-      proxy := wst_CreateInstance_ISWSServicePortType('SOAP:', 'HTTP:', url.AsURL);
-
-      auth := GetAuthentificationHeader(credentials);
-      (proxy as ICallContext).AddHeader(auth, True);
-
-      req := GetCreateShipmentDDReq(config, order_data);
-
-      resp := proxy.createShipmentDD(req);
     except
       on E: Exception do
       begin

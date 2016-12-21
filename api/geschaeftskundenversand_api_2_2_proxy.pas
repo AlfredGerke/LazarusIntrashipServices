@@ -34,7 +34,7 @@ Type
       const  GetLabelRequestParam : GetLabelRequest
     ):GetLabelResponse;
     function getVersion(
-      const  VersionParam : Version_Type
+      const  VersionParam : geschaeftskundenversand_api_2_2.Version_Type
     ):GetVersionResponse;
     function getExportDoc(
       const  GetExportDocRequestParam : GetExportDocRequest
@@ -206,7 +206,7 @@ Begin
 End;
 
 function TGKVAPIServicePortType_Proxy.getVersion(
-  const  VersionParam : Version_Type
+  const  VersionParam : geschaeftskundenversand_api_2_2.Version_Type
 ):GetVersionResponse;
 Var
   locSerializer : IFormatterClient;

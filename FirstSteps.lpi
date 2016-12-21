@@ -33,7 +33,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="12">
+    <Units Count="11">
       <Unit0>
         <Filename Value="FirstSteps.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -46,50 +46,46 @@
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="api\geschaeftskundenversand_api_1_0.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="api\cis_base.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="api\is_base_de.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="api\geschaeftskundenversand_api_1_0_proxy.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit5>
-      <Unit6>
         <Filename Value="source\intrashipservicesconst.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="IntrashipServicesConst"/>
-      </Unit6>
-      <Unit7>
+      </Unit2>
+      <Unit3>
         <Filename Value="source\businessclientapirequestbuilder.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="BusinessClientAPIRequestBuilder"/>
-      </Unit7>
-      <Unit8>
+      </Unit3>
+      <Unit4>
         <Filename Value="source\intrashipservicestypes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="IntrashipServicesTypes"/>
-      </Unit8>
-      <Unit9>
+      </Unit4>
+      <Unit5>
         <Filename Value="source\intrashipservicesutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="IntrashipServicesUtils"/>
-      </Unit9>
-      <Unit10>
+      </Unit5>
+      <Unit6>
         <Filename Value="source\lis_synapse_http_protocol.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit10>
-      <Unit11>
+      </Unit6>
+      <Unit7>
         <Filename Value="source\remodel.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Remodel"/>
-      </Unit11>
+      </Unit7>
+      <Unit8>
+        <Filename Value="api\geschaeftskundenversand_api_2_2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="api\geschaeftskundenversand_api_2_2_proxy.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="api\geschaeftskundenversand_api_2_2_schema_cis_base.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

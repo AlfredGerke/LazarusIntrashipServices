@@ -733,9 +733,9 @@ type
   ShipperType = class(ShipperTypeType)
   end;
 
-  ReceiverTypeType = class(TBaseComplexRemotable)
+  ReceiverTypeType = class(ReceiverTypeTypeCISBase)
   private
-    Fname1 : name1_Type;
+    //Fname1 : name1_Type;
     FAddress : ReceiverNativeAddressType;
     FPackstation : PackStationType;
     FPostfiliale : PostfilialeType;
@@ -750,7 +750,7 @@ type
     constructor Create();override;
     procedure FreeObjectProperties();override;
   published
-    property name1 : name1_Type read Fname1 write Fname1;
+    //property name1 : name1_Type read Fname1 write Fname1;
     property Address : ReceiverNativeAddressType read FAddress write FAddress stored wstHas_Address;
     property Packstation : PackStationType read FPackstation write FPackstation stored wstHas_Packstation;
     property Postfiliale : PostfilialeType read FPostfiliale write FPostfiliale stored wstHas_Postfiliale;
@@ -782,10 +782,10 @@ type
     property Nationality : UnicodeString read FNationality write FNationality;
   end;
 
-  ShipmentDetailsType = class(TBaseComplexRemotable)
+  ShipmentDetailsType = class(ShipmentDetailsTypeCISBase)
   private
     Fproduct : UnicodeString;
-    FaccountNumber : accountNumber_Type;
+    //FaccountNumber : accountNumber_Type;
     FcustomerReference : ShipmentDetailsType_customerReference_Type;
     FshipmentDate : ShipmentDetailsType_shipmentDate_Type;
     FreturnShipmentAccountNumber : ShipmentDetailsType_returnShipmentAccountNumber_Type;
@@ -796,7 +796,7 @@ type
     function wstHas_returnShipmentReference() : Boolean;
   published
     property product : UnicodeString read Fproduct write Fproduct;
-    property accountNumber : accountNumber_Type read FaccountNumber write FaccountNumber;
+    //property accountNumber : accountNumber_Type read FaccountNumber write FaccountNumber;
     property customerReference : ShipmentDetailsType_customerReference_Type read FcustomerReference write FcustomerReference stored wstHas_customerReference;
     property shipmentDate : ShipmentDetailsType_shipmentDate_Type read FshipmentDate write FshipmentDate;
     property returnShipmentAccountNumber : ShipmentDetailsType_returnShipmentAccountNumber_Type read FreturnShipmentAccountNumber write FreturnShipmentAccountNumber stored wstHas_returnShipmentAccountNumber;
@@ -4254,8 +4254,13 @@ initialization
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverType),'ReceiverType',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Ident),'Ident',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsType),'ShipmentDetailsType',[triounqualifiedElement, triounqualifiedAttribute]);
+
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeType),'ShipmentDetailsTypeType',[triounqualifiedElement, triounqualifiedAttribute]);
+  //typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeType),'ShipmentDetails',[triounqualifiedElement, triounqualifiedAttribute]);
+
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemType),'ShipmentItemType',[triounqualifiedElement, triounqualifiedAttribute]);
+  //typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemType),'ShipmentItem',[triounqualifiedElement, triounqualifiedAttribute]);
+
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemTypeType),'ShipmentItemTypeType',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentService),'ShipmentService',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Serviceconfiguration),'Serviceconfiguration',[triounqualifiedElement, triounqualifiedAttribute]);

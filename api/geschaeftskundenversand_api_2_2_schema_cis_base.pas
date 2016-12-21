@@ -584,6 +584,32 @@ type
     property Item[AIndex:Integer] : ReceiverNativeAddressType_addressAddition_Type read GetItem write SetItem; default;
   end;
 
+  // !:<--
+  // Zusätzliche Basis-Objecte für den Namespace: http://dhl.de/webservice/cisbase
+  // Die Objecte wurden von Hand angelegt um einzelnen Childnodes eines Elementes mit dem
+  // Namespace: http://dhl.de/webservices/businesscustomershipping für den cisbase-Namespace zuzuweisen
+
+  dummy_Type = type UnicodeString;
+
+  ShipmentDetailsTypeCISBase = class(TBaseComplexRemotable)
+  private
+    Fdummy: dummy_Type;
+    FaccountNumber : accountNumber_Type;
+  published
+    property dummy: dummy_Type read Fdummy write Fdummy;
+    property accountNumber : accountNumber_Type read FaccountNumber write FaccountNumber;
+  end;
+
+  ReceiverTypeTypeCISBase = class(TBaseComplexRemotable)
+  private
+    Fdummy: dummy_Type;
+    Fname1 : name1_Type;
+  published
+    property dummy: dummy_Type read Fdummy write Fdummy;
+    property name1 : name1_Type read Fname1 write Fname1;
+  end;
+  // -->
+
 Implementation
 uses metadata_repository, record_rtti, wst_types;
 
@@ -999,7 +1025,7 @@ end;
 
 function ShipmentNumberType.wstHas_shipmentNumber() : Boolean;
 begin
-  Result := ( FshipmentNumber <> shipmentNumber_Type(0) );
+  Result := ( Trim(FshipmentNumber) <> EmptyStr );
 end;
 
 function Dimension.wstHas__unit() : Boolean;
@@ -1167,7 +1193,10 @@ initialization
 
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Dimension_unit_Type),'Dimension_unit_Type');
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(CountryType),'CountryType',[trioqualifiedElement, triounqualifiedAttribute]);
-  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(AuthentificationType),'AuthentificationType',[trioqualifiedElement, triounqualifiedAttribute]);
+
+  // DeclaredName AuthentificationType wurde in Authentification geändert
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(AuthentificationType),'Authentification',[trioqualifiedElement, triounqualifiedAttribute]);
+
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Version_Type),'Version',[trioqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(NativeAddressType),'NativeAddressType',[trioqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverNativeAddressType),'ReceiverNativeAddressType',[trioqualifiedElement, triounqualifiedAttribute]);
@@ -1195,5 +1224,8 @@ initialization
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(Dimension)].RegisterExternalPropertyName('_unit','unit');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(TimeFrame)].RegisterExternalPropertyName('_until','until');
 
+  // Zustäztliche von Hand angelegte Objecte für den cisbase-Namspace werden hier registrieren
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeCISBase),'ShipmentDetailsTypeCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
+  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverTypeTypeCISBase),'ReceiverTypeTypeCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
 
 End.
