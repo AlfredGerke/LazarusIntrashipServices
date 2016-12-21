@@ -28,18 +28,10 @@ LazarusIntrashipServices
 		.gitignore
 		.gitattributes
 [Open project files]
-0=.gitattributes
-1=.gitignore
-2=..\..\Subversion\DHL-WS-Test_2_2\importWSDL.bat
+0=README.md
 [Selected Project Files]
 Main=
-Selected=..\..\Subversion\DHL-WS-Test_2_2\importWSDL.bat
-[.gitattributes]
-TopLine=1
-Caret=28,18
-[.gitignore]
-TopLine=1
-Caret=1,12
-[..\..\Subversion\DHL-WS-Test_2_2\importWSDL.bat]
-TopLine=1
-Caret=40,1
+Selected=README.md
+[README.md]
+TopLine=21
+Caret=119,59

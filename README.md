@@ -53,10 +53,10 @@ eine Komponente entwickelt werden, über die eine Grundversion der Geschäftskun
 Versionen
 ---------
       
-Lazarus: 1.4.4 (DebugServer kompilieren)      
-FPC: 2.6.4     
+Lazarus: 1.6.2 (DebugServer kompilieren)      
+FPC: 3.0.0     
 Web Service Toolkit: 0.6   
-Synapse: 0.40   
+Synapse: [Trunk-Version](https://svn.code.sf.net/p/synalist/code/trunk "https://svn.code.sf.net/p/synalist/code/trunk")   
 OpenSSL: 1.0.2d      
 
 Das Web Service Toolkit bietet neben dem Standard HTTP-Zugriff von FPC zusätzlich den Zugriff über Synapse und Indy an.
