@@ -67,6 +67,7 @@ type
     Active: boolean;
     IniFilename: string;
 
+    DoTest: Boolean;
     SandboxURL: string;
     ProductivURL: string;
 
@@ -82,6 +83,8 @@ type
     MajorVersionGL: TStringHandler;
     MinorVersionGL: TStringHandler;
 
+    function GetURL: String;
+
     function SetByIni: TErrorHandler;
     procedure Clear;
   end;
@@ -96,8 +99,6 @@ type
 
     IntrashipUser: TStringHandler;
     Signature: TStringHandler;
-
-    DoTest: Boolean;
 
     function AsBasicHTTPAuthenticationString: string;
     function CheckData: TErrorHandler;
@@ -230,10 +231,7 @@ end;
 
 procedure TUrlHandler.InitURL;
 begin
-  if Credentials.DoTest then
-    URL.SetByString(Configuration.SandboxURL)
-  else
-    URL.SetByString(Configuration.ProductivURL);
+  URL.SetByString(Configuration.GetURL);
 end;
 
 procedure TUrlHandler.Clear;
@@ -294,8 +292,6 @@ begin
 
       str := ini.ReadString('authentication', 'password', '');
       Password.SetByString(str);
-
-      DoTest:= ini.ReadBool('intraship', 'test', True);
 
       str := ini.ReadString('intraship', 'user', '');
       IntrashipUser.SetByString(str);
@@ -812,6 +808,16 @@ end;
 procedure TConfigSettings.Clear;
 begin
   FillChar(Self, SizeOf(Self), #0);
+
+  DoTest := True;
+end;
+
+function TConfigSettings.GetURL: String;
+begin
+  if DoTest then
+    Result := SandboxURL
+  else
+    Result := ProductivURL;
 end;
 
 function TConfigSettings.SetByIni: TErrorHandler;
@@ -829,6 +835,7 @@ begin
     begin
       ini := TIniFile.Create(IniFilename);
       try
+        DoTest:= ini.ReadBool('url', 'test', True);
         SandboxURL := ini.ReadString('url', 'sandbox', '');
         ProductivURL := ini.ReadString('url', 'productiv', '');
 

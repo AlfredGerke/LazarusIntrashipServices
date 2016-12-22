@@ -50,8 +50,9 @@ type
     procedure ClearLog;
     procedure CreateShipmentOrder;
     procedure DeleteShipmentOrder;
-    procedure GetShipmentNoByResponse(ACreationState: CreateShipmentOrderResponse_CreationStateArray);
-    procedure GetDeleteShipmentNoByResponse(ADeletionState: DeleteShipmentOrderResponse_DeletionStateArray);
+    function GetShipmentNoByResponse(ACreationState: CreateShipmentOrderResponse_CreationStateArray): boolean;
+    function GetDeleteShipmentNoByResponse(ADeletionState: DeleteShipmentOrderResponse_DeletionStateArray): boolean;
+    procedure HandleStateInformation(AStateInformation: Statusinformation);
 
     procedure OnBeforeExecuteProc(ARequest: TStream;
                                   var AContinue: boolean);
@@ -223,12 +224,12 @@ begin
             raise Exception.Create('Fehler im Response! (s. Log)')
           else
             if Assigned(resp.CreationState) then
-              GetShipmentNoByResponse(resp.CreationState)
+            begin
+              if not GetShipmentNoByResponse(resp.CreationState) then
+                HandleStateInformation(resp.Status);
+            end
             else
-            if Assigned(resp.Status) then
-              TStateInformation.Open(resp.Status)
-            else
-              raise Exception.Create('Fehler im Response! (s. Log)');
+              HandleStateInformation(resp.Status);
       end;
     except
       on E: Exception do
@@ -294,12 +295,12 @@ begin
             raise Exception.Create('Fehler im Response! (s. Log)')
           else
             if Assigned(resp.DeletionState) then
-              GetDeleteShipmentNoByResponse(resp.DeletionState)
+            begin
+              if not GetDeleteShipmentNoByResponse(resp.DeletionState) then
+                HandleStateInformation(resp.Status);
+            end
             else
-            if Assigned(resp.Status) then
-              TStateInformation.Open(resp.Status)
-            else
-              raise Exception.Create('Fehler im Response! (s. Log)');
+              HandleStateInformation(resp.Status);
       end;
     except
       on E: Exception do
@@ -317,15 +318,16 @@ begin
   end;
 end;
 
-procedure TMain.GetShipmentNoByResponse(
-  ACreationState: CreateShipmentOrderResponse_CreationStateArray);
+function TMain.GetShipmentNoByResponse(
+  ACreationState: CreateShipmentOrderResponse_CreationStateArray): boolean;
 var
   cre_state: CreationState;
   len: integer;
 begin
   len := ACreationState.Length;
 
-  if (len > 0) then
+  Result := (len > 0);
+  if Result then
   begin
     cre_state := ACreationState.Item[0];
     edtShipmentNr.text := String(cre_state.LabelData.shipmentNumber);
@@ -333,26 +335,35 @@ begin
     SendDebug(Format('Sendungsnummer: %s', [cre_state.LabelData.shipmentNumber]));
     SendDebug(Format('Labelurl: %s', [cre_state.LabelData.labelUrl]));
 
-    TStateInformation.Open(cre_state.LabelData.Status);
+    HandleStateInformation(cre_state.LabelData.Status);
   end;
 end;
 
-procedure TMain.GetDeleteShipmentNoByResponse(
-  ADeletionState: DeleteShipmentOrderResponse_DeletionStateArray);
+function TMain.GetDeleteShipmentNoByResponse(
+  ADeletionState: DeleteShipmentOrderResponse_DeletionStateArray): boolean;
 var
   del_state: DeletionState;
   len: integer;
 begin
   len := ADeletionState.Length;
 
-  if (len > 0) then
+  Result := (len > 0);
+  if Result then
   begin
     del_state := ADeletionState.Item[0];
 
     SendDebug(Format('Sendungsnummer: %s', [del_state.shipmentNumber]));
 
-    TStateInformation.Open(del_state.Status);
+    HandleStateInformation(del_state.Status);
   end;
+end;
+
+procedure TMain.HandleStateInformation(AStateInformation: Statusinformation);
+begin
+  if Assigned(AStateInformation) then
+    TStateInformation.Open(AStateInformation)
+  else
+    raise Exception.Create('Fehler im Response! (s. Log)');
 end;
 
 procedure TMain.OnBeforeExecuteProc(ARequest: TStream;

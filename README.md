@@ -17,7 +17,7 @@ die Geschäftskundenversand-API von DHL-Intraship in ein entsprechendes Projekt 
 Anmerkung zur neuen Version
 ---------------------------
 
-Erstellung der ersten Version.
+Erstellung der ersten Version für die Geschäftskundenversand-API Version 2.0 (WS-Version 2.2).
 
 
 Voraussetzungen
@@ -35,12 +35,21 @@ Allerdings kann man jede Web API durch entsprechende Testsysteme simulieren, was
 aber den logischen Anteil, der bei der Nutzung des Logistikportals zum tragen kommt,
 nur unzureichend berücksichtigt.
 
+### Pfade
+Die Pfade für die Sourcen vom Web Service Toolkit und von Synapse sind im Projekt wie folgt eingetragen: `..\..\Subversion\lazarus-ccr;..\..\Subversion\Synapse`    
+Die Einträge müssen entsprechend der lokalen Installation der Packages angepast werden.
 
 Einleitung
 ----------
 
 Dieses Testprojekt soll klären, ob mit dem Web Service Toolkit von [Inoussa OUEDRAOGO](http://inoussa12.googlepages.com/ "Inoussa OUEDRAOGO") 
-die Geschäftskundenversand-API von DHL-Intraship in ein entsprechendes Projekt unter Lazarus eingebunden werden kann. 
+die Geschäftskundenversand-API von DHL-Intraship in ein entsprechendes Projekt unter Lazarus eingebunden werden kann.
+
+* Das Testprojekt soll die Operationen CreateShipmentOrder und DeleteShipmentOrder zur Verfügung stellen    
+* CreateShipmentOrder soll eine Sendung mit Auftrags-Testdaten wie sie auch in den Beispielprogrammen verwendent werden erstellen    
+* DeleteShipmentOrder soll eine Sendung anhand einer Sendungsnummer stornieren
+* Der Request wie der Response werden in einem Log angezeigt
+* Die erstellte Sendungsnummer wird in einem separaten Feld angezeigt    
 
 
 ## Links zum Web Service Toolkit
@@ -63,6 +72,7 @@ OpenSSL: 1.0.2d
 Das Web Service Toolkit bietet neben dem Standard HTTP-Zugriff von FPC zusätzlich den Zugriff über Synapse und Indy an.
 In diesem Projekt wird die Netzwerkkommunikation mit [Ararat Synapse](http://synapse.ararat.cz/ "Ararat Synapse") realisiert.
 Als SSL-Plugin wird das OpenSSL-Plugin gewählt, da es von Synapse besonders empfohlen wird. Bedingung für das OpenSSL-Plugin sind die entsprechenden Libaries (DLLs genügen).
+
 
 settings.ini
 ------------

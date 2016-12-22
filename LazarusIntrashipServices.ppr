@@ -29,30 +29,14 @@ LazarusIntrashipServices
 		.gitignore
 		.gitattributes
 [Open project files]
-0=ini\settings.ini
+0=README.md
 1=ini\README.md
-2=ini\settings.in_
-3=README.md
-4=.gitignore
-5=api\README.md
 [Selected Project Files]
 Main=
-Selected=api\README.md
-[ini\settings.ini]
-TopLine=1
-Caret=9,3
+Selected=README.md
+[README.md]
+TopLine=16
+Caret=1,40
 [ini\README.md]
 TopLine=1
-Caret=45,10
-[ini\settings.in_]
-TopLine=1
-Caret=35,12
-[README.md]
-TopLine=1
-Caret=84,30
-[.gitignore]
-TopLine=1
-Caret=51,11
-[api\README.md]
-TopLine=1
-Caret=26,18
+Caret=1,1

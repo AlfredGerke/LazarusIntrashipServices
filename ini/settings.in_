@@ -5,12 +5,12 @@ password=<pass>
 
 ;Credentials
 [intraship]
-test=1
 user=<user> 
 signature=<signatur>
 
 ;URL für Produktiv- und Testsystem
 [url]
+test=1
 sandbox="<sandbox-url>"
 productiv="<productiv-url>" 
 
