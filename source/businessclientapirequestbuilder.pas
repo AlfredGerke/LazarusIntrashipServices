@@ -17,6 +17,7 @@ type
   private
     FConfigSettings: TConfigSettings;
     FOrderData: TOrderData;
+    FShipmentNo: string;
 
     function GetReceiverCommunicationType: CommunicationType;
     function GetReceiverNativeAddressType: ReceiverNativeAddressType;
@@ -33,6 +34,7 @@ type
     class function GetInstance: TBusinessClientAPIRequestBuilder;
 
     function GetCreateShipmentOrderReq(ADoXMLabel: boolean): CreateShipmentOrderRequest;
+    function GetDeleteShipmentOrderReq(AShipmentNo: string): DeleteShipmentOrderRequest;
 
     property ConfigSettings: TConfigSettings
       read FConfigSettings
@@ -41,6 +43,10 @@ type
     property OrderData: TOrderData
       read FOrderData
       write FOrderData;
+
+    property ShipmentNo: string
+      read FShipmentNo
+      write FShipmentNo;
   end;
 
 procedure FreeSingeltonBusinessClientAPIRequestBuilder;
@@ -315,6 +321,26 @@ begin
     shipment_order_type.LabelResponseType := ShipmentOrderType_LabelResponseType_Type(0);
 
   req.ShipmentOrder := shipment_order_array;
+
+  Result := req;
+end;
+
+function TBusinessClientAPIRequestBuilder.GetDeleteShipmentOrderReq(
+  AShipmentNo: string): DeleteShipmentOrderRequest;
+var
+  req: DeleteShipmentOrderRequest;
+  shipment_no_array: DeleteShipmentOrderRequest_shipmentNumberArray;
+begin
+  req := DeleteShipmentOrderRequest.Create;
+
+  req.Version := self.GetVersion(catDeleteShipment);
+
+  shipment_no_array := DeleteShipmentOrderRequest_shipmentNumberArray.Create;
+
+  shipment_no_array.SetLength(1);
+  shipment_no_array.Item[0] := AShipmentNo;
+
+  req.shipmentNumber := shipment_no_array;
 
   Result := req;
 end;

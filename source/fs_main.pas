@@ -35,10 +35,13 @@ type
     btnCreateShipmentDD: TSpeedButton;
     procedure btnClearLogClick(Sender: TObject);
     procedure btnCreateShipmentDDClick(Sender: TObject);
+    procedure btnDeleteShipmentDDClick(Sender: TObject);
   private
     procedure DoMonitor(ALog: string);
     function GetCreateShipmentOrderReq(AConfigSettings: TConfigSettings;
                                        AOrderData: TOrderData): CreateShipmentOrderRequest;
+    function GetDeleteShipmentOrderReq(AConfigSettings: TConfigSettings;
+                                       AShipmentNo: string): DeleteShipmentOrderRequest;
     function GetAuthentificationHeader(ACredentials: TCredentials): Authentification;
     function GetSettings(var AConfig: TConfigSettings;
                          var ACredentials: TCredentials;
@@ -46,7 +49,9 @@ type
                          var AUrl: TUrlHandler): TErrorHandler;
     procedure ClearLog;
     procedure CreateShipmentOrder;
+    procedure DeleteShipmentOrder;
     procedure GetShipmentNoByResponse(ACreationState: CreateShipmentOrderResponse_CreationStateArray);
+    procedure GetDeleteShipmentNoByResponse(ADeletionState: DeleteShipmentOrderResponse_DeletionStateArray);
 
     procedure OnBeforeExecuteProc(ARequest: TStream;
                                   var AContinue: boolean);
@@ -85,6 +90,11 @@ begin
   CreateShipmentOrder;
 end;
 
+procedure TMain.btnDeleteShipmentDDClick(Sender: TObject);
+begin
+  DeleteShipmentOrder;
+end;
+
 procedure TMain.DoMonitor(ALog: string);
 begin
   edtLog.Lines.Add(ALog);
@@ -102,6 +112,22 @@ begin
     request_builder.OrderData := AOrderData;
 
     req := request_builder.GetCreateShipmentOrderReq(False);
+  finally
+    Result := req;
+  end;
+end;
+
+function TMain.GetDeleteShipmentOrderReq(AConfigSettings: TConfigSettings;
+  AShipmentNo: string): DeleteShipmentOrderRequest;
+var
+  request_builder: TBusinessClientAPIRequestBuilder;
+  req: DeleteShipmentOrderRequest;
+begin
+  request_builder := TBusinessClientAPIRequestBuilder.Create;
+  try
+    request_builder.ConfigSettings := AConfigSettings;
+
+    req := request_builder.GetDeleteShipmentOrderReq(AShipmentNo);
   finally
     Result := req;
   end;
@@ -220,6 +246,77 @@ begin
   end;
 end;
 
+procedure TMain.DeleteShipmentOrder;
+var
+  proxy: GKVAPIServicePortType;
+  auth: Authentification;
+  credentials: TCredentials;
+  config: TConfigSettings;
+  order_data: TOrderData;
+  req: DeleteShipmentOrderRequest;
+  resp: DeleteShipmentOrderResponse;
+  url: TUrlHandler;
+  err: TErrorHandler;
+  free_resp: boolean;
+  shipment_no: string;
+begin
+  free_resp := True;
+
+  shipment_no := edtShipmentNr.text;
+  if Trim(shipment_no) = EmptyStr then
+    MessageDlg('Keine Sendnungsnummer vorhanden!', mtInformation, [mbOK], 0)
+  else
+  try
+    try
+      err := GetSettings(config, credentials, order_data, url);
+
+      if err.Found then
+        MessageDlg(err.GetErrorMessage, mtError, [mbOK], 0)
+      else
+      begin
+        SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
+          OnSkipSendAndReceive);
+
+        // Wenn keine BasicHTTP-Authentication verwendet werden soll (s. OnSetHeadersProc) dann
+        // url.AsURL verwenden
+        //proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.AsURL);
+        proxy := wst_CreateInstance_GKVAPIServicePortType('SOAP:', 'HTTP:', url.URL.AsString);
+
+        auth := GetAuthentificationHeader(credentials);
+        (proxy as ICallContext).AddHeader(auth, True);
+
+        req := GetDeleteShipmentOrderReq(config, edtShipmentNr.Text);
+
+        resp := proxy.deleteShipmentOrder(req);
+
+        if not cbxSkipSendAndReceive.Checked then
+          if not Assigned(resp) then
+            raise Exception.Create('Fehler im Response! (s. Log)')
+          else
+            if Assigned(resp.DeletionState) then
+              GetDeleteShipmentNoByResponse(resp.DeletionState)
+            else
+            if Assigned(resp.Status) then
+              TStateInformation.Open(resp.Status)
+            else
+              raise Exception.Create('Fehler im Response! (s. Log)');
+      end;
+    except
+      on E: Exception do
+      begin
+        edtLog.Lines.Add(E.Message);
+        free_resp := False;
+      end;
+    end;
+  finally
+    if Assigned(req) then
+      FreeAndNil(req);
+
+    if (Assigned(resp) and free_resp) then
+      FreeAndNil(resp);
+  end;
+end;
+
 procedure TMain.GetShipmentNoByResponse(
   ACreationState: CreateShipmentOrderResponse_CreationStateArray);
 var
@@ -237,6 +334,24 @@ begin
     SendDebug(Format('Labelurl: %s', [cre_state.LabelData.labelUrl]));
 
     TStateInformation.Open(cre_state.LabelData.Status);
+  end;
+end;
+
+procedure TMain.GetDeleteShipmentNoByResponse(
+  ADeletionState: DeleteShipmentOrderResponse_DeletionStateArray);
+var
+  del_state: DeletionState;
+  len: integer;
+begin
+  len := ADeletionState.Length;
+
+  if (len > 0) then
+  begin
+    del_state := ADeletionState.Item[0];
+
+    SendDebug(Format('Sendungsnummer: %s', [del_state.shipmentNumber]));
+
+    TStateInformation.Open(del_state.Status);
   end;
 end;
 

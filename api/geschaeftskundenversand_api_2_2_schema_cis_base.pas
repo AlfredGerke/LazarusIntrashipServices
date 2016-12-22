@@ -617,7 +617,6 @@ type
   published
     property shipmentNumber : shipmentNumber_Type read FshipmentNumber write FshipmentNumber stored wstHas_shipmentNumber;
   end;
-
   // -->
 
 Implementation

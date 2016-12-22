@@ -35,9 +35,10 @@ LazarusIntrashipServices
 3=README.md
 4=.gitignore
 5=api\README.md
+6=Neu2.ini
 [Selected Project Files]
 Main=
-Selected=ini\settings.ini
+Selected=Neu2.ini
 [ini\settings.ini]
 TopLine=1
 Caret=9,3
@@ -56,3 +57,6 @@ Caret=51,11
 [api\README.md]
 TopLine=1
 Caret=26,18
+[Neu2.ini]
+TopLine=1
+Caret=21,1

@@ -471,16 +471,25 @@ type
     property ManifestState : DoManifestResponse_ManifestStateArray read FManifestState write FManifestState stored wstHas_ManifestState;
   end;
 
-  DeleteShipmentOrderRequest = class(TBaseComplexRemotable)
+  DeleteShipmentOrderRequestCISBase = class(TBaseComplexRemotable)
+  private
+    Fdummy: dummy_Type;
+    FshipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray;
+  published
+    property dummy: dummy_Type read Fdummy write Fdummy;
+    property shipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray read FshipmentNumber write FshipmentNumber;
+  end;
+
+  DeleteShipmentOrderRequest = class(DeleteShipmentOrderRequestCISBase)
   private
     FVersion : Version_Type;
-    FshipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray;
+    //FshipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray;
   public
     constructor Create();override;
     procedure FreeObjectProperties();override;
   published
     property Version : Version_Type read FVersion write FVersion;
-    property shipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray read FshipmentNumber write FshipmentNumber;
+    //property shipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray read FshipmentNumber write FshipmentNumber;
   end;
 
   DeleteShipmentOrderResponse = class(TBaseComplexRemotable)
@@ -4166,6 +4175,8 @@ initialization
   ServiceconfigurationUnfree.RegisterAttributeProperty('CustomerNumber');
   ServiceconfigurationIC.RegisterAttributeProperty('active');
 
+  typeRegistryInstance.Register('http://dhl.de/webservice/cisbase',TypeInfo(DeleteShipmentOrderRequestCISBase),'DeleteShipmentOrderRequestCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
+
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(GetLabelRequest_labelResponseType_Type),'GetLabelRequest_labelResponseType_Type');
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(GetExportDocRequest_exportDocResponseType_Type),'GetExportDocRequest_exportDocResponseType_Type');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(GetExportDocRequest_exportDocResponseType_Type)].RegisterExternalPropertyName('GetExportDocRequest_exportDocResponseType_Type_URL','URL');
@@ -4328,8 +4339,10 @@ initialization
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(DoManifestRequest_shipmentNumberArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(DoManifestResponse_ManifestStateArray),'DoManifestResponse_ManifestStateArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(DoManifestResponse_ManifestStateArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
-  typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(DeleteShipmentOrderRequest_shipmentNumberArray),'DeleteShipmentOrderRequest_shipmentNumberArray');
+
+  typeRegistryInstance.Register('http://dhl.de/webservice/cisbase',TypeInfo(DeleteShipmentOrderRequest_shipmentNumberArray),'DeleteShipmentOrderRequest_shipmentNumberArray',[trioqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(DeleteShipmentOrderRequest_shipmentNumberArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
+
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(DeleteShipmentOrderResponse_DeletionStateArray),'DeleteShipmentOrderResponse_DeletionStateArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(DeleteShipmentOrderResponse_DeletionStateArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(GetExportDocRequest_shipmentNumberArray),'GetExportDocRequest_shipmentNumberArray');
@@ -4348,6 +4361,5 @@ initialization
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(ServiceconfigurationVisualAgeCheck)].RegisterExternalPropertyName('_type','type');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(ServiceconfigurationDeliveryTimeframe)].RegisterExternalPropertyName('_type','type');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(ServiceconfigurationShipmentHandling)].RegisterExternalPropertyName('_type','type');
-
 
 End.
