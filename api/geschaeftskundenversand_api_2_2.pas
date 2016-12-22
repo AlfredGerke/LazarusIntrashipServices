@@ -37,7 +37,7 @@ type
   DoManifestRequest = class;
   DoManifestResponse_ManifestStateArray = class;
   DoManifestResponse = class;
-  DeleteShipmentOrderRequest_shipmentNumberArray = class;
+  //DeleteShipmentOrderRequest_shipmentNumberArray = class;
   DeleteShipmentOrderRequest = class;
   DeleteShipmentOrderResponse_DeletionStateArray = class;
   DeleteShipmentOrderResponse = class;
@@ -471,14 +471,14 @@ type
     property ManifestState : DoManifestResponse_ManifestStateArray read FManifestState write FManifestState stored wstHas_ManifestState;
   end;
 
-  DeleteShipmentOrderRequestCISBase = class(TBaseComplexRemotable)
-  private
-    Fdummy: dummy_Type;
-    FshipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray;
-  published
-    property dummy: dummy_Type read Fdummy write Fdummy;
-    property shipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray read FshipmentNumber write FshipmentNumber;
-  end;
+  //DeleteShipmentOrderRequestCISBase = class(TBaseComplexRemotable)
+  //private
+  //  Fdummy: dummy_Type;
+  //  FshipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray;
+  //published
+  //  property dummy: dummy_Type read Fdummy write Fdummy;
+  //  property shipmentNumber : DeleteShipmentOrderRequest_shipmentNumberArray read FshipmentNumber write FshipmentNumber;
+  //end;
 
   DeleteShipmentOrderRequest = class(DeleteShipmentOrderRequestCISBase)
   private
@@ -1649,22 +1649,22 @@ type
     property Item[AIndex:Integer] : ManifestState Read GetItem;Default;
   end;
 
-  DeleteShipmentOrderRequest_shipmentNumberArray = class(TBaseSimpleTypeArrayRemotable)
-  private
-    FData : array of shipmentNumber_Type;
-  private
-    function GetItem(AIndex: Integer): shipmentNumber_Type;
-    procedure SetItem(AIndex: Integer; const AValue: shipmentNumber_Type);
-  protected
-    function GetLength():Integer;override;
-    procedure SaveItem(AStore : IFormatterBase;const AName : String;const AIndex : Integer);override;
-    procedure LoadItem(AStore : IFormatterBase;const AIndex : Integer);override;
-  public
-    class function GetItemTypeInfo():PTypeInfo;override;
-    procedure SetLength(const ANewSize : Integer);override;
-    procedure Assign(Source: TPersistent); override;
-    property Item[AIndex:Integer] : shipmentNumber_Type read GetItem write SetItem; default;
-  end;
+  //DeleteShipmentOrderRequest_shipmentNumberArray = class(TBaseSimpleTypeArrayRemotable)
+  //private
+  //  FData : array of shipmentNumber_Type;
+  //private
+  //  function GetItem(AIndex: Integer): shipmentNumber_Type;
+  //  procedure SetItem(AIndex: Integer; const AValue: shipmentNumber_Type);
+  //protected
+  //  function GetLength():Integer;override;
+  //  procedure SaveItem(AStore : IFormatterBase;const AName : String;const AIndex : Integer);override;
+  //  procedure LoadItem(AStore : IFormatterBase;const AIndex : Integer);override;
+  //public
+  //  class function GetItemTypeInfo():PTypeInfo;override;
+  //  procedure SetLength(const ANewSize : Integer);override;
+  //  procedure Assign(Source: TPersistent); override;
+  //  property Item[AIndex:Integer] : shipmentNumber_Type read GetItem write SetItem; default;
+  //end;
 
   DeleteShipmentOrderResponse_DeletionStateArray = class(TObjectCollectionRemotable)
   private
@@ -1978,15 +1978,15 @@ constructor DeleteShipmentOrderRequest.Create();
 begin
   inherited Create();
   FVersion := Version_Type.Create();
-  FshipmentNumber := DeleteShipmentOrderRequest_shipmentNumberArray.Create();
+  //FshipmentNumber := DeleteShipmentOrderRequest_shipmentNumberArray.Create();
 end;
 
 procedure DeleteShipmentOrderRequest.FreeObjectProperties();
 begin
   if Assigned(FVersion) then
     FreeAndNil(FVersion);
-  if Assigned(FshipmentNumber) then
-    FreeAndNil(FshipmentNumber);
+  //if Assigned(FshipmentNumber) then
+  //  FreeAndNil(FshipmentNumber);
   inherited FreeObjectProperties();
 end;
 
@@ -3514,72 +3514,72 @@ begin
   Result := ManifestState(inherited AddAt(APosition));
 end;
 
-{ DeleteShipmentOrderRequest_shipmentNumberArray }
-
-function DeleteShipmentOrderRequest_shipmentNumberArray.GetItem(AIndex: Integer): shipmentNumber_Type;
-begin
-  CheckIndex(AIndex);
-  Result := FData[AIndex];
-end;
-
-procedure DeleteShipmentOrderRequest_shipmentNumberArray.SetItem(AIndex: Integer;const AValue: shipmentNumber_Type);
-begin
-  CheckIndex(AIndex);
-  FData[AIndex] := AValue;
-end;
-
-function DeleteShipmentOrderRequest_shipmentNumberArray.GetLength(): Integer;
-begin
-  Result := System.Length(FData);
-end;
-
-procedure DeleteShipmentOrderRequest_shipmentNumberArray.SaveItem(AStore: IFormatterBase;const AName: String; const AIndex: Integer);
-begin
-  AStore.Put('shipmentNumber',TypeInfo(shipmentNumber_Type),FData[AIndex]);
-end;
-
-procedure DeleteShipmentOrderRequest_shipmentNumberArray.LoadItem(AStore: IFormatterBase;const AIndex: Integer);
-var
-  sName : string;
-begin
-  sName := 'shipmentNumber';
-  AStore.Get(TypeInfo(shipmentNumber_Type),sName,FData[AIndex]);
-end;
-
-class function DeleteShipmentOrderRequest_shipmentNumberArray.GetItemTypeInfo(): PTypeInfo;
-begin
-  Result := TypeInfo(shipmentNumber_Type);
-end;
-
-procedure DeleteShipmentOrderRequest_shipmentNumberArray.SetLength(const ANewSize: Integer);
-var
-  i : Integer;
-begin
-  if ( ANewSize < 0 ) then
-    i := 0
-  else
-    i := ANewSize;
-  System.SetLength(FData,i);
-end;
-
-procedure DeleteShipmentOrderRequest_shipmentNumberArray.Assign(Source: TPersistent);
-var
-  src : DeleteShipmentOrderRequest_shipmentNumberArray;
-  i, c : Integer;
-begin
-  if Assigned(Source) and Source.InheritsFrom(DeleteShipmentOrderRequest_shipmentNumberArray) then begin
-    src := DeleteShipmentOrderRequest_shipmentNumberArray(Source);
-    c := src.Length;
-    Self.SetLength(c);
-    if ( c > 0 ) then begin
-      for i := 0 to Pred(c) do begin
-        Self[i] := src[i];
-      end;
-    end;
-  end else begin
-    inherited Assign(Source);
-  end;
-end;
+//{ DeleteShipmentOrderRequest_shipmentNumberArray }
+//
+//function DeleteShipmentOrderRequest_shipmentNumberArray.GetItem(AIndex: Integer): shipmentNumber_Type;
+//begin
+//  CheckIndex(AIndex);
+//  Result := FData[AIndex];
+//end;
+//
+//procedure DeleteShipmentOrderRequest_shipmentNumberArray.SetItem(AIndex: Integer;const AValue: shipmentNumber_Type);
+//begin
+//  CheckIndex(AIndex);
+//  FData[AIndex] := AValue;
+//end;
+//
+//function DeleteShipmentOrderRequest_shipmentNumberArray.GetLength(): Integer;
+//begin
+//  Result := System.Length(FData);
+//end;
+//
+//procedure DeleteShipmentOrderRequest_shipmentNumberArray.SaveItem(AStore: IFormatterBase;const AName: String; const AIndex: Integer);
+//begin
+//  AStore.Put('shipmentNumber',TypeInfo(shipmentNumber_Type),FData[AIndex]);
+//end;
+//
+//procedure DeleteShipmentOrderRequest_shipmentNumberArray.LoadItem(AStore: IFormatterBase;const AIndex: Integer);
+//var
+//  sName : string;
+//begin
+//  sName := 'shipmentNumber';
+//  AStore.Get(TypeInfo(shipmentNumber_Type),sName,FData[AIndex]);
+//end;
+//
+//class function DeleteShipmentOrderRequest_shipmentNumberArray.GetItemTypeInfo(): PTypeInfo;
+//begin
+//  Result := TypeInfo(shipmentNumber_Type);
+//end;
+//
+//procedure DeleteShipmentOrderRequest_shipmentNumberArray.SetLength(const ANewSize: Integer);
+//var
+//  i : Integer;
+//begin
+//  if ( ANewSize < 0 ) then
+//    i := 0
+//  else
+//    i := ANewSize;
+//  System.SetLength(FData,i);
+//end;
+//
+//procedure DeleteShipmentOrderRequest_shipmentNumberArray.Assign(Source: TPersistent);
+//var
+//  src : DeleteShipmentOrderRequest_shipmentNumberArray;
+//  i, c : Integer;
+//begin
+//  if Assigned(Source) and Source.InheritsFrom(DeleteShipmentOrderRequest_shipmentNumberArray) then begin
+//    src := DeleteShipmentOrderRequest_shipmentNumberArray(Source);
+//    c := src.Length;
+//    Self.SetLength(c);
+//    if ( c > 0 ) then begin
+//      for i := 0 to Pred(c) do begin
+//        Self[i] := src[i];
+//      end;
+//    end;
+//  end else begin
+//    inherited Assign(Source);
+//  end;
+//end;
 
 { DeleteShipmentOrderResponse_DeletionStateArray }
 
@@ -4175,7 +4175,7 @@ initialization
   ServiceconfigurationUnfree.RegisterAttributeProperty('CustomerNumber');
   ServiceconfigurationIC.RegisterAttributeProperty('active');
 
-  typeRegistryInstance.Register('http://dhl.de/webservice/cisbase',TypeInfo(DeleteShipmentOrderRequestCISBase),'DeleteShipmentOrderRequestCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
+  //typeRegistryInstance.Register('http://dhl.de/webservice/cisbase',TypeInfo(DeleteShipmentOrderRequestCISBase),'DeleteShipmentOrderRequestCISBase',[trioqualifiedElement, triounqualifiedAttribute]);
 
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(GetLabelRequest_labelResponseType_Type),'GetLabelRequest_labelResponseType_Type');
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(GetExportDocRequest_exportDocResponseType_Type),'GetExportDocRequest_exportDocResponseType_Type');
@@ -4273,13 +4273,8 @@ initialization
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ReceiverType),'ReceiverType',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Ident),'Ident',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsType),'ShipmentDetailsType',[triounqualifiedElement, triounqualifiedAttribute]);
-
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeType),'ShipmentDetailsTypeType',[triounqualifiedElement, triounqualifiedAttribute]);
-  //typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentDetailsTypeType),'ShipmentDetails',[triounqualifiedElement, triounqualifiedAttribute]);
-
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemType),'ShipmentItemType',[triounqualifiedElement, triounqualifiedAttribute]);
-  //typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemType),'ShipmentItem',[triounqualifiedElement, triounqualifiedAttribute]);
-
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentItemTypeType),'ShipmentItemTypeType',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(ShipmentService),'ShipmentService',[triounqualifiedElement, triounqualifiedAttribute]);
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(Serviceconfiguration),'Serviceconfiguration',[triounqualifiedElement, triounqualifiedAttribute]);
@@ -4340,8 +4335,8 @@ initialization
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(DoManifestResponse_ManifestStateArray),'DoManifestResponse_ManifestStateArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(DoManifestResponse_ManifestStateArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
 
-  typeRegistryInstance.Register('http://dhl.de/webservice/cisbase',TypeInfo(DeleteShipmentOrderRequest_shipmentNumberArray),'DeleteShipmentOrderRequest_shipmentNumberArray',[trioqualifiedElement, triounqualifiedAttribute]);
-  typeRegistryInstance.ItemByTypeInfo[TypeInfo(DeleteShipmentOrderRequest_shipmentNumberArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
+  //typeRegistryInstance.Register('http://dhl.de/webservice/cisbase',TypeInfo(DeleteShipmentOrderRequest_shipmentNumberArray),'DeleteShipmentOrderRequest_shipmentNumberArray',[trioqualifiedElement, triounqualifiedAttribute]);
+  //typeRegistryInstance.ItemByTypeInfo[TypeInfo(DeleteShipmentOrderRequest_shipmentNumberArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);
 
   typeRegistryInstance.Register(sNAME_SPACE,TypeInfo(DeleteShipmentOrderResponse_DeletionStateArray),'DeleteShipmentOrderResponse_DeletionStateArray');
   typeRegistryInstance.ItemByTypeInfo[TypeInfo(DeleteShipmentOrderResponse_DeletionStateArray)].RegisterExternalPropertyName(sARRAY_STYLE,sEmbedded);

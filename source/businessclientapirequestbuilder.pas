@@ -7,7 +7,8 @@ interface
 uses
   geschaeftskundenversand_api_2_2,
   geschaeftskundenversand_api_2_2_schema_cis_base,
-  IntrashipServicesTypes;
+  IntrashipServicesTypes,
+  Classes;
 
 type
 
@@ -34,7 +35,9 @@ type
     class function GetInstance: TBusinessClientAPIRequestBuilder;
 
     function GetCreateShipmentOrderReq(ADoXMLabel: boolean): CreateShipmentOrderRequest;
-    function GetDeleteShipmentOrderReq(AShipmentNo: string): DeleteShipmentOrderRequest;
+
+    function GetDeleteShipmentOrderReq(AShipmentNo: string): DeleteShipmentOrderRequest; overload;
+    function GetDeleteShipmentOrderReq(AShipmentNo: TStrings): DeleteShipmentOrderRequest; overload;
 
     property ConfigSettings: TConfigSettings
       read FConfigSettings
@@ -328,17 +331,38 @@ end;
 function TBusinessClientAPIRequestBuilder.GetDeleteShipmentOrderReq(
   AShipmentNo: string): DeleteShipmentOrderRequest;
 var
+  list: TStrings;
+begin
+  list := TStringList.Create;
+  try
+    list.Add(AShipmentNo);
+
+    Result := GetDeleteShipmentOrderReq(list);
+  finally
+    if Assigned(list) then
+      FreeAndNil(list)
+  end;
+end;
+
+function TBusinessClientAPIRequestBuilder.GetDeleteShipmentOrderReq(
+  AShipmentNo: TStrings): DeleteShipmentOrderRequest;
+var
   req: DeleteShipmentOrderRequest;
   shipment_no_array: DeleteShipmentOrderRequest_shipmentNumberArray;
+  len: integer;
+  anz: integer;
 begin
+  len := AShipmentNo.Count;
+
   req := DeleteShipmentOrderRequest.Create;
 
   req.Version := self.GetVersion(catDeleteShipment);
 
   shipment_no_array := DeleteShipmentOrderRequest_shipmentNumberArray.Create;
 
-  shipment_no_array.SetLength(1);
-  shipment_no_array.Item[0] := AShipmentNo;
+  shipment_no_array.SetLength(len);
+  for anz := 0 to len-1 do
+    shipment_no_array.Item[anz] := AShipmentNo.Strings[anz];
 
   req.shipmentNumber := shipment_no_array;
 

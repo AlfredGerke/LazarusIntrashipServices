@@ -53,7 +53,7 @@ object Main: TMain
     object cbxSkipSendAndReceive: TCheckBox
       Left = 8
       Height = 19
-      Top = 280
+      Top = 288
       Width = 137
       Caption = 'Nur Requests erstellen'
       Checked = True
