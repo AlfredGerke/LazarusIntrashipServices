@@ -1,4 +1,4 @@
-***(in Progress: Zielversion LIS 0.9 M1)***
+***(in Progress: Zielversion LIS 0.9 M2)***
 
 LazarusIntrashipServices (LIS)
 =============================

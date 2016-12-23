@@ -2,13 +2,7 @@
 ## LazarusIntrashipServices
 ###########################
 
-Authentifizierung.pdf
-Beispieldaten.pdf
-I_O Referenz.pdf
-Beispieldaten - DeleteShipmentOrder - DHL Entwicklerportal.pdf
-Beispieldaten - GetLabel - DHL Entwicklerportal.pdf
-I_O Referenz - DeleteShipmentOrder - DHL Entwicklerportal.pdf
-I_O Referenz - GetLabel - DHL Entwicklerportal.pdf
+doc/subversion_doc
 lib/i386-win32/
 example/lib/i386-win32/
 test/lib/i386-win32/
@@ -18,3 +12,4 @@ settings.ini
 *.lnk
 *.dll
 *.exe
+*.pdf

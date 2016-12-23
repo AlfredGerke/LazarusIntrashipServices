@@ -12,11 +12,11 @@ ProjectFilesOnly=0
 [Project tree]
 LazarusIntrashipServices
 	+Root
-		+ini
+		-ini
 			ini\settings.ini
 			ini\README.md
 			ini\settings.in_
-		+api
+		-api
 			api\README.md
 		-dhl
 			dhl\geschaeftskundenversand-api-2.2.wsdl
@@ -29,14 +29,14 @@ LazarusIntrashipServices
 		.gitignore
 		.gitattributes
 [Open project files]
-0=README.md
-1=ini\README.md
+0=.gitignore
+1=README.md
 [Selected Project Files]
 Main=
 Selected=README.md
-[README.md]
-TopLine=16
-Caret=1,40
-[ini\README.md]
+[.gitignore]
 TopLine=1
-Caret=1,1
+Caret=5,5
+[README.md]
+TopLine=35
+Caret=40,1
