@@ -66,7 +66,7 @@
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="source\validate_request.pas"/>
+        <Filename Value="..\source\validate_request.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>

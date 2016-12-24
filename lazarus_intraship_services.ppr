@@ -27,7 +27,7 @@ lazarus_intraship_services
 		-doc
 			doc\LIS.component.1-0-0.md
 			doc\lazarus-ide.md
-		-ini
+		+ini
 			first_steps\bin\i386-win32\debug\settings.ini
 			ini\README.md
 			ini\settings.in_
@@ -45,12 +45,16 @@ lazarus_intraship_services
 [Open project files]
 0=.gitignore
 1=README.md
+2=first_steps\bin\i386-win32\debug\settings.ini
 [Selected Project Files]
 Main=
-Selected=README.md
+Selected=.gitignore
 [.gitignore]
 TopLine=1
 Caret=20,8
 [README.md]
 TopLine=1
 Caret=24,52
+[first_steps\bin\i386-win32\debug\settings.ini]
+TopLine=1
+Caret=16,9
