@@ -44,13 +44,13 @@ lazarus_intraship_services
 		.gitattributes
 [Open project files]
 0=.gitignore
-1=first_steps\README.md
+1=README.md
 [Selected Project Files]
 Main=
-Selected=.gitignore
+Selected=README.md
 [.gitignore]
 TopLine=1
 Caret=20,8
-[first_steps\README.md]
+[README.md]
 TopLine=1
-Caret=1,1
+Caret=24,52
