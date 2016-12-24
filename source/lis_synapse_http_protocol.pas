@@ -8,7 +8,7 @@ uses
   Classes,
   SysUtils,
   synapse_http_protocol,
-  IntrashipServicesTypes,
+  intraship_services_types,
   httpsend,
   client_utils,
   service_intf;

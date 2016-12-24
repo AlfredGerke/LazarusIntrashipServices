@@ -3,9 +3,6 @@
 ###########################
 
 doc/subversion_doc
-lib/i386-win32/
-example/lib/i386-win32/
-test/lib/i386-win32/
 settings.ini
 *.bak
 *.lps

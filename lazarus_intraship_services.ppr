@@ -1,0 +1,56 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.HideOutput=0
+Compilator.LogType=0
+DefaultCPIndex=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+[Project tree]
+lazarus_intraship_services
+	+Root
+		+lis_component
+			-source
+				lis_component\source\README.md
+			-package
+				lis_component\package\README.md
+			-test_gui
+				lis_component\test_gui\README.md
+			-unit_test
+				lis_component\unit_test\README.md
+			lis_component\README.md
+		+first_steps
+			first_steps\README.md
+		-doc
+			doc\LIS.component.1-0-0.md
+			doc\lazarus-ide.md
+		-ini
+			first_steps\bin\i386-win32\debug\settings.ini
+			ini\README.md
+			ini\settings.in_
+		-api
+			api\README.md
+		-dhl
+			dhl\geschaeftskundenversand-api-2.2.wsdl
+			dhl\geschaeftskundenversand-api-2.2-schema-cis_base.xsd
+			dhl\geschaeftskundenversand-api-2.2-schema-bcs_base.xsd
+			dhl\README.md
+		LICENSE
+		README.md
+		.gitignore
+		.gitattributes
+[Open project files]
+0=.gitignore
+1=first_steps\README.md
+[Selected Project Files]
+Main=
+Selected=.gitignore
+[.gitignore]
+TopLine=1
+Caret=20,8
+[first_steps\README.md]
+TopLine=1
+Caret=1,1
