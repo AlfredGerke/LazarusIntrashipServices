@@ -53,14 +53,14 @@ Zugriff auf Firebird.
 * [Download: UIB](https://code.google.com/p/uib "UIB")
 
 
-### Lazarus Registry Controls
+### Lazarus Registry Controls (optional)
 Controls für den Zugriff auf die Registry.
 
 * [Download: LRC](https://github.com/AlfredGerke/LazarusRegistryControls "LRC")
 
 
 ## Lazarus Components
-### Anchor Docking
+### Anchor Docking (optional)
 Organisiert die IDE übersichtlicher.
 
 * [Wiki](http://wiki.freepascal.org/Anchor_Docking "Wiki")
