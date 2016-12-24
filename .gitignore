@@ -3,9 +3,9 @@
 ###########################
 
 doc/subversion_doc
-lib/i386-win32/
-example/lib/i386-win32/
-test/lib/i386-win32/
+first_steps/bin/i386-win32/debug/
+first_steps/lib/i386-win32/debug/
+first_steps/backup/
 settings.ini
 *.bak
 *.lps
