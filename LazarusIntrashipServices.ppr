@@ -12,9 +12,10 @@ ProjectFilesOnly=0
 [Project tree]
 LazarusIntrashipServices
 	+Root
-		+concept
-			concept\LIS.component.1-0-0.md
-		-ini
+		+doc
+			doc\LIS.component.1-0-0.md
+			doc\lazarus-ide.md
+		+ini
 			ini\settings.ini
 			ini\README.md
 			ini\settings.in_
@@ -32,17 +33,17 @@ LazarusIntrashipServices
 		.gitattributes
 [Open project files]
 0=.gitignore
-1=README.md
-2=concept\LIS.component.1-0-0.md
+1=doc\LIS.component.1-0-0.md
+2=doc\lazarus-ide.md
 [Selected Project Files]
 Main=
-Selected=concept\LIS.component.1-0-0.md
+Selected=.gitignore
 [.gitignore]
 TopLine=1
 Caret=5,5
-[README.md]
+[doc\LIS.component.1-0-0.md]
+TopLine=21
+Caret=16,43
+[doc\lazarus-ide.md]
 TopLine=1
-Caret=40,1
-[concept\LIS.component.1-0-0.md]
-TopLine=84
-Caret=39,96
+Caret=1,1

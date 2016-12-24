@@ -39,7 +39,8 @@ Verfügbare Services:
     
 Komponenten müssen so aufgebaut werden, das zusätzliche Services einfach implementiert werden können.         
     
-Struktur der Daten:    
+Struktur der Daten:  
+* Verbindungsdaten (URLs, Proxy-Einstellungen)  
 * Zugangsdaten (Benutzer, Password, Signatur, etc.)
 * Auftragsdaten (Produkt, Teilnahme, etc.)   
     - es muss daran gedacht werden das mehrere Teilnahmen pro Kundennummer+Verfahren möglich sind
@@ -53,7 +54,7 @@ Struktur der Daten:
 Komponenten müssen so aufgebaut werden das Daten aus verschiedenen Datenquellen verwendet werden können.    
 * z.B.: Alle Daten kommen aus einer Firebird-DB oder aus einer csv-Datei oder aus einer INI-Datei
 * z.B.: Zugangsdaten kommen aus einer INI-Datei, sämtliche anderen Daten kommen aus einer Firebrid-DB
-* u.B.: Jedem in **Struktur der Daten** aufgeführte Punkt wird eine eigene Datenquelle zugewiesen 
+* z.B.: Jedem in **Struktur der Daten** aufgeführten Punkt wird eine eigene Datenquelle zugewiesen 
 
 
 ### Testanwendung        
@@ -111,5 +112,3 @@ Die Anwendung wird in drei Bereiche aufgeteilt:
     - ein einzeiliges Feld für die Sendungsnummer
     - ein mehrzeiliges Feld um sämtliche Meldungen aus der Anwendung anzuzeigen
         - besonders der Request und der Response sollen hier ausführlich aufgelistet werden  
-
-
