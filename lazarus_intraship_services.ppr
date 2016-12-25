@@ -12,6 +12,8 @@ ProjectFilesOnly=0
 [Project tree]
 lazarus_intraship_services
 	+Root
+		+model
+			model\README.md
 		+lis_component
 			-source
 				lis_component\source\README.md
@@ -24,7 +26,7 @@ lazarus_intraship_services
 			lis_component\README.md
 		+first_steps
 			first_steps\README.md
-		-doc
+		+doc
 			doc\LIS.component.1-0-0.md
 			doc\lazarus-ide.md
 		+ini
@@ -43,18 +45,14 @@ lazarus_intraship_services
 		.gitignore
 		.gitattributes
 [Open project files]
-0=.gitignore
-1=README.md
-2=first_steps\bin\i386-win32\debug\settings.ini
+0=README.md
+1=doc\LIS.component.1-0-0.md
 [Selected Project Files]
 Main=
-Selected=.gitignore
-[.gitignore]
-TopLine=1
-Caret=20,8
+Selected=README.md
 [README.md]
-TopLine=1
-Caret=24,52
-[first_steps\bin\i386-win32\debug\settings.ini]
-TopLine=1
-Caret=16,9
+TopLine=11
+Caret=1,1
+[doc\LIS.component.1-0-0.md]
+TopLine=71
+Caret=57,69

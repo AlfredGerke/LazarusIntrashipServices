@@ -66,7 +66,7 @@ Die Anwendung wird in drei Bereiche aufgeteilt:
  
     -----------------------------------------------------------------    
     |                              |                                |   
-    |    Outline-Bereich           |    Formlur-Bereich             |
+    |    Outline-Bereich           |    Formular-Bereich            |
     |                              |                                |
     |                              |                                |
     |                              |                                |
