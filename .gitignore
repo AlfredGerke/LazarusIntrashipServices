@@ -6,6 +6,7 @@ doc/subversion_doc
 first_steps/bin/i386-win32/debug/
 first_steps/lib/i386-win32/debug/
 first_steps/backup/
+first_steps/source/backup/
 settings.ini
 *.bak
 *.lps

@@ -14,7 +14,6 @@ test=1
 sandbox="<sandbox-url>"
 productiv="<productiv-url>" 
 
-;Timeouts derzeit nicht unterstützt
 [connect]
 connecttimeout=10000
 receivetimeout=1000

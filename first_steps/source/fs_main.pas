@@ -59,6 +59,8 @@ type
     procedure OnSkipSendAndReceive(AResponse: TStream);
     procedure OnAfterExecuteProc(AResponse: TStream);
     procedure OnSetHeadersProc(AConnection: THTTPSend);
+    procedure OnGetTimeouts(var AConnectTimeout: integer;
+                            var AReadTimeout: integer);
   public
   end;
 
@@ -205,7 +207,7 @@ begin
       else
       begin
         SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
-          OnSkipSendAndReceive);
+          OnSkipSendAndReceive, OnGetTimeouts);
 
         // Wenn keine BasicHTTP-Authentication verwendet werden soll (s. OnSetHeadersProc) dann
         // url.AsURL verwenden
@@ -276,7 +278,7 @@ begin
       else
       begin
         SYNAPSE_RegisterLIS_HTTP_Transport(OnBeforeExecuteProc, OnAfterExecuteProc, OnSetHeadersProc,
-          OnSkipSendAndReceive);
+          OnSkipSendAndReceive, OnGetTimeouts);
 
         // Wenn keine BasicHTTP-Authentication verwendet werden soll (s. OnSetHeadersProc) dann
         // url.AsURL verwenden
@@ -461,6 +463,7 @@ var
   credentials: TCredentials;
   err: TErrorHandler;
 begin
+  credentials.Clear;
   edtLog.Lines.add('// OnSetHeadersProc');
 
   credentials.IniFilename := '.\settings.ini';
@@ -481,6 +484,41 @@ begin
         edtLog.lines.Add('-----------------------------');
       end;
   end;
+end;
+
+procedure TMain.OnGetTimeouts(var AConnectTimeout: integer;
+  var AReadTimeout: integer);
+var
+  config: TConfigSettings;
+  err: TErrorHandler;
+begin
+  config.Clear;
+  edtLog.Lines.add('// OnGetTimeouts');
+
+  config.IniFilename := '.\settings.ini';
+  err := config.SetByIni;
+  if err.Found then
+  begin
+    AConnectTimeout := 10000;
+    AReadTimeout := 1000;
+
+    edtLog.Lines.Add(err.GetErrorMessage);
+  end
+  else
+  begin
+    AConnectTimeout := config.ConnectTimeout.AsInteger;
+    AReadTimeout := config.ReceiveTimeout.AsInteger;
+  end;
+
+  edtLog.lines.Add('-----------------------------');
+  edtLog.lines.Add('//!<-- Beginnt hier: OnGetTimeouts');
+
+  edtLog.Lines.add(Format('ConnectTimeout: %d', [AConnectTimeout]));
+  edtLog.Lines.add(Format('ReadTimeout: %d', [AReadTimeout]));
+
+  edtLog.lines.Add('// Endet hier: OnGetTimeouts -->');
+  edtLog.lines.Add('-----------------------------');
+
 end;
 
 end.

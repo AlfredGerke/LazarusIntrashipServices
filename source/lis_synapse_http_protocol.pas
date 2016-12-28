@@ -49,6 +49,7 @@ type
     FOnAfterExecute: TOnAfterExecute;
     FOnSetHeaders: TOnSetHeaders;
     FOnSkipSendAndReceive: TOnSkipSendAndReceive;
+    FOnGetTimeouts: TOnGetTimeouts;
   public
     class function GetInstance: TLIS_HTTPTransportEvents;
 
@@ -57,11 +58,13 @@ type
     procedure DoOnSkipSendAndReceive(AResponse: TStream);
     procedure DoOnAfterExecute(AResponse: TStream);
     procedure DoOnSetHeaders(AConnection: THTTPSend);
+    procedure DoOnGetTimeouts(AHTTPTransport: THTTPTransport);
 
     procedure SetEvents(AOnBeforeExecuteProc: TOnBeforeExecute;
                         AOnAfterExecuteProc: TOnAfterExecute;
                         AOnSetHeaders: TOnSetHeaders;
-                        AOnSkipSendAndReceive: TOnSkipSendAndReceive);
+                        AOnSkipSendAndReceive: TOnSkipSendAndReceive;
+                        AOnGetTimeouts: TOnGetTimeouts);
 
     property OnBeforeExecute: TOnBeforeExecute
       read FOnBeforeExecute
@@ -85,7 +88,8 @@ procedure FreeLIS_HTTPTransportEventsSingletonInstance;
 procedure SYNAPSE_RegisterLIS_HTTP_Transport(AOnBeforeExecuteProc: TOnBeforeExecute;
                                              AOnAfterExecuteProc: TOnAfterExecute;
                                              AOnSetHeaders: TOnSetHeaders;
-                                             ASkipSendAndReceive: TOnSkipSendAndReceive);
+                                             ASkipSendAndReceive: TOnSkipSendAndReceive;
+                                             AOnGetTimeouts: TOnGetTimeouts);
 
 implementation
 
@@ -106,10 +110,11 @@ end;
 procedure SYNAPSE_RegisterLIS_HTTP_Transport(AOnBeforeExecuteProc: TOnBeforeExecute;
   AOnAfterExecuteProc: TOnAfterExecute;
   AOnSetHeaders: TOnSetHeaders;
-  ASkipSendAndReceive: TOnSkipSendAndReceive);
+  ASkipSendAndReceive: TOnSkipSendAndReceive;
+  AOnGetTimeouts: TOnGetTimeouts);
 begin
   TLIS_HTTPTransportEvents.GetInstance.SetEvents(AOnBeforeExecuteProc, AOnAfterExecuteProc,
-    AOnSetHeaders, ASkipSendAndReceive);
+    AOnSetHeaders, ASkipSendAndReceive, AOnGetTimeouts);
 
   GetTransportRegistry().Register(sTRANSPORT_NAME,TSimpleItemFactory.Create(TLIS_HTTPTransport));
 end;
@@ -156,16 +161,36 @@ begin
     FOnSetHeaders(AConnection);
 end;
 
+procedure TLIS_HTTPTransportEvents.DoOnGetTimeouts(AHTTPTransport: THTTPTransport);
+var
+  connect_timeout: integer;
+  read_timeout: integer;
+begin
+  if Assigned(FOnGetTimeouts) then
+  begin
+    FOnGetTimeouts(connect_timeout, read_timeout);
+    AHTTPTransport.ConnectTimeout := connect_timeout;
+    AHTTPTransport.ReadTimeout := read_timeout;
+  end
+  else
+  begin
+    AHTTPTransport.ConnectTimeout := 10000;
+    AHTTPTransport.ReadTimeout := 1000;
+  end;
+end;
+
 procedure TLIS_HTTPTransportEvents.SetEvents(
   AOnBeforeExecuteProc: TOnBeforeExecute;
   AOnAfterExecuteProc: TOnAfterExecute;
   AOnSetHeaders: TOnSetHeaders;
-  AOnSkipSendAndReceive: TOnSkipSendAndReceive);
+  AOnSkipSendAndReceive: TOnSkipSendAndReceive;
+  AOnGetTimeouts: TOnGetTimeouts);
 begin
   FOnBeforeExecute := AOnBeforeExecuteProc;
   FOnAfterExecute := AOnAfterExecuteProc;
   FOnSetHeaders := AOnSetHeaders;
   FOnSkipSendAndReceive := AOnSkipSendAndReceive;
+  FOnGetTimeouts := AOnGetTimeouts;
 end;
 
 { TLIS_HTTPTransport }
@@ -184,6 +209,7 @@ begin
     else
     begin
       DoOnSetHeaders(GetConnection);
+      DoOnGetTimeouts(Self);
 
       inherited DoSendAndReceive(ARequest, AResponse);
 

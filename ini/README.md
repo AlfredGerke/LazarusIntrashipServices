@@ -8,7 +8,7 @@ Konfiguration
 * Für Testsystem oder Produktivsystem Credentials entsprechend hinterlegen
 * Wenn Produktivsystem gewählt wird muss der Ident=test auf 0 (`test=0`) stehen **(aktueller Stand: nicht unterstützt)** 
 * URL für Produktiv- und Testsystem eintragen
-* Timeouts wenn nötig anpassen **(aktueller Stand: nicht unterstützt)**
+* Timeouts wenn nötig anpassen
 * Version für Methoden: **CreateShipment**, **DeleteShipment** und **GetLabel** nur anpassen wenn WS-Version sich ändert
 
 ### Entwicklerportal der DHL
