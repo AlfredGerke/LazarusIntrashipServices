@@ -53,13 +53,13 @@ lazarus_intraship_services
 5=ini\README.md
 [Selected Project Files]
 Main=
-Selected=ini\README.md
+Selected=doc\LIS.component.1-0-0.md
 [README.md]
 TopLine=11
 Caret=1,1
 [doc\LIS.component.1-0-0.md]
-TopLine=69
-Caret=57,69
+TopLine=23
+Caret=30,65
 [.gitignore]
 TopLine=1
 Caret=13,10

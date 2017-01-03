@@ -56,6 +56,13 @@ Komponenten müssen so aufgebaut werden das Daten aus verschiedenen Datenquellen
 * z.B.: Zugangsdaten kommen aus einer INI-Datei, sämtliche anderen Daten kommen aus einer Firebrid-DB
 * z.B.: Jedem in **Struktur der Daten** aufgeführten Punkt wird eine eigene Datenquelle zugewiesen 
 
+Folgende Komponenten werden eingerichtet:
+* TLISContractItems: DHL Vertragsdaten (EKP, Produkt, Teihnahme) 
+* TLISConnectionSettings: Verbindungsdaten (Sandbox- u. Productiv-URL, Proxy-Einstellungen, Test-Flag)
+* TLISCredentials: Anmeldedaten (CGI-Anmeldung, Intraship-Anmeldung) 
+* TLISIniDataProvider
+* in _Progress..._
+
 
 ### Testanwendung        
 * In der Testanwendung wird die erste Version der LIS.component eingeführt und getestet    
