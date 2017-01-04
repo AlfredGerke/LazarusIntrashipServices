@@ -9,7 +9,10 @@ uses
   fpcunittestrunner,
   lis_testcase,
   register_lis_test,
-  generics_collection_test;
+  generics_collection_test,
+  common_record_list,
+  common_types,
+  service_record, service_record_list;
 
 {$R *.res}
 

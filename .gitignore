@@ -25,3 +25,4 @@ dbugsrv.exe
 *.pdf
 *.zargo~
 *.compiled
+*.java

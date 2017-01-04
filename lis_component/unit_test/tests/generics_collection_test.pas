@@ -9,9 +9,12 @@ uses
   SysUtils,
   fpcunit,
   testutils,
-  lis_testcase;
+  lis_testcase,
+  service_record_list;
 
 type
+
+  { TTListTest }
 
   TTListTest= class(TLISTestCase)
   protected
@@ -21,6 +24,8 @@ type
   end;
 
 implementation
+
+{ TTListTest }
 
 procedure TTListTest.SetUp;
 begin
