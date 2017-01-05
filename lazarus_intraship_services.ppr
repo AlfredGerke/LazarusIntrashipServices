@@ -46,9 +46,13 @@ lazarus_intraship_services
 		.gitattributes
 [Open project files]
 0=.gitignore
+1=lis_component\source\api\b2c\data\TService.java
 [Selected Project Files]
 Main=
-Selected=.gitignore
+Selected=lis_component\source\api\b2c\data\TService.java
 [.gitignore]
 TopLine=1
 Caret=7,28
+[lis_component\source\api\b2c\data\TService.java]
+TopLine=1
+Caret=1,1
