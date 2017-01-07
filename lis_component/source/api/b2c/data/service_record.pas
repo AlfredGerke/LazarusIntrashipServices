@@ -18,6 +18,7 @@ type
     Active: Boolean;
 
     class function GetByDefault: TServiceRecord; static;
+
     procedure Clear;
   end;
 
@@ -31,8 +32,10 @@ begin
 end;
 
 procedure TServiceRecord.Clear;
+const
+  empty_rec: TServiceRecord = ();
 begin
-
+  Self := empty_rec;
 end;
 
 end.

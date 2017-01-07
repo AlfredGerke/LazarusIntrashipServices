@@ -24,9 +24,8 @@ type
     procedure ClearItemProc(AIndex: integer;
                             var AItem: T;
                             var ABreak: boolean);
-
+  protected
     procedure ClearItem(AItem: T); virtual; abstract;
-
     function GetIsAvailable: boolean;
   public
     constructor Create; reintroduce; overload;

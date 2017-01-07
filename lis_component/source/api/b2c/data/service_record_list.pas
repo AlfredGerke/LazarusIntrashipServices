@@ -17,8 +17,6 @@ type
   TServiceRecordList = class(TCommonRecordList<TServiceRecord>)
   protected
     procedure ClearItem(AItem: TServiceRecord); override;
-  public
-    procedure LoadForTest;
   end;
 
 
@@ -29,11 +27,6 @@ implementation
 procedure TServiceRecordList.ClearItem(AItem: TServiceRecord);
 begin
   AItem.Clear;
-end;
-
-procedure TServiceRecordList.LoadForTest;
-begin
-  Add(TServiceRecord.GetByDefault);
 end;
 
 end.

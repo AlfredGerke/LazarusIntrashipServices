@@ -24,7 +24,7 @@ initialization
 
   // Alle Tests für generics.collection
   //!<--
-  RegisterTest('GenericsCollections', TTListTest);
+  RegisterTest('GenericsCollections', TServiceRedorcdListTest);
   //-->
 
 end.
