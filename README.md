@@ -33,6 +33,7 @@ Voraussetzungen
 * API der [Zielversion LIS 0.9 M1](https://github.com/AlfredGerke/LazarusIntrashipServices/milestone/1 "https://github.com/AlfredGerke/LazarusIntrashipServices/milestone/1")
 * Refactored Sourcen im Ordner ./source/ ([Zielversion LIS 0.9 M1](https://github.com/AlfredGerke/LazarusIntrashipServices/milestone/1 "https://github.com/AlfredGerke/LazarusIntrashipServices/milestone/1"))
 * [s. README.md](https://github.com/AlfredGerke/LazarusIntrashipServices/blob/master/first_steps/README.md "https://github.com/AlfredGerke/LazarusIntrashipServices/blob/master/first_steps/README.md") 
+* Generics.Collection ist ein Port aus Delphi für diverse Listen-Klassen [s. Generics.Collections](https://github.com/dathox/generics.collections "https://github.com/dathox/generics.collections")
 
 
 [LIS.component](https://github.com/AlfredGerke/LazarusIntrashipServices/projects/1 "https://github.com/AlfredGerke/LazarusIntrashipServices/projects/1")
@@ -50,3 +51,4 @@ FPC: 3.0.0
 Web Service Toolkit: 0.6   
 Synapse: [Trunk-Version](https://svn.code.sf.net/p/synalist/code/trunk "https://svn.code.sf.net/p/synalist/code/trunk")   
 OpenSSL: 1.0.2d        
+Generics.Collections: [Master (GitHub)](https://github.com/dathox/generics.collections "https://github.com/dathox/generics.collections")

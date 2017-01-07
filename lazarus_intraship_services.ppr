@@ -21,7 +21,7 @@ lazarus_intraship_services
 				lis_component\package\README.md
 			-test_gui
 				lis_component\test_gui\README.md
-			-unit_test
+			+unit_test
 				lis_component\unit_test\README.md
 			lis_component\README.md
 		+first_steps
@@ -33,9 +33,9 @@ lazarus_intraship_services
 			first_steps\bin\i386-win32\debug\settings.ini
 			ini\README.md
 			ini\settings.in_
-		-api
+		+api
 			api\README.md
-		-dhl
+		+dhl
 			dhl\geschaeftskundenversand-api-2.2.wsdl
 			dhl\geschaeftskundenversand-api-2.2-schema-cis_base.xsd
 			dhl\geschaeftskundenversand-api-2.2-schema-bcs_base.xsd
@@ -45,14 +45,18 @@ lazarus_intraship_services
 		.gitignore
 		.gitattributes
 [Open project files]
-0=.gitignore
-1=lis_component\source\api\b2c\data\TService.java
+0=lis_component\unit_test\README.md
+1=README.md
+2=model\README.md
 [Selected Project Files]
 Main=
-Selected=lis_component\source\api\b2c\data\TService.java
-[.gitignore]
+Selected=model\README.md
+[lis_component\unit_test\README.md]
 TopLine=1
-Caret=7,28
-[lis_component\source\api\b2c\data\TService.java]
+Caret=1,3
+[README.md]
 TopLine=1
-Caret=1,1
+Caret=46,1
+[model\README.md]
+TopLine=1
+Caret=175,10
