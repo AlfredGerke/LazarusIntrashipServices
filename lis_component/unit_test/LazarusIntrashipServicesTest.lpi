@@ -57,19 +57,19 @@
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\source\api\common\common_record_list.pas"/>
+        <Filename Value="..\source\api.common.common_record_list.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\source\api\b2c\data\common\common_types.pas"/>
+        <Filename Value="..\source\api.b2c.data.common.types.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="..\source\api\b2c\data\service_record.pas"/>
+        <Filename Value="..\source\api.b2c.data.service_record.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="..\source\api\b2c\data\service_record_list.pas"/>
+        <Filename Value="..\source\api.b2c.data.service_record_list.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
     </Units>
@@ -82,7 +82,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="tests;register;..\source\api\common;..\..\..\generics.collections\src;..\source\api\b2c\data\common;..\source\api\b2c\data"/>
+      <OtherUnitFiles Value="tests;register;..\source;..\..\..\generics.collections\src"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\$(BuildMode)"/>
     </SearchPaths>
     <Parsing>

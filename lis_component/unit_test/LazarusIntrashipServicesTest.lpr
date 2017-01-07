@@ -10,10 +10,10 @@ uses
   lis_testcase,
   register_lis_test,
   generics_collection_test,
-  common_record_list,
-  common_types,
-  service_record,
-  service_record_list;
+  api.common.common_record_list,
+  api.b2c.data.common.types,
+  api.b2c.data.service_record,
+  api.b2c.data.service_record_list;
 
 {$R *.res}
 

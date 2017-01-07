@@ -1,4 +1,4 @@
-unit service_record;
+unit api.b2c.data.service_record;
 
 {$mode delphi}{$H+}
 
@@ -7,7 +7,7 @@ interface
 uses
   Classes,
   SysUtils,
-  common_types;
+  api.b2c.data.common.types;
 
 type
 

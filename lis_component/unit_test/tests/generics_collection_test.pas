@@ -7,11 +7,9 @@ interface
 uses
   Classes,
   SysUtils,
-  fpcunit,
-  testutils,
   lis_testcase,
-  service_record,
-  service_record_list;
+  api.b2c.data.service_record,
+  api.b2c.data.service_record_list;
 
 type
 
@@ -50,9 +48,10 @@ uses
   {$ifdef Debug}
     dbugintf,
   {$endif}
-  common_types;
+  api.b2c.data.common.types;
 
 { TServiceRecordListWrapper }
+
 procedure TServiceRecordListWrapper.AlterServiceTypeProc(AIndex: integer;
   var AItem: TServiceRecord;
   var ABreak: boolean);
@@ -161,7 +160,7 @@ begin
       AssertEquals('Anz. Items sollte 1 sein', 1, FServiceRecordList.Count);
   end;
 
-  //6. Fall: Liste besitzt 2 Item
+  //7. Fall: Liste besitzt 2 Item
   service_record := TServiceRecord.GetByDefault;
   service_record.ServiceType := stDeliveryTimeframe;
   try
@@ -184,13 +183,12 @@ begin
   //2. Fall: Liste besitzt 2 Items (Infos im DebugServer)
   service_record := TServiceRecord.GetByDefault;
   service_record.ServiceType := stUnknown;
-
   FServiceRecordList.Add(service_record);
 
   service_record := TServiceRecord.GetByDefault;
   service_record.ServiceType := stDayOfDelivery;
-
   FServiceRecordList.Add(service_record);
+
   with FServiceRecordList do
     ForEach(CheckByDebugServerProc);
 

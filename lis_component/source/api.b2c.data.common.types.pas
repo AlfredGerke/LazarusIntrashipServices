@@ -1,4 +1,4 @@
-unit common_types;
+unit api.b2c.data.common.types;
 
 {$mode delphi}{$H+}
 
@@ -11,6 +11,10 @@ uses
 type
 
   TServiceType = (stUnknown, stDayOfDelivery, stDeliveryTimeframe, stPreferredTime);
+
+const
+  ServiceTypeStr: array[TServiceType] of string =
+    ('stUnknown', 'stDayOfDelivery', 'stDeliveryTimeframe', 'stPreferredTime');
 
 implementation
 
