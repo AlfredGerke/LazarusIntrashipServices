@@ -48,7 +48,8 @@ uses
   {$ifdef Debug}
     dbugintf,
   {$endif}
-  api.b2c.data.common.types;
+  api.b2c.data.common.types,
+  api.common.utils;
 
 { TServiceRecordListWrapper }
 

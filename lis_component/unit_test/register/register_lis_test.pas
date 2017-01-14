@@ -6,7 +6,8 @@ interface
 
 uses
   testregistry,
-  generics_collection_test;
+  generics_collection_test,
+  common_utils_test;
 
 implementation
 
@@ -25,6 +26,12 @@ initialization
   // Alle Tests für generics.collection
   //!<--
   RegisterTest('GenericsCollections', TServiceRedorcdListTest);
+  //-->
+
+  // Alle Tests für api.common.utils
+  //!<--
+  RegisterTest('CommonUtils', TStringToTEnumTest);
+  RegisterTest('CommonUtils', TTEnumToStringTest);
   //-->
 
 end.
