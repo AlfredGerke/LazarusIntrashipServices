@@ -49,7 +49,7 @@ uses
     dbugintf,
   {$endif}
   api.b2c.data.common.types,
-  api.common.utils;
+  generics.convert;
 
 { TServiceRecordListWrapper }
 

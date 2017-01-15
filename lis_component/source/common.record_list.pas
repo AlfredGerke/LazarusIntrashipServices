@@ -1,4 +1,4 @@
-unit api.common.common_record_list;
+unit common.record_list;
 
 {$mode delphi}{$H+}
 

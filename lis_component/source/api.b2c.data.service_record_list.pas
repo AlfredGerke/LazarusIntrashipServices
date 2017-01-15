@@ -7,7 +7,7 @@ interface
 uses
   Classes,
   SysUtils,
-  api.common.common_record_list,
+  common.record_list,
   api.b2c.data.service_record;
 
 type

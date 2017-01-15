@@ -57,7 +57,7 @@
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\source\api.common.common_record_list.pas"/>
+        <Filename Value="..\source\common.record_list.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
@@ -73,11 +73,11 @@
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="..\source\api.common.utils.pas"/>
+        <Filename Value="..\source\generics.convert.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="tests\common_utils_test.pas"/>
+        <Filename Value="tests\common_generics_test.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
     </Units>

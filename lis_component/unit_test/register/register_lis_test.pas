@@ -7,7 +7,7 @@ interface
 uses
   testregistry,
   generics_collection_test,
-  common_utils_test;
+  common_generics_test;
 
 implementation
 
@@ -25,13 +25,13 @@ initialization
 
   // Alle Tests für generics.collection
   //!<--
-  RegisterTest('GenericsCollections', TServiceRedorcdListTest);
+  RegisterTest('Generics.Collections', TServiceRedorcdListTest);
   //-->
 
-  // Alle Tests für api.common.utils
+  // Alle Tests für common.convert
   //!<--
-  RegisterTest('CommonUtils', TStringToTEnumTest);
-  RegisterTest('CommonUtils', TTEnumToStringTest);
+  RegisterTest('Generics.Convert', TStringToTEnumTest);
+  RegisterTest('Generics.Convert', TTEnumToStringTest);
   //-->
 
 end.
