@@ -6,9 +6,8 @@ interface
 
 uses
   Classes,
-  SysUtils;
-
-type
+  SysUtils,
+  Generics.Collections;
 
 implementation
 

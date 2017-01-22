@@ -14,7 +14,7 @@ type
 
 const
   ServiceTypeStr: array[TServiceType] of string =
-    ('stUnknown', 'stDayOfDelivery', 'stDeliveryTimeframe', 'stPreferredTime');
+    ('Unknown', 'DayOfDelivery', 'DeliveryTimeframe', 'PreferredTime');
 
 implementation
 

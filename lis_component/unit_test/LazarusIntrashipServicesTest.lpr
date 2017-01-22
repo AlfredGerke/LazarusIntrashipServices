@@ -15,6 +15,7 @@ uses
   api.b2c.data.service_record,
   api.b2c.data.service_record_list,
   generics.convert,
+  generics.collections.helper,
   common_generics_test;
 
 {$R *.res}

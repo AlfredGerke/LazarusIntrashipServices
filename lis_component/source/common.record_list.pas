@@ -13,7 +13,7 @@ type
 
   { TCommonRecordList }
 
-  TCommonRecordList<T> = class(TList<T>)
+  TCommonRecordList<T: record> = class(TList<T>)
   public type
     TOnForEach = procedure (AIndex: integer;
                             var AItem: T;

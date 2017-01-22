@@ -61,19 +61,19 @@ var
 begin
   // 1.Fall stUnkown muss folgende String ergeben: stUnkown
   res_type_str := TTEnumToString<TServiceType>.Convert(stUnknown);
-  AssertEquals('ResultTypeString muss stUnknown sein', 'stUnknown', res_type_str);
+  AssertEquals('1. Fall: ResultTypeString muss stUnknown sein', 'stUnknown', res_type_str);
 
   // 2.Fall stDayOfDelivery muss folgende String ergeben: stDayOfDelivery
   res_type_str := TTEnumToString<TServiceType>.Convert(stDayOfDelivery);
-  AssertEquals('ResultTypeString muss stDayOfDelivery sein', 'stDayOfDelivery', res_type_str);
+  AssertEquals('2. Fall: ResultTypeString muss stDayOfDelivery sein', 'stDayOfDelivery', res_type_str);
 
   // 3.Fall stDeliveryTimeframe muss folgende String ergeben: stDeliveryTimeframe
   res_type_str := TTEnumToString<TServiceType>.Convert(stDeliveryTimeframe);
-  AssertEquals('ResultTypeString muss stDeliveryTimeframe sein', 'stDeliveryTimeframe', res_type_str);
+  AssertEquals('3. Fall: ResultTypeString muss stDeliveryTimeframe sein', 'stDeliveryTimeframe', res_type_str);
 
   // 4.Fall stPreferredTime muss folgende String ergeben: stPreferredTime
   res_type_str := TTEnumToString<TServiceType>.Convert(stPreferredTime);
-  AssertEquals('ResultTypeString muss stPreferredTime sein', 'stPreferredTime', res_type_str);
+  AssertEquals('4. Fall: ResultTypeString muss stPreferredTime sein', 'stPreferredTime', res_type_str);
 end;
 
 { TStringToTEnumTest }
@@ -82,43 +82,43 @@ procedure TStringToTEnumTest.Convert;
 var
   res_type: TServiceType;
 begin
-  // 1. Fall String stUnknown muss TServiceType stUnkown ergeben
+  // 1. Fall String Unknown muss TServiceType stUnkown ergeben
   // Strings werden aus separaten StringArray entnommen
-  res_type := TStringToTEnum<TServiceType>.Convert('stUnknown', ServiceTypeStr);
-  AssertEquals('ResultType muss stUnknown sein', 'stUnknown', ServiceTypeStr[res_type]);
+  res_type := TStringToTEnum<TServiceType>.Convert('Unknown', ServiceTypeStr);
+  AssertEquals('1. Fall: ResultType muss stUnknown sein', 'Unknown', ServiceTypeStr[res_type]);
 
-  // 2. Fall String stDayOfDelivery muss TServiceType stDayOfDelivery ergeben
+  // 2. Fall String DayOfDelivery muss TServiceType stDayOfDelivery ergeben
   // Strings werden aus separaten StringArray entnommen
-  res_type := TStringToTEnum<TServiceType>.Convert('stDayOfDelivery', ServiceTypeStr);
-  AssertEquals('ResultType muss stDayOfDelivery sein', 'stDayOfDelivery', ServiceTypeStr[res_type]);
+  res_type := TStringToTEnum<TServiceType>.Convert('DayOfDelivery', ServiceTypeStr);
+  AssertEquals('2. Fall: ResultType muss stDayOfDelivery sein', 'DayOfDelivery', ServiceTypeStr[res_type]);
 
-  // 3. Fall String stDeliveryTimeframe muss TServiceType stDeliveryTimeframe ergeben
+  // 3. Fall String DeliveryTimeframe muss TServiceType stDeliveryTimeframe ergeben
   // Strings werden aus separaten StringArray entnommen
-  res_type := TStringToTEnum<TServiceType>.Convert('stDeliveryTimeframe', ServiceTypeStr);
-  AssertEquals('ResultType muss stDeliveryTimeframe sein', 'stDeliveryTimeframe', ServiceTypeStr[res_type]);
+  res_type := TStringToTEnum<TServiceType>.Convert('DeliveryTimeframe', ServiceTypeStr);
+  AssertEquals('3. Fall: ResultType muss stDeliveryTimeframe sein', 'DeliveryTimeframe', ServiceTypeStr[res_type]);
 
-  // 4. Fall String stPreferredTime muss TServiceType stPreferredTime ergeben
+  // 4. Fall String PreferredTime muss TServiceType stPreferredTime ergeben
   // Strings werden aus separaten StringArray entnommen
-  res_type := TStringToTEnum<TServiceType>.Convert('stPreferredTime', ServiceTypeStr);
-  AssertEquals('ResultType muss stPreferredTime sein', 'stPreferredTime', ServiceTypeStr[res_type]);
+  res_type := TStringToTEnum<TServiceType>.Convert('PreferredTime', ServiceTypeStr);
+  AssertEquals('4. Fall: ResultType muss stPreferredTime sein', 'PreferredTime', ServiceTypeStr[res_type]);
 
-  // 5. Fall String stNichtVorhanden muss TServiceType stUnknown ergeben
+  // 5. Fall String NichtVorhanden muss TServiceType stUnknown ergeben
   // Strings werden aus separaten StringArray entnommen
   // stNichtVorhanden ist nicht Teil des separaten StringArray
-  res_type := TStringToTEnum<TServiceType>.Convert('stNichtVorhanden', ServiceTypeStr);
-  AssertEquals('ResultType muss stUnknown sein', 'stUnknown', ServiceTypeStr[stUnknown]);
+  res_type := TStringToTEnum<TServiceType>.Convert('NichtVorhanden', ServiceTypeStr);
+  AssertEquals('5. Fall: ResultType muss stUnknown sein', 'Unknown', ServiceTypeStr[stUnknown]);
 
   // 6. Fall String stUnknown muss TServiceType stUnknown ergeben
   // String wird über RTTI ermittelnt
   // kein Separates StringArray vorhanden
   res_type := TStringToTEnum<TServiceType>.Convert('stUnknown');
-  AssertEquals('ResultType muss stPreferredTime sein', 'stUnknown', ServiceTypeStr[res_type]);
+  AssertEquals('6. Fall: ResultType muss stUnknown sein', 'Unknown', ServiceTypeStr[res_type]);
 
   // 7. Fall String stPreferredTime muss TServiceType stPreferredTime ergeben
   // String wird über RTTI ermittelnt
   // kein Separates StringArray vorhanden
   res_type := TStringToTEnum<TServiceType>.Convert('stPreferredTime');
-  AssertEquals('ResultType muss stPreferredTime sein', 'stPreferredTime', ServiceTypeStr[res_type]);
+  AssertEquals('7. Fall: ResultType muss stPreferredTime sein', 'PreferredTime', ServiceTypeStr[res_type]);
 end;
 
 procedure TStringToTEnumTest.SetUp;
