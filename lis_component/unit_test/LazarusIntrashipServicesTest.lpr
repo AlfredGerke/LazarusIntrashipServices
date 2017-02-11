@@ -16,7 +16,7 @@ uses
   api.b2c.data.service_record_list,
   generics.convert,
   generics.collections.helper,
-  common_generics_test;
+  common_generics_test, common.key_value_pair;
 
 {$R *.res}
 

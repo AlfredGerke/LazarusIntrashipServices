@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="12">
+    <Units Count="13">
       <Unit0>
         <Filename Value="LazarusIntrashipServicesTest.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -88,6 +88,10 @@
         <Filename Value="..\source\common.key_value_list.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
+      <Unit12>
+        <Filename Value="..\source\common.key_value_pair.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

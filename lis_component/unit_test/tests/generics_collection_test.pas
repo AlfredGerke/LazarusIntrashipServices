@@ -40,6 +40,7 @@ type
     procedure Count;
     procedure Duplicates;
     procedure ForEach;
+    procedure Details;
   end;
 
 implementation
@@ -49,7 +50,8 @@ uses
     dbugintf,
   {$endif}
   api.b2c.data.common.types,
-  generics.convert;
+  generics.convert,
+  common.key_value_pair;
 
 { TServiceRecordListWrapper }
 
@@ -199,6 +201,42 @@ begin
     ForEach(AlterServiceTypeProc);
     ForEach(CheckByDebugServerProc);
   end;
+end;
+
+procedure TServiceRedorcdListTest.Details;
+var
+  service_record: TServiceRecord;
+begin
+  //1. Fall: Liste ist leer
+  FServiceRecordList.Clear;
+  FServiceRecordList.Duplicates := dupError;
+  AssertEquals('Anz. Items sollte 0 sein', 0, FServiceRecordList.Count);
+
+  service_record := TServiceRecord.GetByDefault;
+  service_record.ServiceType := stCashOnDelivery;
+  service_record.Details.Add(TKeyValuePair.GetByDefault('active', 1));
+  service_record.Details.Add(TKeyValuePair.GetByDefault('codAmount', 23.25));
+  FServiceRecordList.Add(service_record);
+
+  service_record := TServiceRecord.GetByDefault;
+  service_record.ServiceType := stVisualCheckOfAge;
+  service_record.Details.Add(TKeyValuePair.GetByDefault('active', 1));
+  service_record.Details.Add(TKeyValuePair.GetByDefault('type', 'A16'));
+  FServiceRecordList.Add(service_record);
+
+  AssertEquals('Anz. Services sollte 2 sein', 2, FServiceRecordList.Count);
+
+  service_record.Clear;
+  service_record := FServiceRecordList.GetByServiceType(stCashOnDelivery);
+
+  AssertEquals('Wert "active" sollte 1 sein', 1, service_record.Details.GetValue('active'));
+  AssertEquals('Wert "codAmount" sollte 23.25 sein', 23.25, service_record.Details.GetValue('codAmount'));
+
+  service_record.Clear;
+  service_record := FServiceRecordList.GetByServiceType(stVisualCheckOfAge);
+
+  AssertEquals('Wert "active" sollte 1 sein', 1, service_record.Details.GetValue('active'));
+  AssertEquals('Wert "type" sollte A16 sein', 'A16', service_record.Details.GetValue('type'));
 end;
 
 end.
