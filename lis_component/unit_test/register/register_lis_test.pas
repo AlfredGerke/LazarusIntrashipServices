@@ -25,7 +25,7 @@ initialization
 
   // Alle Tests für generics.collection
   //!<--
-  RegisterTest('Generics.Collections', TServiceRedorcdListTest);
+  RegisterTest('Generics.Collections', TDHLServiceDataListTest);
   //-->
 
   // Alle Tests für common.convert

@@ -12,11 +12,12 @@ uses
   generics_collection_test,
   common.record_list,
   api.b2c.data.common.types,
-  api.b2c.data.service_record,
-  api.b2c.data.service_record_list,
+  api.b2c.data.dhl_service,
+  api.b2c.data.dhl_service_list,
   generics.convert,
   generics.collections.helper,
-  common_generics_test, common.key_value_pair;
+  common_generics_test, common.key_value_pair, 
+  api.b2c.data.common.interfaces;
 
 {$R *.res}
 

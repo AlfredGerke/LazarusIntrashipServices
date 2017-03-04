@@ -6,9 +6,20 @@ interface
 
 uses
   Classes,
-  SysUtils;
+  SysUtils,
+  api.b2c.data.credential,
+  api.b2c.data.connection,
+  api.b2c.data.dhl_contract,
+  api.b2c.data.shipment_order;
 
 type
+
+  TOnGetCredentials = procedure (var ACredentialData: TCredentialData) of object;
+  TOnGetConnectionData = procedure (var AConnectionData: TConnectionData) of object;
+  TOnGetDHLContractData = procedure (var AContractData: TDHLContractData) of object;
+  TOnGetShipmentOrder = procedure (var AShipmentOrder: TShipmentOrder) of object;
+  TOnDecryptPassword = procedure (var APassword: string) of object;
+  TOnEncryptPassword = procedure (var APassword: string) of object;
 
   TServiceType = (stUnknown, stDayOfDelivery, stDeliveryTimeframe,
     stPreferredTime, stIndividualSenderRequirement, stPackagingReturn,

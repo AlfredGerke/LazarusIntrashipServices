@@ -8,31 +8,31 @@ uses
   Classes,
   SysUtils,
   lis_testcase,
-  api.b2c.data.service_record,
-  api.b2c.data.service_record_list;
+  api.b2c.data.dhl_service,
+  api.b2c.data.dhl_service_list;
 
 type
 
-  { TServiceRecordListWrapper }
+  { TDHLServiceDataListWrapper }
 
-  TServiceRecordListWrapper = class(TServiceRecordList)
+  TDHLServiceDataListWrapper = class(TDHLServiceDataList)
   public
     procedure AlterServiceTypeProc(AIndex: integer;
-                                   var AItem: TServiceRecord;
+                                   var AItem: TDHLServiceData;
                                    var ABreak: boolean);
 
     procedure CheckByDebugServerProc(AIndex: integer;
-                                     var AItem: TServiceRecord;
+                                     var AItem: TDHLServiceData;
                                      var ABreak: boolean);
 
     procedure LoadForTest(ACount: integer);
   end;
 
-  { TServiceRedorcdListTest }
+  { TDHLServiceDataListTest }
 
-  TServiceRedorcdListTest= class(TLISTestCase)
+  TDHLServiceDataListTest= class(TLISTestCase)
   private
-    FServiceRecordList: TServiceRecordListWrapper;
+    FServiceRecordList: TDHLServiceDataListWrapper;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -53,10 +53,10 @@ uses
   generics.convert,
   common.key_value_pair;
 
-{ TServiceRecordListWrapper }
+{ TDHLServiceDataListWrapper }
 
-procedure TServiceRecordListWrapper.AlterServiceTypeProc(AIndex: integer;
-  var AItem: TServiceRecord;
+procedure TDHLServiceDataListWrapper.AlterServiceTypeProc(AIndex: integer;
+  var AItem: TDHLServiceData;
   var ABreak: boolean);
 begin
   if (AItem.ServiceType = stUnknown) then
@@ -66,8 +66,8 @@ begin
     AItem.ServiceType := stPreferredTime;
 end;
 
-procedure TServiceRecordListWrapper.CheckByDebugServerProc(AIndex: integer;
-  var AItem: TServiceRecord;
+procedure TDHLServiceDataListWrapper.CheckByDebugServerProc(AIndex: integer;
+  var AItem: TDHLServiceData;
   var ABreak: boolean);
 begin
   {$ifdef Debug}
@@ -75,24 +75,24 @@ begin
   {$endif}
 end;
 
-procedure TServiceRecordListWrapper.LoadForTest(ACount: integer);
+procedure TDHLServiceDataListWrapper.LoadForTest(ACount: integer);
 var
   anz: integer;
 begin
   for anz := 0 to ACount-1 do
-    Add(TServiceRecord.GetByDefault);
+    Add(TDHLServiceData.GetByDefault);
 end;
 
-{ TServiceRedorcdListTest }
+{ TDHLServiceDataListTest }
 
-procedure TServiceRedorcdListTest.SetUp;
+procedure TDHLServiceDataListTest.SetUp;
 begin
   inherited SetUp;
 
-  FServiceRecordList := TServiceRecordListWrapper.Create;
+  FServiceRecordList := TDHLServiceDataListWrapper.Create;
 end;
 
-procedure TServiceRedorcdListTest.TearDown;
+procedure TDHLServiceDataListTest.TearDown;
 begin
   if Assigned(FServiceRecordList) then
     FreeAndNil(FServiceRecordList);
@@ -100,7 +100,7 @@ begin
   inherited TearDown;
 end;
 
-procedure TServiceRedorcdListTest.Count;
+procedure TDHLServiceDataListTest.Count;
 begin
   //1. Fall: Liste ist leer
   AssertEquals('Anz. Items sollte 0 sein', 0, FServiceRecordList.Count);
@@ -124,9 +124,9 @@ begin
   AssertEquals('Anz. Items sollte 0 sein', 0, FServiceRecordList.Count);
 end;
 
-procedure TServiceRedorcdListTest.Duplicates;
+procedure TDHLServiceDataListTest.Duplicates;
 var
-  service_record: TServiceRecord;
+  service_record: TDHLServiceData;
 begin
   //1. Fall: Liste ist leer
   AssertEquals('Anz. Items sollte 0 sein', 0, FServiceRecordList.Count);
@@ -154,7 +154,7 @@ begin
   AssertEquals('Anz. Items sollte 0 sein', 0, FServiceRecordList.Count);
 
   //6. Fall: Liste besitzt 1 Item
-  service_record := TServiceRecord.GetByDefault;
+  service_record := TDHLServiceData.GetByDefault;
   service_record.ServiceType := stDayOfDelivery;
   try
     FServiceRecordList.Add(service_record);
@@ -164,7 +164,7 @@ begin
   end;
 
   //7. Fall: Liste besitzt 2 Item
-  service_record := TServiceRecord.GetByDefault;
+  service_record := TDHLServiceData.GetByDefault;
   service_record.ServiceType := stDeliveryTimeframe;
   try
     FServiceRecordList.Add(service_record);
@@ -174,9 +174,9 @@ begin
   end;
 end;
 
-procedure TServiceRedorcdListTest.ForEach;
+procedure TDHLServiceDataListTest.ForEach;
 var
-  service_record: TServiceRecord;
+  service_record: TDHLServiceData;
 begin
   //1. Fall: Liste ist leer
   FServiceRecordList.Clear;
@@ -184,11 +184,11 @@ begin
   AssertEquals('Anz. Items sollte 0 sein', 0, FServiceRecordList.Count);
 
   //2. Fall: Liste besitzt 2 Items (Infos im DebugServer)
-  service_record := TServiceRecord.GetByDefault;
+  service_record := TDHLServiceData.GetByDefault;
   service_record.ServiceType := stUnknown;
   FServiceRecordList.Add(service_record);
 
-  service_record := TServiceRecord.GetByDefault;
+  service_record := TDHLServiceData.GetByDefault;
   service_record.ServiceType := stDayOfDelivery;
   FServiceRecordList.Add(service_record);
 
@@ -203,22 +203,22 @@ begin
   end;
 end;
 
-procedure TServiceRedorcdListTest.Details;
+procedure TDHLServiceDataListTest.Details;
 var
-  service_record: TServiceRecord;
+  service_record: TDHLServiceData;
 begin
   //1. Fall: Liste ist leer
   FServiceRecordList.Clear;
   FServiceRecordList.Duplicates := dupError;
   AssertEquals('Anz. Items sollte 0 sein', 0, FServiceRecordList.Count);
 
-  service_record := TServiceRecord.GetByDefault;
+  service_record := TDHLServiceData.GetByDefault;
   service_record.ServiceType := stCashOnDelivery;
   service_record.Details.Add(TKeyValuePair.GetByDefault('active', 1));
   service_record.Details.Add(TKeyValuePair.GetByDefault('codAmount', 23.25));
   FServiceRecordList.Add(service_record);
 
-  service_record := TServiceRecord.GetByDefault;
+  service_record := TDHLServiceData.GetByDefault;
   service_record.ServiceType := stVisualCheckOfAge;
   service_record.Details.Add(TKeyValuePair.GetByDefault('active', 1));
   service_record.Details.Add(TKeyValuePair.GetByDefault('type', 'A16'));

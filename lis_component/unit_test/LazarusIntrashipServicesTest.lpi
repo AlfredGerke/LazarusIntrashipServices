@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="18">
       <Unit0>
         <Filename Value="LazarusIntrashipServicesTest.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -65,11 +65,11 @@
         <IsPartOfProject Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="..\source\api.b2c.data.service_record.pas"/>
+        <Filename Value="..\source\api.b2c.data.dhl_service.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="..\source\api.b2c.data.service_record_list.pas"/>
+        <Filename Value="..\source\api.b2c.data.dhl_service_list.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
@@ -92,6 +92,26 @@
         <Filename Value="..\source\common.key_value_pair.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="..\source\api.b2c.data.common.interfaces.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\source\api.b2c.data.dhl_contract.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\source\api.b2c.data.connection.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\source\api.b2c.data.credential.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\source\api.b2c.data.shipment_order.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit17>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
