@@ -15,11 +15,13 @@ type
 
   TCommonRecordList<T: record> = class(TList<T>)
   public type
+    TOnCustomIndexOf = function(constref AValue: T): SizeInt of object;
     TOnForEach = procedure (AIndex: integer;
                             var AItem: T;
                             var ABreak: boolean) of object;
   private
     FDuplicates: TDuplicates;
+    FCustomIndexOf: TOnCustomIndexOf;
 
     procedure ClearItemProc(AIndex: integer;
                             var AItem: T;
@@ -35,6 +37,7 @@ type
 
     procedure Clear;
     function Add(const Value: T): integer;
+    function IndexOf(constref AValue: T): SizeInt;
 
     property IsAvailable: boolean
       read GetIsAvailable;
@@ -42,6 +45,10 @@ type
     property Duplicates: TDuplicates
       read FDuplicates
       write FDuplicates;
+
+    property CustomIndexOf: TOnCustomIndexOf
+      read FCustomIndexOf
+      write FCustomIndexOf;
   end;
 
 implementation
@@ -60,6 +67,7 @@ begin
   inherited;
 
   Duplicates := dupAccept;
+  FCustomIndexOf := nil;
 end;
 
 function TCommonRecordList<T>.Add(const Value: T): integer;
@@ -120,6 +128,14 @@ begin
 
       Result := Result + 1;
     end;
+end;
+
+function TCommonRecordList<T>.IndexOf(constref AValue: T): SizeInt;
+begin
+  if Assigned(FCustomIndexOf) then
+    Result := FCustomIndexOf(AValue)
+  else
+    Result := inherited IndexOf(AValue);
 end;
 
 end.
