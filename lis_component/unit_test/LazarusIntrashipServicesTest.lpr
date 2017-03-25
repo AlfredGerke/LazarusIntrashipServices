@@ -17,7 +17,8 @@ uses
   generics.convert,
   generics.collections.helper,
   common_generics_test, common.key_value_pair, 
-  api.b2c.data.common.interfaces;
+  api.b2c.data.common.interfaces, api.b2c.data.common.credentials, 
+api.b2c.data.common.proxy, api.b2c.data.common.url;
 
 {$R *.res}
 

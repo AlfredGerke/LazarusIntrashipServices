@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="18">
+    <Units Count="21">
       <Unit0>
         <Filename Value="LazarusIntrashipServicesTest.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -105,13 +105,25 @@
         <IsPartOfProject Value="True"/>
       </Unit15>
       <Unit16>
-        <Filename Value="..\source\api.b2c.data.credential.pas"/>
+        <Filename Value="..\source\api.b2c.data.credentials.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit16>
       <Unit17>
         <Filename Value="..\source\api.b2c.data.shipment_order.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit17>
+      <Unit18>
+        <Filename Value="..\source\api.b2c.data.common.credentials.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\source\api.b2c.data.common.proxy.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\source\api.b2c.data.common.url.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit20>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
