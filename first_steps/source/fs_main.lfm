@@ -7,7 +7,7 @@ object Main: TMain
   Caption = 'Erste Schritte'
   ClientHeight = 351
   ClientWidth = 693
-  LCLVersion = '1.6.2.0'
+  LCLVersion = '1.8.2.0'
   object pnlOutline: TPanel
     Left = 0
     Height = 312

@@ -55,9 +55,9 @@ Dieses Testprogramm bildet die Grundlage für die Weiterentwicklung **LIS.compon
 Versionen
 ---------
       
-Lazarus: 1.6.2 (DebugServer kompilieren)      
-FPC: 3.0.0     
-Web Service Toolkit: 0.6   
+Lazarus: 1.8.2 (DebugServer kompilieren)      
+FPC: 3.0.4     
+Web Service Toolkit: 0.7   
 Synapse: [Trunk-Version](https://svn.code.sf.net/p/synalist/code/trunk "https://svn.code.sf.net/p/synalist/code/trunk")   
 OpenSSL: 1.0.2d      
 

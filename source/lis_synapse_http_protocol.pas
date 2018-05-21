@@ -19,9 +19,8 @@ type
   { THTTPTransportHack }
 
   THTTPTransportHack = class(TBaseTransport,ITransport)
-  Private
-    FConnection : THTTPSend;
   private
+    FConnection : THTTPSend;
   protected
   Public
   Published
