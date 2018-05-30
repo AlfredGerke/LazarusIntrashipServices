@@ -49,6 +49,7 @@ Versionen
 Lazarus: 1.8.2 (DebugServer kompilieren)      
 FPC: 3.0.4     
 Web Service Toolkit: 0.7   
+    - Revision: 6004 
 Synapse: [Trunk-Version](https://svn.code.sf.net/p/synalist/code/trunk "https://svn.code.sf.net/p/synalist/code/trunk")   
 OpenSSL: 1.0.2d        
 Generics.Collections: [Master (GitHub)](https://github.com/dathox/generics.collections "https://github.com/dathox/generics.collections")

@@ -48,9 +48,29 @@ lazarus_intraship_services
 		.gitattributes
 [Open project files]
 0=fix\README.md
+1=README.md
+2=Neu1.md
+3=..\..\..\Programme\Firebird\links\fbguard.bat.TXT
+4=..\..\..\Programme\Firebird\links\log.txt
+5=..\..\..\Programme\Firebird\x32\v303\databases.conf
 [Selected Project Files]
 Main=
-Selected=fix\README.md
+Selected=Neu1.md
 [fix\README.md]
 TopLine=1
-Caret=18,7
+Caret=19,4
+[README.md]
+TopLine=1
+Caret=21,52
+[Neu1.md]
+TopLine=1
+Caret=68,2
+[..\..\..\Programme\Firebird\links\fbguard.bat.TXT]
+TopLine=1
+Caret=78,1
+[..\..\..\Programme\Firebird\links\log.txt]
+TopLine=1
+Caret=1,1
+[..\..\..\Programme\Firebird\x32\v303\databases.conf]
+TopLine=1
+Caret=78,23
