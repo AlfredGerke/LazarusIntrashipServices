@@ -1,3 +1,4 @@
+;!!!WICHTIG!!!: Aufgrund eines Bugs in TIniFile Strings nicht mit "<beliebiger String>" Anführungszeichen eintragen
 ;CIGAuthentifizierung
 [authentication]
 user=<user>
@@ -11,8 +12,8 @@ signature=<signatur>
 ;URL für Produktiv- und Testsystem
 [url]
 test=1
-sandbox="<sandbox-url>"
-productiv="<productiv-url>" 
+sandbox=<sandbox-url>
+productiv=<productiv-url> 
 
 [connect]
 connecttimeout=10000

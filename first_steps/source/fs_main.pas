@@ -110,7 +110,7 @@ var
   request_builder: TBusinessClientAPIRequestBuilder;
   req: CreateShipmentOrderRequest;
 begin
-  request_builder := TBusinessClientAPIRequestBuilder.Create;
+     request_builder := TBusinessClientAPIRequestBuilder.Create;
   try
     request_builder.ConfigSettings := AConfigSettings;
     request_builder.OrderData := AOrderData;
