@@ -5,12 +5,13 @@ unit fs_main;
 interface
 
 uses
+  LazUTF8,
   Forms,
   ExtCtrls,
   Buttons,
   StdCtrls,
   lis_synapse_http_protocol,
-  Classes,
+  Classes, IBConnection,
   soap_formatter,
   httpsend,
   intraship_services_types,
@@ -385,11 +386,22 @@ begin
     ARequest.Position := 0;
     list.LoadFromStream(ARequest);
 
+
+    //!:<-- Stand: 2020-03-16:
+    { TODO -oAGE -cUTF8 : Dieser Vorgang muss beobachtet werden }
+    list.text := WinCPToUTF8(list.Text);
+    // -->
+
     edtLog.lines.Add('-----------------------------');
     edtLog.lines.Add('//!<-- Beginnt hier: OnBeforeExecuteEvent');
     edtLog.lines.AddStrings(list);
     edtLog.lines.Add('// Endet hier: OnBeforeExecuteEvent -->');
     edtLog.lines.Add('-----------------------------');
+
+    //!:<-- Stand: 2020-03-16: Dieser Code ist nur dann notwendig, wenn der Response angepasst werden muss
+     ARequest.Position := 0;
+     list.SaveToStream(ARequest);
+    //-->
   finally
     if Assigned(list) then
       FreeAndNil(list);
@@ -447,11 +459,24 @@ begin
     AResponse.Position := 0;
     list.LoadFromStream(AResponse);
 
+    //!:<-- Stand: 2020-03-16:
+{ TODO -oAGE -cUTF8 : Meldung wurde falsch ausgegeben.
+Falsch: Der Webservice wurde ohne Fehler ausgef?hrt. <-- ? anstatt ü
+Richtig: Der Webservice wurde ohne Fehler ausgeführt.
+Dieser Vorgang muss beobachtet werden      }
+    list.text := WinCPToUTF8(list.Text);
+    // -->
+
     edtLog.lines.Add('-----------------------------');
     edtLog.lines.Add('//!<-- Beginnt hier: OnAfterExecuteEvent');
     edtLog.lines.AddStrings(list);
     edtLog.lines.Add('// Endet hier: OnAfterExecuteEvent -->');
     edtLog.lines.Add('-----------------------------');
+
+    //!:<-- Stand: 2020-03-16: Dieser Code ist nur dann notwendig, wenn der Response angepasst werden muss
+    AResponse.Position := 0;
+    list.SaveToStream(AResponse);
+    //-->
   finally
     if Assigned(list) then
       FreeAndNil(list);

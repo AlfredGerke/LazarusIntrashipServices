@@ -1,13 +1,13 @@
 object Main: TMain
-  Left = 605
+  Left = 508
   Height = 351
-  Top = 345
+  Top = 403
   Width = 693
   BorderStyle = bsDialog
   Caption = 'Erste Schritte'
   ClientHeight = 351
   ClientWidth = 693
-  LCLVersion = '1.6.2.0'
+  LCLVersion = '2.0.6.0'
   object pnlOutline: TPanel
     Left = 0
     Height = 312
@@ -30,13 +30,7 @@ object Main: TMain
       Height = 23
       Top = 91
       Width = 191
-      EditLabel.AnchorSideLeft.Control = edtShipmentNr
-      EditLabel.AnchorSideRight.Control = edtShipmentNr
-      EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = edtShipmentNr
-      EditLabel.Left = 8
       EditLabel.Height = 15
-      EditLabel.Top = 73
       EditLabel.Width = 191
       EditLabel.Caption = 'Sendungsnummer'
       EditLabel.ParentColor = False

@@ -832,7 +832,7 @@ type
 
   ShipmentItemType = class(TBaseComplexRemotable)
   private
-    FweightInKG : Currency; //ShipmentItemType_weightInKG_Type;
+    FweightInKG : ShipmentItemType_weightInKG_Type;
     FlengthInCM : ShipmentItemType_lengthInCM_Type;
     FwidthInCM : ShipmentItemType_widthInCM_Type;
     FheightInCM : ShipmentItemType_heightInCM_Type;
@@ -841,7 +841,7 @@ type
     function wstHas_widthInCM() : Boolean;
     function wstHas_heightInCM() : Boolean;
   published
-    property weightInKG : Currency {ShipmentItemType_weightInKG_Type} read FweightInKG write FweightInKG;
+    property weightInKG : ShipmentItemType_weightInKG_Type read FweightInKG write FweightInKG;
     property lengthInCM : ShipmentItemType_lengthInCM_Type read FlengthInCM write FlengthInCM stored wstHas_lengthInCM;
     property widthInCM : ShipmentItemType_widthInCM_Type read FwidthInCM write FwidthInCM stored wstHas_widthInCM;
     property heightInCM : ShipmentItemType_heightInCM_Type read FheightInCM write FheightInCM stored wstHas_heightInCM;
@@ -1029,7 +1029,7 @@ type
   published
     property active : ServiceconfigurationCashOnDelivery_active_Type read Factive write Factive;
     property addFee : ServiceconfigurationCashOnDelivery_addFee_Type read FaddFee write FaddFee stored wstHas_addFee;
-    property codAmount : Currency {ServiceconfigurationCashOnDelivery_codAmount_Type} read FcodAmount write FcodAmount;
+    property codAmount : Currency read FcodAmount write FcodAmount;
   end;
 
   ServiceconfigurationShipmentHandling = class(TBaseComplexRemotable)

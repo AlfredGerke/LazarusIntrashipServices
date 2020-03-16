@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
@@ -14,9 +14,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Debug" Default="True"/>
     </BuildModes>
@@ -24,14 +21,18 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="FCL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="12">
       <Unit0>
@@ -97,7 +98,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source;..\api;..\..\..\Subversion\lazarus-ccr;..\..\..\Subversion\Synapse;source"/>
+      <OtherUnitFiles Value="..\source;..\api;source;..\..\..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\synapse40.1;..\..\..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\wst"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\debug"/>
     </SearchPaths>
     <Parsing>

@@ -187,8 +187,11 @@ end;
 procedure TBusinessClientAPIRequestBuilder.SetShipmentSerciceCOD(AShipmentService: ShipmentService);
 var
   service_config_cod: ServiceconfigurationCashOnDelivery;
+  //curr: Currency;
 begin
   service_config_cod := ServiceconfigurationCashOnDelivery.Create;
+  //if FOrderData.ServiceGroupOtherCodCodAmount.SetAsCurrency then;
+  //  curr:= FOrderData.ServiceGroupOtherCodCodAmount.Cur;
   service_config_cod.codAmount := FOrderData.ServiceGroupOtherCodCodAmount.AsCurrency;
   service_config_cod.addFee := ServiceconfigurationCashOnDelivery_addFee_Type(0);
   service_config_cod.active := ServiceconfigurationCashOnDelivery_active_Type(1);

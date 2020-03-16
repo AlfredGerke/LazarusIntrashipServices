@@ -26,8 +26,14 @@ type
   { TStringHandler }
 
   TStringHandler = record
+  private
     Str: string;
-
+    FCur: Currency;
+  public
+    property Cur: Currency
+      read FCur
+      write FCur;
+    function SetAsCurrency: boolean;
     function Equals(AItems: string): boolean;
     function IsInteger: boolean;
     function IsFloat: boolean;
@@ -942,7 +948,16 @@ end;
 
 procedure TStringHandler.Clear;
 begin
-  FillChar(Self, SizeOf(Self), #0);
+  //FillChar(Self, SizeOf(Self), #0);
+end;
+
+function TStringHandler.SetAsCurrency: boolean;
+begin
+  Result := False;
+  if TryStrToCurr(Str, FCur) then
+    Result := True
+  else
+    raise Exception.CreateFmt('%s ist kein gültiger Currency!', [Str]);
 end;
 
 function TStringHandler.Equals(AItems: string): boolean;

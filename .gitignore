@@ -3,15 +3,20 @@
 ###########################
 
 doc/subversion_doc
+source/backup/
 
 lis_component/unit_test/backup
 lis_component/unit_test/bin/i386-win32/Debug
 lis_component/unit_test/lib/i386-win32/Debug
+lis_component/unit_test/bin/x86_64-win64/Debug
+lis_component/unit_test/lib/x86_64-win64/Debug
 lis_component/unit_test/register/backup
 lis_component/tests/register/backup
 
 first_steps/bin/i386-win32/debug/
 first_steps/lib/i386-win32/debug/
+first_steps/bin/x86_64-win64/debug/
+first_steps/lib/x86_64-win64/debug/
 first_steps/backup/
 first_steps/source/backup/
 
